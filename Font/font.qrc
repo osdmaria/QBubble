@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/font">
+        <file>Bubblegum.otf</file>
+        <file>super_story/SuperStory.ttf</file>
+    </qresource>
+</RCC>

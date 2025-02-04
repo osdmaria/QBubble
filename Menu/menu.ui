@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Menu</class>
+ <widget class="QWidget" name="Menu">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>900</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>160</y>
+     <width>288</width>
+     <height>261</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0,0">
+    <property name="spacing">
+     <number>8</number>
+    </property>
+    <property name="topMargin">
+     <number>5</number>
+    </property>
+    <property name="bottomMargin">
+     <number>5</number>
+    </property>
+    <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="font">
+       <font>
+        <family>Bauhaus 93</family>
+        <pointsize>12</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">    background-color: rgb(49, 180, 114);
+	color : white;
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: black;
+	font: url(C:/Users/dell/Documents/Game_menu_2/fonts/Bubblegum.otf);
+    min-width: 10em;
+    padding: 6px;</string>
+      </property>
+      <property name="text">
+       <string>Solo</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="font">
+       <font>
+        <family>Bauhaus 93</family>
+        <pointsize>12</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">    background-color: rgb(49, 180, 114);
+	color : white;
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: black;
+	font: url(C:/Users/dell/Documents/Game_menu_2/fonts/Bubblegum.otf);
+    min-width: 10em;
+    padding: 6px;</string>
+      </property>
+      <property name="text">
+       <string>Multijoueurs</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="font">
+       <font>
+        <family>Bauhaus 93</family>
+        <pointsize>12</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">    background-color: rgb(49, 180, 114);
+	color : white;
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: black;
+	font: url(C:/Users/dell/Documents/Game_menu_2/fonts/Bubblegum.otf);
+    min-width: 10em;
+    padding: 6px;</string>
+      </property>
+      <property name="text">
+       <string>Comment Jouer?</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="font">
+       <font>
+        <family>Bauhaus 93</family>
+        <pointsize>12</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">    background-color: rgb(49, 180, 114);
+	color : white;
+    border-style: outset;
+    border-width: 2px;
+    border-radius: 10px;
+    border-color: black;
+	font: url(C:/Users/dell/Documents/Game_menu_2/fonts/Bubblegum.otf);
+    min-width: 10em;
+    padding: 6px;</string>
+      </property>
+      <property name="text">
+       <string>Quitter</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

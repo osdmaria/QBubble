@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/new/prefix1">
+        <file>fonts/super_story/SuperStory.ttf</file>
+        <file>fonts/Bubblegum.otf</file>
+    </qresource>
+    <qresource prefix="/images">
+        <file>fonts/bubble_blue.png</file>
+        <file>fonts/bubble_black.png</file>
+        <file>fonts/bubble_purple.png</file>
+        <file>fonts/bubble_red.png</file>
+        <file>fonts/bubble_yellow.png</file>
+    </qresource>
+</RCC>

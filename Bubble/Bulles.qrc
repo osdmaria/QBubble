@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>bubble_black.png</file>
+        <file>bubble_blue.png</file>
+        <file>bubble_purple.png</file>
+        <file>bubble_red.png</file>
+        <file>bubble_yellow.png</file>
+    </qresource>
+</RCC>
