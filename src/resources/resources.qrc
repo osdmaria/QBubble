@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>fonts/Bubblegum.otf</file>
+        <file>fonts/SuperStory.ttf</file>
+        <file>images/bubble_bordeaux.png</file>
+        <file>images/bubble_brown.png</file>
+        <file>images/bubble_green.png</file>
+        <file>images/bubble_lightblue.png</file>
+        <file>images/canon3.png</file>
+        <file>images/frame.png</file>
+    </qresource>
+</RCC>

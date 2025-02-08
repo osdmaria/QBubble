@@ -1,0 +1,65 @@
+QT       += core gui
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+CONFIG += c++17
+
+# You can make your code fail to compile if it uses deprecated APIs.
+# In order to do so, uncomment the following line.
+#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+
+
+SOURCES += \
+    main.cpp \
+    src/delegate/maincontroller.cpp \
+    src/delegate/sologamecontroller.cpp \
+    src/delegate/windowscontroller.cpp \
+    src/model/bubble.cpp \
+    src/model/cannonmodel.cpp \
+    src/model/containermodel.cpp \
+    src/model/gridmodel.cpp \
+    src/model/scoremodel.cpp \
+    src/view/bubbleview.cpp \
+    src/view/cannonwidget.cpp \
+    src/view/containerwidget.cpp \
+    src/view/gridscene.cpp \
+    src/view/howtoplaywindow.cpp \
+    src/view/mainmenuwindow.cpp \
+    src/view/multiplayerchoicewindow.cpp \
+    src/view/scorewidget.cpp \
+    src/view/sologamewindow.cpp
+
+
+HEADERS += \
+    src/delegate/maincontroller.h \
+    src/delegate/sologamecontroller.h \
+    src/delegate/windowscontroller.h \
+    src/model/bubble.h \
+    src/model/cannonmodel.h \
+    src/model/containermodel.h \
+    src/model/gridmodel.h \
+    src/model/scoremodel.h \
+    src/view/bubbleview.h \
+    src/view/cannonwidget.h \
+    src/view/containerwidget.h \
+    src/view/gridscene.h \
+    src/view/howtoplaywindow.h \
+    src/view/mainmenuwindow.h \
+    src/view/multiplayerchoicewindow.h \
+    src/view/scorewidget.h \
+    src/view/sologamewindow.h
+
+
+
+#FORMS += \
+
+
+
+
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    src/resources/resources.qrc
