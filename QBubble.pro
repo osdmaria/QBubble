@@ -11,6 +11,8 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    src/delegate/alliesgamecontroller.cpp \
+    src/delegate/enemiesgamecontroller.cpp \
     src/delegate/maincontroller.cpp \
     src/delegate/sologamecontroller.cpp \
     src/delegate/windowscontroller.cpp \
@@ -19,9 +21,11 @@ SOURCES += \
     src/model/containermodel.cpp \
     src/model/gridmodel.cpp \
     src/model/scoremodel.cpp \
+    src/view/alliesgamewindow.cpp \
     src/view/bubbleview.cpp \
     src/view/cannonwidget.cpp \
     src/view/containerwidget.cpp \
+    src/view/enemiesgamewindow.cpp \
     src/view/gridscene.cpp \
     src/view/howtoplaywindow.cpp \
     src/view/mainmenuwindow.cpp \
@@ -31,6 +35,8 @@ SOURCES += \
 
 
 HEADERS += \
+    src/delegate/alliesgamecontroller.h \
+    src/delegate/enemiesgamecontroller.h \
     src/delegate/maincontroller.h \
     src/delegate/sologamecontroller.h \
     src/delegate/windowscontroller.h \
@@ -39,9 +45,11 @@ HEADERS += \
     src/model/containermodel.h \
     src/model/gridmodel.h \
     src/model/scoremodel.h \
+    src/view/alliesgamewindow.h \
     src/view/bubbleview.h \
     src/view/cannonwidget.h \
     src/view/containerwidget.h \
+    src/view/enemiesgamewindow.h \
     src/view/gridscene.h \
     src/view/howtoplaywindow.h \
     src/view/mainmenuwindow.h \

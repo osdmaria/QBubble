@@ -6,6 +6,9 @@ WindowsController::WindowsController(QObject *parent) :QObject(parent)
     m_howToPlayView = new HowToPlayWindow();
     m_multiplayerChoiceView = new MultiplayerChoiceWindow();
     m_soloGameView = new SoloGameWindow();
+    m_alliesGameView = new AlliesGameWindow();
+    m_enemiesGameView = new EnemiesGameWindow();
+
 
     //Menu principal
     connectSignalsMainMenu();
@@ -21,6 +24,12 @@ WindowsController::WindowsController(QObject *parent) :QObject(parent)
 
     //Solo
     setFixedSize(m_soloGameView);
+
+    //Allies
+    setFixedSize(m_alliesGameView);
+
+    //Enemies
+    setFixedSize(m_enemiesGameView);
 }
 
 void WindowsController::connectSignalsMainMenu(){
@@ -82,10 +91,16 @@ void WindowsController::openSoloGame() {
 
 void WindowsController::openAlliesGameWindow() {
     qDebug() << "Allies clicked!";
+    m_multiplayerChoiceView->hide();
+    m_alliesGameView->show();
+    emit alliesLauched();
 }
 
 void WindowsController::openEnemiesGameWindow() {
     qDebug() << "Enemies clicked!";
+    m_multiplayerChoiceView->hide();
+    m_enemiesGameView->show();
+    emit enemiesLauched();
 }
 
 
@@ -104,4 +119,3 @@ void WindowsController::setFixedSize(QMainWindow *w){
 
     w->setFixedSize(width,height);
 }
-

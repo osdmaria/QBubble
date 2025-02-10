@@ -37,9 +37,6 @@ private:
     GridScene *m_gridScene;
     CannonWidget *m_cannonWidget;
     ContainerWidget *m_containerWidget;
-
-
-
 };
 
 #endif // SOLOGAMEWINDOW_H

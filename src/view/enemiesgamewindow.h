@@ -1,0 +1,42 @@
+#ifndef ENEMIESGAMEWINDOW_H
+#define ENEMIESGAMEWINDOW_H
+
+#include <QMainWindow>
+#include <QPointF>
+#include <QPainter>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QGraphicsView>
+#include <QLabel>
+
+#include "src/view/scorewidget.h"
+#include "src/view/gridscene.h"
+#include "src/view/bubbleview.h"
+#include "src/view/cannonwidget.h"
+#include "src/view/containerwidget.h"
+
+class EnemiesGameWindow : public QMainWindow
+{
+    Q_OBJECT
+public:
+    explicit EnemiesGameWindow(QWidget *parent = nullptr);
+    ~EnemiesGameWindow();
+    ScoreWidget *scoreWidget(){return m_scoreWidget;}
+    GridScene *gridScene(){return m_gridScene;}
+    CannonWidget *cannonWidget(){return m_cannonWidget;}
+    ContainerWidget *containerWidget(){return m_containerWidget;}
+
+private:
+    void setupUi();
+
+signals:
+
+
+private:
+    ScoreWidget *m_scoreWidget;
+    GridScene *m_gridScene;
+    CannonWidget *m_cannonWidget;
+    ContainerWidget *m_containerWidget;
+};
+
+#endif // ENEMIESGAMEWINDOW_H

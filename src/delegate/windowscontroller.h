@@ -5,6 +5,8 @@
 #include "src/view/howtoplaywindow.h"
 #include "src/view/multiplayerchoicewindow.h"
 #include "src/view/sologamewindow.h"
+#include "src/view/alliesgamewindow.h"
+#include "src/view/enemiesgamewindow.h"
 
 #include <QObject>
 #include <QPushButton>
@@ -29,6 +31,8 @@ public:
 
 signals:
     void soloLaunched();
+    void alliesLauched();
+    void enemiesLauched();
 
 public slots:
     //Main menu window
@@ -55,8 +59,8 @@ private:
     MultiplayerChoiceWindow *m_multiplayerChoiceView;
 
     SoloGameWindow *m_soloGameView;
-    //AlliesGameWindow *m_alliesGameView;
-    //EnemiesGameWindow *m_enemiesGameView;
+    AlliesGameWindow *m_alliesGameView;
+    EnemiesGameWindow *m_enemiesGameView;
 };
 
 #endif // WINDOWSCONTROLLER_H
