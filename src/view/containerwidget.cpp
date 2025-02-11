@@ -4,10 +4,10 @@
 ContainerWidget::ContainerWidget(QWidget *parent)
     : QWidget{parent}
 {
-    m_containerBackground = QPixmap(":/images/frame.png");
-    if (m_containerBackground.isNull()) {
-        qWarning() << "Failed to load background image!";
-    }
+    // m_containerBackground = QPixmap(":/images/frame.png");
+    // if (m_containerBackground.isNull()) {
+    //     qWarning() << "Failed to load background image!";
+    // }
 
     m_spotBubble1 = new QLabel(this);
     m_spotBubble2 = new QLabel(this);

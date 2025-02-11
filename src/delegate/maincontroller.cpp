@@ -18,7 +18,7 @@ MainController::~MainController() {
 
 
 void MainController::soloLaunched(){
-    m_soloGameController = new SoloGameController(m_windowsController->soloGameWindow());
+    m_soloGameController = new SoloGameController(m_windowsController->soloGameWindow(),m_windowsController->mainMenuWindow());
 }
 
 void MainController::soloEnded(){

@@ -8,6 +8,7 @@
 #include <QHBoxLayout>
 #include <QGraphicsView>
 #include <QLabel>
+#include <QPushButton>
 
 #include "src/view/scorewidget.h"
 #include "src/view/gridscene.h"
@@ -25,12 +26,15 @@ public:
     GridScene *gridScene(){return m_gridScene;}
     CannonWidget *cannonWidget(){return m_cannonWidget;}
     ContainerWidget *containerWidget(){return m_containerWidget;}
+    QPushButton *m_retour;
+    QPushButton *m_pause;
 
 private:
     void setupUi();
 
 signals:
-
+    void onRetourClicked();
+    void onPauseClicked();
 
 private:
     ScoreWidget *m_scoreWidget;
@@ -38,6 +42,7 @@ private:
     GridScene *m_gridScene;
     CannonWidget *m_cannonWidget;
     ContainerWidget *m_containerWidget;
+    void connectSignals();
 };
 
 #endif // SOLOGAMEWINDOW_H

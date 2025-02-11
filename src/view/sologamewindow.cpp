@@ -9,23 +9,25 @@ SoloGameWindow::SoloGameWindow(QWidget *parent)
     m_cannonWidget = new CannonWidget();
     m_containerWidget = new ContainerWidget();
     setupUi();
+    connectSignals();
 }
 
 SoloGameWindow::~SoloGameWindow() {}
 
 void SoloGameWindow::setupUi() {
+
+    //widget
+
     QWidget *centralWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
-    QHBoxLayout *topLayout = new QHBoxLayout();
+    //QHBoxLayout *topLayout = new QHBoxLayout();
 
     m_scoreWidget->setFixedSize(300, 30);
     m_scoreWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    m_scoreWidget->move(50, 50);
 
-    topLayout->addWidget(m_scoreWidget);
-    topLayout->setContentsMargins(0, 0, 0, 0);
-    topLayout->setSpacing(0);
-
-    mainLayout->addLayout(topLayout);
+    // mainLayout->addLayout(topLayout);
+    mainLayout->addWidget(m_scoreWidget);
     mainLayout->addWidget(m_gridScene);
     mainLayout->addWidget(m_cannonWidget);
     mainLayout->addWidget(m_containerWidget);
@@ -34,11 +36,57 @@ void SoloGameWindow::setupUi() {
     centralWidget->setLayout(mainLayout);
     setCentralWidget(centralWidget);
 
-    //taille mainwwindow
-    //setMinimumSize(640, 1270);
-    //resize(640, 1270);
+    //button
+    m_retour = new QPushButton("X", this);
+    m_pause  = new QPushButton("Pause", this);
+    //Taille des bouttons
+    m_retour->setFixedSize(this->height() * 0.07, this->height() * 0.08);
+    m_pause ->setFixedSize(this->width() *0.15, this->height() * 0.08);
 
-    // Thêm khẩu pháo vào cửa sổ chính và đặt vị trí
-    m_cannonWidget->setParent(this);  // Quan trọng: Đặt parent là SoloGameWindow
-    m_cannonWidget->move(540, 600);   // Đặt vị trí mong muốn
+    //Style des boutons
+    QString buttonStyle = "QPushButton {"
+                          "background-color: green;"
+                          "color: white;"
+                          "border-radius: 10px;"
+                          "font-size: 25px;"
+                          "border: 2px solid black;"
+                          "}"
+                          "QPushButton:hover {"
+                          "background-color: #aade90;"
+                          "}"
+                          "QPushButton:pressed {"
+                          "background-color: #6c9956;"
+                          "}";
+
+    m_retour->setStyleSheet(buttonStyle);
+    m_pause ->setStyleSheet(buttonStyle);
+    mainLayout->addWidget(m_retour);
+    mainLayout->addWidget(m_pause);
+
+    // position des sur mainwindow
+    m_cannonWidget->setParent(this);
+    m_cannonWidget->move(260, 620);
+
+    //
+    m_containerWidget->setParent(this);
+    m_containerWidget->move(0,560);
+
+    //
+    m_scoreWidget->setParent(this);
+    m_scoreWidget->move(450, 50);
+
+    //
+    m_retour->setParent(this);
+    m_retour->move(50,50);
+
+    //
+    m_pause->setParent(this);
+    m_pause->move(90, 50);
+}
+
+
+void SoloGameWindow::connectSignals() {
+    connect(m_retour, &QPushButton::clicked, this, &SoloGameWindow::onRetourClicked);
+    connect(m_pause, &QPushButton::clicked, this, &SoloGameWindow::onPauseClicked);
+
 }

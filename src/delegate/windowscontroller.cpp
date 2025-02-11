@@ -33,6 +33,7 @@ WindowsController::WindowsController(QObject *parent) :QObject(parent)
 }
 
 void WindowsController::connectSignalsMainMenu(){
+    qDebug() << "SignalsMainMenu clicked!";
     connect(m_mainMenuView, &MainMenuWindow::onSoloClicked, this, &WindowsController::openSoloGame);
     connect(m_mainMenuView, &MainMenuWindow::onMultiplayerClicked, this, &WindowsController::openMultiplayerChoice);
     connect(m_mainMenuView, &MainMenuWindow::onHowToPlayClicked, this, &WindowsController::openHowToPlay);
@@ -117,5 +118,5 @@ void WindowsController::setFixedSize(QMainWindow *w){
     int width = screenGeometry.width() * 0.8;
     int height = screenGeometry.height() * 0.8;
 
-    w->setFixedSize(width,height);
+    w->setFixedSize(640,750);
 }

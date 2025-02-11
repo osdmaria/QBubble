@@ -38,7 +38,7 @@ void GridScene::setupUi() {
     int width = screenGeometry.width() * 0.6;
     int height = screenGeometry.height() * 0.5;
 
-    setFixedSize(width, height);
+    setFixedSize(600, 700);
 
 }
 
