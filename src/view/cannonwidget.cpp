@@ -16,6 +16,7 @@ void CannonWidget::paintEvent(QPaintEvent *event)
     painter.setRenderHint(QPainter::SmoothPixmapTransform);
 
     if (!m_cannonImage.isNull()) {
+        //painter.translate(width() / 2, height() / 2);
         painter.translate(width() / 2, height() / 2);
         painter.drawPixmap(-m_cannonImage.width() / 2, -m_cannonImage.height() / 2, m_cannonImage);
     }else{

@@ -26,6 +26,7 @@ public:
     ScoreWidget *scoreWidget(){return m_scoreWidget;}
     GridScene *gridScene(){return m_gridScene;}
     CannonWidget *cannonWidget(){return m_cannonWidget;}
+    CannonWidget *cannonWidget2(){return m_cannonWidget2;}
     ContainerWidget *containerWidget(){return m_containerWidget;}
 
 private:
@@ -38,9 +39,8 @@ private:
     ScoreWidget *m_scoreWidget;
     GridScene *m_gridScene;
     CannonWidget *m_cannonWidget;
+    CannonWidget *m_cannonWidget2;
     ContainerWidget *m_containerWidget;
-
-
 };
 
 #endif // ALLIESGAMEWINDOW_H

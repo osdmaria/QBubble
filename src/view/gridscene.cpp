@@ -14,8 +14,9 @@ GridScene::GridScene(QWidget *parent)
 void GridScene::setupUi() {
 
     QGraphicsScene *scene = new QGraphicsScene();
+    //QPixmap backgroundImage("://images/BG.JPG");
     scene->setBackgroundBrush(QBrush(QColor(173, 216, 230)));
-
+    //scene->setBackgroundBrush(QBrush(backgroundImage));
     setScene(scene);
 
     setRenderHint(QPainter::Antialiasing);
@@ -28,6 +29,6 @@ void GridScene::setupUi() {
     int width = screenGeometry.width() * 0.6;
     int height = screenGeometry.height() * 0.5;
 
-    setFixedSize(width, height);
+    setFixedSize(540, 1270);
 
 }

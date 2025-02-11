@@ -33,5 +33,11 @@ void SoloGameWindow::setupUi() {
     centralWidget->setLayout(mainLayout);
     setCentralWidget(centralWidget);
 
-    //setMinimumSize(600, 600);
+    //taille mainwwindow
+    //setMinimumSize(640, 1270);
+    //resize(640, 1270);
+
+    // Thêm khẩu pháo vào cửa sổ chính và đặt vị trí
+    m_cannonWidget->setParent(this);  // Quan trọng: Đặt parent là SoloGameWindow
+    m_cannonWidget->move(540, 600);   // Đặt vị trí mong muốn
 }
