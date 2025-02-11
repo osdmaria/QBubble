@@ -1,30 +1,74 @@
 #ifndef GRIDMODEL_H
 #define GRIDMODEL_H
 
-#include <QObject>
-
 #include "bubble.h"
 
-class GridModel : public QObject
-{
+#include <QKeyEvent>
+
+#include <QGraphicsScene>
+#include <QVector>
+#include <QColor>
+#include <QDebug>
+#include <QTimer>
+#include <QQueue>
+#include <QRandomGenerator>
+
+class GridModel : public QGraphicsScene {
     Q_OBJECT
+
 public:
-    explicit GridModel(int rows, int cols, QObject *parent = nullptr);
-    void addBubble(int row, int col, Bubble *bubble);
-    Bubble* popBubble(int row, int col);
-    void addRow();
-    bool isFull();
-    void setHigherRow();
+    GridModel(int rows, int cols, QObject *parent = nullptr);
+
+    int getMaxRowCount() const { return m_max_nb_rows; }
+    int getCurrRowCount() const { return m_curr_nb_rows; }
+    int getColCount() const { return m_nb_cols; }
+    int getBubbleRadius() const { return m_bubble_radius; }
+    int getGraphicalOffset() const { return m_graphic_offset; }
+
+    void addBubble(int row, int col, QColor color);
+    bool isFirstRowFull();
+    void addNewLineOfBubbles();
+    void fillFirstRow();
+
+    void removeBubble(int row, int col);
+    bool isFirstRowEmpty();
+    void popAllBubbles();
+
+    bool isGameOver();
+    QColor getRandomColor();
+
+    QVector<QPair<int, int>>  getSameColorConnectedBubbles(int bubble_row, int bubble_col);
+    QVector<QPair<int, int>>  getAccessibleBlankSpace();
+    QVector<QPair<int, int>>  getDroppableBubbles();
+
+    void handlePossibleEmptyFirstRow();
+    void handlePossibleDroppableBubbles();
+    void handlePossiblePoppableBubbles(int row, int col);
+
+    void addRandomBubbleInAvaibleSpace();
+
+    void setOffset(int row, bool offset);
+    bool getOffset(int row) const;
+
 
 signals:
-    void bubblePopped(int row, int col);
-    void bubbleAdded(int row, int col);
+    void bubbleAdded(Bubble* bubble, bool offset);
+    void bubblePopped(Bubble* bubble);
     void rowAdded();
+    void gameOver();
+    void offsetUpdated(int row, bool offset);
 
+public slots:
+    void addNewLineOfBubblesRequest(); // Slot for adding a row
+    void addRandomBubbleInAvaibleSpaceRequest(); // Slot for adding a random bubble
 private:
-    QVector<QVector<Bubble*>> m_grid;
-    int m_higherRow;
-    int m_deathLimit;
+    int m_max_nb_rows;
+    int m_nb_cols;
+    int m_curr_nb_rows;
+    int m_graphic_offset;
+    int m_bubble_radius;
+    QVector<QVector<Bubble*>> m_grid;  // 2D array to store bubble references
+    QVector<bool> m_offset_tab;  // 2D array to store bubble references
 };
 
 #endif // GRIDMODEL_H

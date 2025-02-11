@@ -1,8 +1,18 @@
+
 #include "bubble.h"
 
-Bubble::Bubble(QObject *parent)
-    : QObject{parent}
-{}
+Bubble::Bubble(QColor color, int scoreValue, bool isDestructible, QPointF position, QObject *parent)
+    : QObject{parent},
+    m_color{color},
+    m_scoreValue{scoreValue},
+    m_isDestructible{isDestructible},
+    m_position{position} {}
 
-Bubble::~Bubble(){}
+Bubble::Bubble(QColor color, QPointF position, QObject *parent)
+    : QObject{parent},
+    m_color{color},
+    m_scoreValue{1},
+    m_isDestructible{true},
+    m_position{position} {}
 
+Bubble::~Bubble() {}

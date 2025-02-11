@@ -4,7 +4,8 @@ SoloGameWindow::SoloGameWindow(QWidget *parent)
     : QMainWindow{parent}
 {
     m_scoreWidget = new ScoreWidget();
-    m_gridScene = new GridScene(this);
+    m_gridModel = new GridModel(10,15);
+    m_gridScene = new GridScene(m_gridModel, 20, 10,15, 0, 10, this );
     m_cannonWidget = new CannonWidget();
     m_containerWidget = new ContainerWidget();
     setupUi();

@@ -37,6 +37,7 @@ signals:
 
 private:
     ScoreWidget *m_scoreWidget;
+    GridModel *m_gridModel;
     GridScene *m_gridScene;
     CannonWidget *m_cannonWidget;
     CannonWidget *m_cannonWidget2;
