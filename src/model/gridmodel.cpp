@@ -14,6 +14,8 @@ GridModel::GridModel(int max_number_rows, int nb_cols, QObject *parent)
 
     setSceneRect(0, 0, m_nb_cols * 2*m_bubble_radius, m_max_nb_rows* 2* m_bubble_radius);
 
+
+
 }
 
 
@@ -140,6 +142,79 @@ void GridModel::addRandomBubbleInAvaibleSpace(){
     handlePossiblePoppableBubbles(row,col);
     handlePossibleDroppableBubbles();
     handlePossibleEmptyFirstRow();
+}
+
+
+
+void GridModel::addBubbleInCanonPosition(int angle) {
+    if (isFirstRowFull()) {
+        QVector<Bubble*> newRow(m_nb_cols, nullptr);
+        m_grid.append(newRow);  // Add a new row at the bottom
+        if (m_curr_nb_rows == 0) {
+            m_offset_tab.append(true);
+        } else {
+            m_offset_tab.append(!m_offset_tab[m_curr_nb_rows - 1]);    // Add a new row at the top
+        }
+        m_curr_nb_rows++;
+
+        if (isGameOver()) { return; }
+    }
+
+    // Convert angle to radians
+    double radians = angle * M_PI / 180.0;
+
+    // Calculate direction vector
+    double dx = cos(radians);
+    double dy = sin(radians);
+
+    // Starting position (assuming the shooter is at the bottom center)
+    double x = m_nb_cols / 2.0;
+    double y = m_curr_nb_rows - 1;
+
+    // Simulate the bubble's path
+    while (true) {
+        x += dx;
+        y += dy;
+
+        // Check if the bubble is out of bounds
+        if (x < 0 || x >= m_nb_cols || y < 0 || y >= m_curr_nb_rows) {
+            break;
+        }
+
+        // Check if the bubble hits another bubble
+        int row = static_cast<int>(y);
+        int col = static_cast<int>(x);
+        qDebug()<<"row et col:"<<row <<col;
+
+        if (m_grid[row][col] != nullptr) {
+            // Place the bubble in the nearest available position
+            // You might need to adjust the position based on the grid's offset
+
+            if (m_offset_tab[row]) {
+                // Adjust for offset rows
+                if (x - col > 0.5) {
+                    col++;
+                }
+            } else {
+                if (x - col > 0.5) {
+                    col++;
+                }
+            }
+
+            // Ensure the column is within bounds
+            if (col < 0) col = 0;
+            if (col >= m_nb_cols) col = m_nb_cols - 1;
+
+            // Add the bubble at the calculated position
+            qDebug() << "Adding Bubble at (" << row << ", " << col << ")";
+            addBubble(row, col, getRandomColor());
+
+            handlePossiblePoppableBubbles(row, col);
+            handlePossibleDroppableBubbles();
+            handlePossibleEmptyFirstRow();
+            break;
+        }
+    }
 }
 
 bool GridModel::isFirstRowFull(){
@@ -404,3 +479,6 @@ QColor GridModel::getRandomColor() {
 
     return colors[randomIndex]; // Return the selected color
 }
+
+
+

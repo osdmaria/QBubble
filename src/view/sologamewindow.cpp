@@ -5,10 +5,12 @@ SoloGameWindow::SoloGameWindow(QWidget *parent)
 {
     m_scoreWidget = new ScoreWidget();
     m_gridModel = new GridModel(10,15);
+    m_canonModel = new CanonModel();
     m_gridScene = new GridScene(m_gridModel, 20, 10,15, 0, 10, this );
     m_containerWidget = new ContainerWidget();
     setupUi();
     connectSignals();
+    connect(m_canonModel, &CanonModel::BubbleShoot, m_gridModel, &GridModel::addBubbleInCanonPosition);
     setFocusPolicy(Qt::StrongFocus);
     setFocus();
 }
@@ -31,10 +33,12 @@ void SoloGameWindow::setupUi() {
     mainLayout->addWidget(m_gridScene);
 
     // Center CanonWidget
-    m_cannonWidget = new CanonWidget(this, 25, 100, 100); // Add cannon
+    m_cannonWidget = new CanonWidget(this, m_canonModel,25, 100, 100); // Add cannon
+    qDebug()<<m_cannonWidget;
     m_cannonWidget->focusWidget();
     m_cannonWidget->setParent(this);
     mainLayout->addWidget(m_cannonWidget, 0, Qt::AlignHCenter); // Center the canon widget horizontally
+    m_cannonWidget->show(); // Ensure it's visible
 
     // Add container widget
     mainLayout->addWidget(m_containerWidget);

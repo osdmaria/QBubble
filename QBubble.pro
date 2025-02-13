@@ -17,7 +17,7 @@ SOURCES += \
     src/delegate/sologamecontroller.cpp \
     src/delegate/windowscontroller.cpp \
     src/model/bubble.cpp \
-    src/model/cannonmodel.cpp \
+    src/model/canonmodel.cpp \
     src/model/containermodel.cpp \
     src/model/gridmodel.cpp \
     src/model/scoremodel.cpp \
@@ -41,7 +41,7 @@ HEADERS += \
     src/delegate/sologamecontroller.h \
     src/delegate/windowscontroller.h \
     src/model/bubble.h \
-    src/model/cannonmodel.h \
+    src/model/canonmodel.h \
     src/model/containermodel.h \
     src/model/gridmodel.h \
     src/model/scoremodel.h \
