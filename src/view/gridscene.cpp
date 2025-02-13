@@ -24,6 +24,7 @@ GridScene::GridScene(GridModel *model, int bubble_radius, int graphic_offset, in
 void GridScene::setupUi() {
     QGraphicsScene *scene = new QGraphicsScene();
     scene->setBackgroundBrush(QBrush(QColor(173, 216, 230)));
+    setMouseTracking(true);
 
     setScene(scene);
 
@@ -40,7 +41,6 @@ void GridScene::connectToModel(GridModel *model) {
     connect(model, &GridModel::bubblePopped, this, &GridScene::onBubblePopped);
     connect(model, &GridModel::rowAdded, this, &GridScene::onRowAdded);
     connect(model, &GridModel::gameOver, this, &GridScene::onGameOver);
-    //connect(&canonWidget, &CanonWidget::bubbleShot, this, &GridModel::addBubbleInCanonPosition);
 
 
 

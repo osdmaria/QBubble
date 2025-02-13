@@ -1,5 +1,5 @@
 #include "maincontroller.h"
-#include <QTimer>
+
 
 MainController::MainController(QObject *parent)
     : QObject{parent}
@@ -7,9 +7,6 @@ MainController::MainController(QObject *parent)
     m_windowsController = new WindowsController();
 
     m_windowsController->launch();
-    m_windowsController->startMusic();
-    //QTimer::singleShot(500, m_windowsController, &WindowsController::startMusic);
-
 
     connect(m_windowsController->mainMenuWindow(), &MainMenuWindow::onSoloClicked, this, &MainController::soloLaunched);
 }

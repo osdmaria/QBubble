@@ -9,13 +9,14 @@
 #include <QGraphicsView>
 #include <QLabel>
 #include <QPushButton>
+#include <QPainter>
+#include <QPixmap>
 
 #include "src/view/scorewidget.h"
 #include "src/view/gridscene.h"
 #include "src/view/bubbleview.h"
 #include "src/view/canonwidget.h"
 #include "src/view/containerwidget.h"
-#include "src/view/music.h"
 
 class SoloGameWindow : public QMainWindow
 {
@@ -41,12 +42,11 @@ signals:
 private:
     ScoreWidget *m_scoreWidget;
     GridModel *m_gridModel;
-    CanonModel *m_canonModel;
     GridScene *m_gridScene;
     ContainerWidget *m_containerWidget;
     CanonWidget *m_cannonWidget;
-    Music *m_music;
     void connectSignals();
+    void paintEvent(QPaintEvent *event);
 };
 
 #endif // SOLOGAMEWINDOW_H

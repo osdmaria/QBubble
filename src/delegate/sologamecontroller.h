@@ -9,6 +9,8 @@
 #include <QApplication>
 #include "src/model/containermodel.h"
 #include "src/view/mainmenuwindow.h"
+#include "src/view/pausewindow.h"
+
 
 #include <QPushButton>
 #include <QScreen>
@@ -31,6 +33,8 @@ private slots:
     void updateScore(int x);
 public slots:
     void openMainMenu();
+    void showPauseWindow();
+
 
 private:
     SoloGameWindow *m_soloGameView;
@@ -38,6 +42,8 @@ private:
     ContainerModel *m_containerModel;
     void connectSignalsButttons();
     MainMenuWindow *m_mainMenuView;
+    pausewindow *m_pauseWindow;
+
 };
 
 #endif // SOLOGAMECONTROLLER_H

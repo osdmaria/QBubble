@@ -2,32 +2,33 @@
 #define CANONWIDGET_H
 
 #include <QWidget>
-#include <QPainter>
 #include <QKeyEvent>
-#include "src/model/canonmodel.h"
+#include <QPainter>
+#include <QtMath>
 
-class CanonWidget : public QWidget
-{
+class CanonWidget : public QWidget {
     Q_OBJECT
 
 public:
-    explicit CanonWidget(QWidget *parent = nullptr,CanonModel *m_model=nullptr , int radius = 100, int startX = 125, int startY = 200);
+    explicit CanonWidget(QWidget *parent = nullptr, int radius = 50, int startX = 100, int startY = 100);
     ~CanonWidget();
 
-    void setModel(CanonModel *model); // Set the model
+    qreal getAngle() const;
     void keyPressEvent(QKeyEvent *event) override;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
-
-private slots:
-    void onAngleChanged(qreal newAngle); // Slot to handle angle changes
+    QSize sizeHint() const override;
 
 private:
-    CanonModel *m_model; // Pointer to the model
+    void updateAngle(int direction);
+
+private:
+    qreal angle;
     int m_radius;
     int startX, startY;
     QPen pen;
 };
+
 
 #endif // CANONWIDGET_H

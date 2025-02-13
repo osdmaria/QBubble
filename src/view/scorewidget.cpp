@@ -19,6 +19,8 @@ void ScoreWidget::setupUi() {
     shadow->setColor(Qt::darkGray);
     shadow->setOffset(0, 0);
     m_scoreLabel->setGraphicsEffect(shadow);
+    m_scoreLabel->setStyleSheet("");
+
 }
 
 

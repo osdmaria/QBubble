@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>pausewindow</class>
+ <widget class="QDialog" name="pausewindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>90</y>
+     <width>203</width>
+     <height>97</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPushButton" name="pushButton">
+      <property name="styleSheet">
+       <string notr="true"> background-color: #31B472;
+                          color: #EEFF6A;
+                          border-radius: 15px;
+                          font-size: 30px;
+                          border: 2px solid #EEFF6A;
+                    </string>
+      </property>
+      <property name="text">
+       <string>Reprendre</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="styleSheet">
+       <string notr="true"> background-color: #31B472;
+                          color: #EEFF6A;
+                          border-radius: 15px;
+                          font-size: 30px;
+                          border: 2px solid #EEFF6A;
+                    </string>
+      </property>
+      <property name="text">
+       <string>Menu Principal</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

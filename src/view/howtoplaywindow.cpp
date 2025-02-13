@@ -1,7 +1,7 @@
 #include "howtoplaywindow.h"
 
 HowToPlayWindow::HowToPlayWindow(QWidget *parent)
-    : QMainWindow{parent},m_music(new Music())
+    : QMainWindow{parent}
 {
     setupUi();
     connectSignals();
@@ -100,10 +100,8 @@ void HowToPlayWindow::setupUi() {
 HowToPlayWindow::~HowToPlayWindow() {}
 
 void HowToPlayWindow::connectSignals() {
-    connect(m_mainMenuButton, &QPushButton::clicked, [this](){
-        m_music->playSoundEffect("click");
-        emit onMainMenuClicked();});
-    }
+    connect(m_mainMenuButton, &QPushButton::clicked, this, &HowToPlayWindow::onMainMenuClicked);
+}
 
 QLabel* HowToPlayWindow::createTitleHowToPlayLabel() {
 

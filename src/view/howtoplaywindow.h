@@ -11,7 +11,6 @@
 #include <QPainter>
 #include <QMap>
 
-#include "src/view/music.h"
 
 class HowToPlayWindow : public QMainWindow
 {
@@ -34,8 +33,6 @@ private:
     QWidget* frameTextWithImage(const QString &text, const QString &imagePath);
     void paintEvent(QPaintEvent *event);
     QLabel* framing();
-    Music *m_music;
-
 };
 
 #endif // HOWTOPLAYWINDOW_H

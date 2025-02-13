@@ -19,6 +19,14 @@ int main(int argc, char *argv[])
         QApplication::setFont(font);
     }
 
+
+
     MainController mainController;
+    QTimer::singleShot(1000, []() {
+        QWidget *mainWin = QApplication::activeWindow();
+        if (mainWin) {
+            qDebug() << "Active window size after startup: " << mainWin->size();
+        }
+    });
     return a.exec();
 }

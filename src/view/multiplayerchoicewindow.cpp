@@ -1,7 +1,7 @@
 #include "src/view/multiplayerchoicewindow.h"
 
 MultiplayerChoiceWindow::MultiplayerChoiceWindow(QWidget *parent)
-    : QMainWindow{parent},m_music(new Music())
+    : QMainWindow{parent}
 {
     setupUi();
     connectSignals();
@@ -11,15 +11,9 @@ MultiplayerChoiceWindow::MultiplayerChoiceWindow(QWidget *parent)
 MultiplayerChoiceWindow::~MultiplayerChoiceWindow() {}
 
 void MultiplayerChoiceWindow::connectSignals() {
-    connect(m_mainMenuButton, &QPushButton::clicked, [this](){
-        m_music->playSoundEffect("click");
-        emit onMainMenuClicked();});
-    connect(m_alliesButton, &QPushButton::clicked, [this](){
-        m_music->playSoundEffect("click");
-        emit onAlliesClicked();});
-    connect(m_enemiesButton, &QPushButton::clicked, [this](){
-        m_music->playSoundEffect("click");
-        emit onEnemiesClicked();});
+    connect(m_mainMenuButton, &QPushButton::clicked, this, &MultiplayerChoiceWindow::onMainMenuClicked);
+    connect(m_alliesButton, &QPushButton::clicked, this, &MultiplayerChoiceWindow::onAlliesClicked);
+    connect(m_enemiesButton, &QPushButton::clicked, this, &MultiplayerChoiceWindow::onEnemiesClicked);
 }
 
 void MultiplayerChoiceWindow::setupUi() {

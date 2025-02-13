@@ -1,5 +1,4 @@
 QT       += core gui
-QT       += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,7 +17,7 @@ SOURCES += \
     src/delegate/sologamecontroller.cpp \
     src/delegate/windowscontroller.cpp \
     src/model/bubble.cpp \
-    src/model/canonmodel.cpp \
+    src/model/cannonmodel.cpp \
     src/model/containermodel.cpp \
     src/model/gridmodel.cpp \
     src/model/scoremodel.cpp \
@@ -31,7 +30,7 @@ SOURCES += \
     src/view/howtoplaywindow.cpp \
     src/view/mainmenuwindow.cpp \
     src/view/multiplayerchoicewindow.cpp \
-    src/view/music.cpp \
+    src/view/pausewindow.cpp \
     src/view/scorewidget.cpp \
     src/view/sologamewindow.cpp
 
@@ -43,7 +42,7 @@ HEADERS += \
     src/delegate/sologamecontroller.h \
     src/delegate/windowscontroller.h \
     src/model/bubble.h \
-    src/model/canonmodel.h \
+    src/model/cannonmodel.h \
     src/model/containermodel.h \
     src/model/gridmodel.h \
     src/model/scoremodel.h \
@@ -56,7 +55,7 @@ HEADERS += \
     src/view/howtoplaywindow.h \
     src/view/mainmenuwindow.h \
     src/view/multiplayerchoicewindow.h \
-    src/view/music.h \
+    src/view/pausewindow.h \
     src/view/scorewidget.h \
     src/view/sologamewindow.h
 
@@ -74,3 +73,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     src/resources/resources.qrc
+
+FORMS += \
+    src/view/pausewindow.ui

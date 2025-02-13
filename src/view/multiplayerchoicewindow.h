@@ -8,8 +8,6 @@
 #include <QApplication>
 #include <QPainter>
 
-#include "src/view/music.h"
-
 class MultiplayerChoiceWindow : public QMainWindow
 {
     Q_OBJECT
@@ -28,7 +26,6 @@ private:
     void setupUi();
     void connectSignals();
     void paintEvent(QPaintEvent *event);
-    Music *m_music;
 };
 
 #endif // MULTIPLAYERCHOICEWINDOW_H

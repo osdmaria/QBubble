@@ -1,16 +1,14 @@
 #include "src/view/sologamewindow.h"
 
 SoloGameWindow::SoloGameWindow(QWidget *parent)
-    : QMainWindow{parent}, m_music(new Music())
+    : QMainWindow{parent}
 {
     m_scoreWidget = new ScoreWidget();
     m_gridModel = new GridModel(10,15);
-    m_canonModel = new CanonModel();
     m_gridScene = new GridScene(m_gridModel, 20, 10,15, 0, 10, this );
     m_containerWidget = new ContainerWidget();
     setupUi();
     connectSignals();
-    connect(m_canonModel, &CanonModel::BubbleShoot, m_gridModel, &GridModel::addBubbleInCanonPosition);
     setFocusPolicy(Qt::StrongFocus);
     setFocus();
 }
@@ -33,12 +31,10 @@ void SoloGameWindow::setupUi() {
     mainLayout->addWidget(m_gridScene);
 
     // Center CanonWidget
-    m_cannonWidget = new CanonWidget(this, m_canonModel,25, 100, 100); // Add cannon
-    qDebug()<<m_cannonWidget;
+    m_cannonWidget = new CanonWidget(this, 25, 100, 100); // Add cannon
     m_cannonWidget->focusWidget();
     m_cannonWidget->setParent(this);
     mainLayout->addWidget(m_cannonWidget, 0, Qt::AlignHCenter); // Center the canon widget horizontally
-    m_cannonWidget->show(); // Ensure it's visible
 
     // Add container widget
     mainLayout->addWidget(m_containerWidget);
@@ -57,11 +53,11 @@ void SoloGameWindow::setupUi() {
 
     // Button styles
     QString buttonStyle = "QPushButton {"
-                          "background-color: green;"
-                          "color: white;"
+                          "background-color: #31B472;"
+                          "color: #EEFF6A;"
                           "border-radius: 10px;"
                           "font-size: 25px;"
-                          "border: 2px solid black;"
+                          "border: 2px solid #EEFF6A;"
                           "}"
                           "QPushButton:hover {"
                           "background-color: #aade90;"
@@ -77,7 +73,7 @@ void SoloGameWindow::setupUi() {
 
     // Position buttons and widgets on main window
     m_containerWidget->setParent(this);
-    m_containerWidget->move(0,560);
+    m_containerWidget->move(0,60);
 
     m_scoreWidget->setParent(this);
     m_scoreWidget->move(450, 50);
@@ -96,11 +92,26 @@ void SoloGameWindow::keyPressEvent(QKeyEvent *event) {
     }
 }
 void SoloGameWindow::connectSignals() {
-    connect(m_retour, &QPushButton::clicked, [this]{
-        m_music->playSoundEffect("click");
-        emit onRetourClicked();});
-    connect(m_pause, &QPushButton::clicked, [this]{
-        m_music->playSoundEffect("click");
-        emit onPauseClicked();});
+    connect(m_retour, &QPushButton::clicked, this, &SoloGameWindow::onRetourClicked);
+    connect(m_pause, &QPushButton::clicked, this, &SoloGameWindow::onPauseClicked);
+    //connect(ui->pauseButton, &QPushButton::clicked, this, &SoloGameWindow::onPauseClicked);
 
+}
+
+void SoloGameWindow::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    QPixmap background(":/images/empty_background.png");
+
+    // Vérifier si l'image est correctement chargée
+    if (!background.isNull()) {
+        // Redimensionner l'image avec une transformation fluide
+        QPixmap scaledBackground = background.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+        // Dessiner l'image redimensionnée
+        painter.drawPixmap(0, 0, scaledBackground);
+    } else {
+        qDebug() << "Erreur : Impossible de charger l'image de fond.";
+    }
+
+    QMainWindow::paintEvent(event);
 }

@@ -1,5 +1,4 @@
 #include "windowscontroller.h"
-#include <QFile>
 
 WindowsController::WindowsController(QObject *parent) :QObject(parent)
 {
@@ -9,7 +8,7 @@ WindowsController::WindowsController(QObject *parent) :QObject(parent)
     m_soloGameView = new SoloGameWindow();
     m_alliesGameView = new AlliesGameWindow();
     m_enemiesGameView = new EnemiesGameWindow();
-    music = new Music();
+
 
     //Menu principal
     connectSignalsMainMenu();
@@ -44,7 +43,6 @@ void WindowsController::connectSignalsMainMenu(){
 //LAUNCH
 void WindowsController::launch(){
     m_mainMenuView->show();
-
 }
 
 //HOW TO PLAY -> Connect signals
@@ -106,10 +104,6 @@ void WindowsController::openEnemiesGameWindow() {
     emit enemiesLauched();
 }
 
-void WindowsController::startMusic() {
-    music->playBackgroundMusic( 0.05);
-}
-
 
 
 void WindowsController::quit() {
@@ -121,8 +115,8 @@ void WindowsController::setFixedSize(QMainWindow *w){
     QScreen *screen = QGuiApplication::primaryScreen();
     QRect screenGeometry = screen->geometry();
 
-    int width = screenGeometry.width() ;
-    int height = screenGeometry.height();
+    int width = screenGeometry.width() * 0.8;
+    int height = screenGeometry.height() * 0.8;
 
-    w->setFixedSize(1226,624);
+    w->setFixedSize(width,height);
 }

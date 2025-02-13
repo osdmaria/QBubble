@@ -46,7 +46,6 @@ public:
     void handlePossiblePoppableBubbles(int row, int col);
 
     void addRandomBubbleInAvaibleSpace();
-    void addBubbleInCanonPosition(int angle);
 
     void setOffset(int row, bool offset);
     bool getOffset(int row) const;
@@ -58,7 +57,6 @@ signals:
     void rowAdded();
     void gameOver();
     void offsetUpdated(int row, bool offset);
-    void BubbleShoot(int angle);
 
 public slots:
     void addNewLineOfBubblesRequest(); // Slot for adding a row
