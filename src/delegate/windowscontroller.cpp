@@ -107,7 +107,7 @@ void WindowsController::openEnemiesGameWindow() {
 }
 
 void WindowsController::startMusic() {
-    music->playBackgroundMusic( 0.05);
+    music->playBackgroundMusic( 0.5);
 }
 
 
@@ -124,5 +124,5 @@ void WindowsController::setFixedSize(QMainWindow *w){
     int width = screenGeometry.width() ;
     int height = screenGeometry.height();
 
-    w->setFixedSize(1226,624);
+    w->setFixedSize(1200,647);
 }
