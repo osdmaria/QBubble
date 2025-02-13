@@ -12,5 +12,9 @@
         <file>images/keyboard_play.png</file>
         <file>images/spacebar.png</file>
         <file>images/window_icon.png</file>
+        <file>Music/BubbleMusicBG.mp3</file>
+        <file>Music/pick.mp3</file>
+        <file>Music/pickbutton.mp3</file>
+        <file>Music/bubbleExplosion.mp3</file>
     </qresource>
 </RCC>

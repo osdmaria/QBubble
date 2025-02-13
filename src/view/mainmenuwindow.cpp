@@ -3,14 +3,16 @@
 #include <QPixmap>
 
 MainMenuWindow::MainMenuWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : QMainWindow(parent),m_music(new Music())
 {
     setupUi();
     connectSignals();
     setFont(QApplication::font());
 }
 
-MainMenuWindow::~MainMenuWindow() {}
+MainMenuWindow::~MainMenuWindow() {
+    delete m_music;
+}
 
 void MainMenuWindow::setupUi() {
 
@@ -86,10 +88,25 @@ void MainMenuWindow::setupUi() {
 }
 
 void MainMenuWindow::connectSignals() {
-    connect(m_soloButton, &QPushButton::clicked, this, &MainMenuWindow::onSoloClicked);
-    connect(m_multiplayerButton, &QPushButton::clicked, this, &MainMenuWindow::onMultiplayerClicked);
-    connect(m_howToPlayButton, &QPushButton::clicked, this, &MainMenuWindow::onHowToPlayClicked);
-    connect(m_quitButton, &QPushButton::clicked, this, &MainMenuWindow::onQuitClicked);
+    connect(m_soloButton, &QPushButton::clicked, [this]() {
+        m_music->playSoundEffect("click");
+        emit onSoloClicked();
+    });
+
+    connect(m_multiplayerButton, &QPushButton::clicked, [this]() {
+        m_music->playSoundEffect("click");
+        emit onMultiplayerClicked();
+    });
+
+    connect(m_howToPlayButton, &QPushButton::clicked, [this]() {
+        m_music->playSoundEffect("click");
+        emit onHowToPlayClicked();
+    });
+
+    connect(m_quitButton, &QPushButton::clicked, [this]() {
+        m_music->playSoundEffect("click");
+        emit onQuitClicked();
+    });
 }
 
 void MainMenuWindow::paintEvent(QPaintEvent *event) {

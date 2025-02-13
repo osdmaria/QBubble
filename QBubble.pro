@@ -1,4 +1,5 @@
 QT       += core gui
+QT       += multimedia
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -30,6 +31,7 @@ SOURCES += \
     src/view/howtoplaywindow.cpp \
     src/view/mainmenuwindow.cpp \
     src/view/multiplayerchoicewindow.cpp \
+    src/view/music.cpp \
     src/view/scorewidget.cpp \
     src/view/sologamewindow.cpp
 
@@ -54,6 +56,7 @@ HEADERS += \
     src/view/howtoplaywindow.h \
     src/view/mainmenuwindow.h \
     src/view/multiplayerchoicewindow.h \
+    src/view/music.h \
     src/view/scorewidget.h \
     src/view/sologamewindow.h
 

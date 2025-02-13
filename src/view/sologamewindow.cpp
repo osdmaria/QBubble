@@ -1,7 +1,7 @@
 #include "src/view/sologamewindow.h"
 
 SoloGameWindow::SoloGameWindow(QWidget *parent)
-    : QMainWindow{parent}
+    : QMainWindow{parent}, m_music(new Music())
 {
     m_scoreWidget = new ScoreWidget();
     m_gridModel = new GridModel(10,15);
@@ -92,7 +92,11 @@ void SoloGameWindow::keyPressEvent(QKeyEvent *event) {
     }
 }
 void SoloGameWindow::connectSignals() {
-    connect(m_retour, &QPushButton::clicked, this, &SoloGameWindow::onRetourClicked);
-    connect(m_pause, &QPushButton::clicked, this, &SoloGameWindow::onPauseClicked);
+    connect(m_retour, &QPushButton::clicked, [this]{
+        m_music->playSoundEffect("click");
+        emit onRetourClicked();});
+    connect(m_pause, &QPushButton::clicked, [this]{
+        m_music->playSoundEffect("click");
+        emit onPauseClicked();});
 
 }

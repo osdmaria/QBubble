@@ -15,6 +15,7 @@
 #include "src/view/bubbleview.h"
 #include "src/view/canonwidget.h"
 #include "src/view/containerwidget.h"
+#include "src/view/music.h"
 
 class SoloGameWindow : public QMainWindow
 {
@@ -43,6 +44,7 @@ private:
     GridScene *m_gridScene;
     ContainerWidget *m_containerWidget;
     CanonWidget *m_cannonWidget;
+    Music *m_music;
     void connectSignals();
 };
 

@@ -10,6 +10,8 @@
 #include <QPixmap>
 #include <QLabel>
 
+#include "Music.h"
+
 class MainMenuWindow : public QMainWindow
 {
     Q_OBJECT
@@ -34,5 +36,6 @@ private:
     void connectSignals();
     void paintEvent(QPaintEvent *event);
     QLabel* createTitle();
+    Music *m_music;
 };
 #endif // MAINMENUWINDOW_H
