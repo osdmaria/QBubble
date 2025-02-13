@@ -6,8 +6,8 @@ AlliesGameWindow::AlliesGameWindow(QWidget *parent)
     m_scoreWidget = new ScoreWidget();
     m_gridModel = new GridModel(10,15);
     m_gridScene = new GridScene(m_gridModel, 20, 10,15, 0, 10, this );
-    m_cannonWidget = new CannonWidget();
-    m_cannonWidget2 = new CannonWidget();
+    //m_cannonWidget = new CannonWidget();
+    //m_cannonWidget2 = new CannonWidget();
     m_containerWidget = new ContainerWidget();
     setupUi();
 }
@@ -27,15 +27,15 @@ void AlliesGameWindow::setupUi() {
     topLayout->setContentsMargins(0, 0, 0, 0);
     topLayout->setSpacing(0);
 
-    cannonLayout->addWidget(m_cannonWidget);
-    cannonLayout->addWidget(m_cannonWidget2);
+    //cannonLayout->addWidget(m_cannonWidget);
+    //cannonLayout->addWidget(m_cannonWidget2);
     cannonLayout->setAlignment(Qt::AlignCenter);
     cannonLayout->setSpacing(50);
 
     mainLayout->addLayout(topLayout);
     mainLayout->addWidget(m_gridScene);
-    mainLayout->addWidget(m_cannonWidget);
-    mainLayout->addWidget(m_cannonWidget2);
+    //mainLayout->addWidget(m_cannonWidget);
+    //mainLayout->addWidget(m_cannonWidget2);
     mainLayout->addWidget(m_containerWidget);
     mainLayout->setAlignment(Qt::AlignCenter);
 

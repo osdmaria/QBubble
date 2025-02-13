@@ -2,7 +2,6 @@
 #define GRIDSCENE_H
 
 #include <QGraphicsView>
-#include "src/view/gridscene.h"
 #include "src/model/gridmodel.h"
 #include "src/view/bubbleview.h"
 

@@ -13,7 +13,7 @@
 #include "src/view/scorewidget.h"
 #include "src/view/gridscene.h"
 #include "src/view/bubbleview.h"
-#include "src/view/cannonwidget.h"
+#include "src/view/canonwidget.h"
 #include "src/view/containerwidget.h"
 
 class SoloGameWindow : public QMainWindow
@@ -24,13 +24,14 @@ public:
     ~SoloGameWindow();
     ScoreWidget *scoreWidget(){return m_scoreWidget;}
     GridScene *gridScene(){return m_gridScene;}
-    CannonWidget *cannonWidget(){return m_cannonWidget;}
+    CanonWidget *CannonWidget(){return m_cannonWidget;}
     ContainerWidget *containerWidget(){return m_containerWidget;}
     QPushButton *m_retour;
     QPushButton *m_pause;
 
 private:
     void setupUi();
+    void keyPressEvent(QKeyEvent *event);
 
 signals:
     void onRetourClicked();
@@ -40,8 +41,8 @@ private:
     ScoreWidget *m_scoreWidget;
     GridModel *m_gridModel;
     GridScene *m_gridScene;
-    CannonWidget *m_cannonWidget;
     ContainerWidget *m_containerWidget;
+    CanonWidget *m_cannonWidget;
     void connectSignals();
 };
 

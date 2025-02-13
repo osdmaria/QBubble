@@ -23,7 +23,7 @@ SOURCES += \
     src/model/scoremodel.cpp \
     src/view/alliesgamewindow.cpp \
     src/view/bubbleview.cpp \
-    src/view/cannonwidget.cpp \
+    src/view/canonwidget.cpp \
     src/view/containerwidget.cpp \
     src/view/enemiesgamewindow.cpp \
     src/view/gridscene.cpp \
@@ -47,7 +47,7 @@ HEADERS += \
     src/model/scoremodel.h \
     src/view/alliesgamewindow.h \
     src/view/bubbleview.h \
-    src/view/cannonwidget.h \
+    src/view/canonwidget.h \
     src/view/containerwidget.h \
     src/view/enemiesgamewindow.h \
     src/view/gridscene.h \

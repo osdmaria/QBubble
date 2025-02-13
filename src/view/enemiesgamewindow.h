@@ -12,7 +12,7 @@
 #include "src/view/scorewidget.h"
 #include "src/view/gridscene.h"
 #include "src/view/bubbleview.h"
-#include "src/view/cannonwidget.h"
+//#include "src/view/cannonwidget.h"
 #include "src/view/containerwidget.h"
 
 class EnemiesGameWindow : public QMainWindow
@@ -24,8 +24,8 @@ public:
     ScoreWidget *scoreWidget(){return m_scoreWidget;}
     ScoreWidget *scoreWidget2(){return m_scoreWidget2;}
     GridScene *gridScene(){return m_gridScene;}
-    CannonWidget *cannonWidget(){return m_cannonWidget;}
-    CannonWidget *cannonWidget2(){return m_cannonWidget2;}
+    //CannonWidget *cannonWidget(){return m_cannonWidget;}
+    //CannonWidget *cannonWidget2(){return m_cannonWidget2;}
     ContainerWidget *containerWidget(){return m_containerWidget;}
 
 private:
@@ -39,8 +39,8 @@ private:
     ScoreWidget *m_scoreWidget2;
     GridModel *m_gridModel;
     GridScene *m_gridScene;
-    CannonWidget *m_cannonWidget;
-    CannonWidget *m_cannonWidget2;
+    //CannonWidget *m_cannonWidget;
+    //CannonWidget *m_cannonWidget2;
     QHBoxLayout *cannonLayout;
     ContainerWidget *m_containerWidget;
 };

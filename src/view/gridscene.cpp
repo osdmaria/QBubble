@@ -17,14 +17,14 @@ GridScene::GridScene(GridModel *model, int bubble_radius, int graphic_offset, in
     setupUi();
     connectToModel(model);
 
-    setFocusPolicy(Qt::StrongFocus);  // Ensure it can accept focus
-    setFocus();  // Set focus on GridModel
+    //setFocusPolicy(Qt::StrongFocus);
+    //setFocus();
 }
 
 void GridScene::setupUi() {
-
     QGraphicsScene *scene = new QGraphicsScene();
     scene->setBackgroundBrush(QBrush(QColor(173, 216, 230)));
+    setMouseTracking(true);
 
     setScene(scene);
 
@@ -32,13 +32,6 @@ void GridScene::setupUi() {
     setRenderHint(QPainter::TextAntialiasing);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    QScreen *screen = QGuiApplication::primaryScreen();
-    QRect screenGeometry = screen->geometry();
-
-    int width = screenGeometry.width() * 0.6;
-    int height = screenGeometry.height() * 0.5;
-
-    setFixedSize(600, 700);
 
 }
 
@@ -82,6 +75,7 @@ void GridScene::onBubblePopped(Bubble* bubble) {
 
 void GridScene::onRowAdded() {
     qDebug() << "New row added!";
+    qDebug() << "size of grid" << m_grid.size();
     redrawAllRows();
 }
 
@@ -135,8 +129,7 @@ void GridScene::redrawAllRows() {
     }
 }
 
-void GridScene::keyPressEvent(QKeyEvent *event)
-{
+void GridScene::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_A) {
         qDebug() << "Key A pressed! Adding a row...";
         emit addRowRequested(); // Call GridLogic to add a row
@@ -145,8 +138,7 @@ void GridScene::keyPressEvent(QKeyEvent *event)
         qDebug() << "Key B pressed! Adding a random Bubble at first row...";
         emit addRandomBubbleRequested();
     }
-    else
-    {
+    else {
         QGraphicsView::keyPressEvent(event); // Pass event to parent class
     }
 }
