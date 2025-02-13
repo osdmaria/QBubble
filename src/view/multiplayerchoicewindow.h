@@ -6,6 +6,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QApplication>
+#include <QPainter>
 
 class MultiplayerChoiceWindow : public QMainWindow
 {
@@ -24,6 +25,7 @@ signals:
 private:
     void setupUi();
     void connectSignals();
+    void paintEvent(QPaintEvent *event);
 };
 
 #endif // MULTIPLAYERCHOICEWINDOW_H

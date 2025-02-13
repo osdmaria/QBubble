@@ -1,4 +1,6 @@
 #include "src/view/mainmenuwindow.h"
+#include <QPainter>
+#include <QPixmap>
 
 MainMenuWindow::MainMenuWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -28,11 +30,11 @@ void MainMenuWindow::setupUi() {
 
     //Style des boutons
     QString buttonStyle = "QPushButton {"
-                          "background-color: green;"
-                          "color: white;"
+                          "background-color: #31B472;"
+                          "color: #EEFF6A;"
                           "border-radius: 15px;"
                           "font-size: 30px;"
-                          "border: 2px solid black;"
+                          "border: 2px solid #EEFF6A;"
                           "}"
                           "QPushButton:hover {"
                           "background-color: #aade90;"
@@ -49,21 +51,38 @@ void MainMenuWindow::setupUi() {
 
     //Alignement des bouttons dans le layout
     QVBoxLayout *layout = new QVBoxLayout();
-    layout->addStretch();
+    QLabel *Title = createTitle();
+    layout->addWidget(Title, 0, Qt::AlignHCenter);
+
+
+    layout->addSpacerItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
     layout->addWidget(m_soloButton);
     layout->addWidget(m_multiplayerButton);
     layout->addWidget(m_howToPlayButton);
     layout->addWidget(m_quitButton);
-    layout->addStretch();
-    layout->setSpacing(20);
-    layout->setAlignment(m_soloButton, Qt::AlignHCenter);
-    layout->setAlignment(m_multiplayerButton, Qt::AlignHCenter);
-    layout->setAlignment(m_howToPlayButton, Qt::AlignHCenter);
-    layout->setAlignment(m_quitButton, Qt::AlignHCenter);
+
+    layout->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed));
+    layout->setAlignment(Qt::AlignHCenter);
 
     QWidget *centralWidget = new QWidget(this);
     centralWidget->setLayout(layout);
     setCentralWidget(centralWidget);
+
+    // layout->addStretch();
+    // layout->addWidget(m_soloButton);
+    // layout->addWidget(m_multiplayerButton);
+    // layout->addWidget(m_howToPlayButton);
+    // layout->addWidget(m_quitButton);
+    // layout->addStretch();
+    // layout->setSpacing(20);
+    // layout->setAlignment(m_soloButton, Qt::AlignHCenter);
+    // layout->setAlignment(m_multiplayerButton, Qt::AlignHCenter);
+    // layout->setAlignment(m_howToPlayButton, Qt::AlignHCenter);
+    // layout->setAlignment(m_quitButton, Qt::AlignHCenter);
+
+    // QWidget *centralWidget = new QWidget(this);
+    // centralWidget->setLayout(layout);
+    // setCentralWidget(centralWidget);
 }
 
 void MainMenuWindow::connectSignals() {
@@ -72,5 +91,41 @@ void MainMenuWindow::connectSignals() {
     connect(m_howToPlayButton, &QPushButton::clicked, this, &MainMenuWindow::onHowToPlayClicked);
     connect(m_quitButton, &QPushButton::clicked, this, &MainMenuWindow::onQuitClicked);
 }
+
+void MainMenuWindow::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    QPixmap background(":/images/empty_background.png");
+
+    // Vérifier si l'image est correctement chargée
+    if (!background.isNull()) {
+        // Redimensionner l'image avec une transformation fluide
+        QPixmap scaledBackground = background.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+        // Dessiner l'image redimensionnée
+        painter.drawPixmap(0, 0, scaledBackground);
+    } else {
+        qDebug() << "Erreur : Impossible de charger l'image de fond.";
+    }
+
+    QMainWindow::paintEvent(event);
+}
+
+QLabel* MainMenuWindow::createTitle() {
+
+    QLabel *title = new QLabel(this);
+    title->setText("\nMKOBAM's\nQBubble++\n");
+    int width = this->width() *0.8;
+    int height = this->height() * 0.8;
+    title->setFixedSize(width,height);
+
+    QString titleStyle = "QLabel {"
+                         "color: #EEFF6A;"
+                         "font-size: 80px;"
+                         "}";
+    title->setStyleSheet(titleStyle);
+
+    return title;
+}
+
 
 

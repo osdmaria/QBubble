@@ -8,5 +8,9 @@
         <file>images/bubble_lightblue.png</file>
         <file>images/canon3.png</file>
         <file>images/frame.png</file>
+        <file>images/empty_background.png</file>
+        <file>images/keyboard_play.png</file>
+        <file>images/spacebar.png</file>
+        <file>images/window_icon.png</file>
     </qresource>
 </RCC>

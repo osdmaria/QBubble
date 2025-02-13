@@ -1,10 +1,13 @@
 #include "src/delegate/maincontroller.h"
 #include <QFontDatabase>
 #include <QApplication>
+#include <QIcon>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+    //icone du jeu
+    a.setWindowIcon(QIcon("://images/window_icon.png"));
 
     //Mise en place de la police
     int fontId = QFontDatabase::addApplicationFont(":/fonts/Bubblegum.otf");

@@ -7,6 +7,8 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QApplication>
+#include <QPixmap>
+#include <QLabel>
 
 class MainMenuWindow : public QMainWindow
 {
@@ -30,5 +32,7 @@ signals:
 private:
     void setupUi();
     void connectSignals();
+    void paintEvent(QPaintEvent *event);
+    QLabel* createTitle();
 };
 #endif // MAINMENUWINDOW_H

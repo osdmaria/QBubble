@@ -8,6 +8,8 @@
 #include <QLabel>
 #include <QApplication>
 #include <QScrollArea>
+#include <QPainter>
+#include <QMap>
 
 
 class HowToPlayWindow : public QMainWindow
@@ -28,6 +30,9 @@ private:
     QLabel* createTitleHowToPlayLabel();
     QLabel* createGameRulesLabel();
     QLabel* createGameControlsLabel();
+    QWidget* frameTextWithImage(const QString &text, const QString &imagePath);
+    void paintEvent(QPaintEvent *event);
+    QLabel* framing();
 };
 
 #endif // HOWTOPLAYWINDOW_H

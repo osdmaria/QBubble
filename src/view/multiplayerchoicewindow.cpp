@@ -31,11 +31,11 @@ void MultiplayerChoiceWindow::setupUi() {
 
     //Style des boutons
     QString buttonStyle = "QPushButton {"
-                          "background-color: green;"
-                          "color: white;"
+                          "background-color: #31B472;"
+                          "color: #EEFF6A;"
                           "border-radius: 15px;"
                           "font-size: 30px;"
-                          "border: 2px solid black;"
+                          "border: 2px solid #EEFF6A;"
                           "}"
                           "QPushButton:hover {"
                           "background-color: #aade90;"
@@ -63,4 +63,22 @@ void MultiplayerChoiceWindow::setupUi() {
     QWidget *centralWidget = new QWidget(this);
     centralWidget->setLayout(layout);
     setCentralWidget(centralWidget);
+}
+
+void MultiplayerChoiceWindow::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    QPixmap background(":/images/empty_background.png");
+
+    // Vérifier si l'image est correctement chargée
+    if (!background.isNull()) {
+        // Redimensionner l'image avec une transformation fluide
+        QPixmap scaledBackground = background.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+        // Dessiner l'image redimensionnée
+        painter.drawPixmap(0, 0, scaledBackground);
+    } else {
+        qDebug() << "Erreur : Impossible de charger l'image de fond.";
+    }
+
+    QMainWindow::paintEvent(event);
 }

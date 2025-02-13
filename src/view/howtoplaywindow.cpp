@@ -18,13 +18,13 @@ void HowToPlayWindow::setupUi() {
     int buttonHeight = this->height() * 0.2;
     m_mainMenuButton->setFixedSize(buttonWidth, buttonHeight);
 
-    //Style des boutons
+    // Style the button
     QString buttonStyle = "QPushButton {"
-                          "background-color: green;"
-                          "color: white;"
+                          "background-color: #31B472;"
+                          "color: #EEFF6A;"
                           "border-radius: 15px;"
                           "font-size: 30px;"
-                          "border: 2px solid black;"
+                          "border: 2px solid #EEFF6A;"
                           "}"
                           "QPushButton:hover {"
                           "background-color: #aade90;"
@@ -34,39 +34,65 @@ void HowToPlayWindow::setupUi() {
                           "}";
 
     m_mainMenuButton->setStyleSheet(buttonStyle);
+    // Create the frame with a border
+    QLabel *frame = framing();
+
+    // Create instruction texts with images
+    QWidget *text1 = frameTextWithImage("1 - Utiliser les touches pour faire bouger le cannon.", "://images/keyboard_play.png");
+    QWidget *text2 = frameTextWithImage("2 - Cliquer la touche espace pour tirer.", "://images/spacebar.png");
+    QWidget *text3 = frameTextWithImage("3 - Éviter que les bulles atteignent le bas.", "");
 
     QVBoxLayout *layout = new QVBoxLayout();
     layout->addStretch();
 
-    //Title
-    QLabel *titleHowToPlayLabel = createTitleHowToPlayLabel();
-    layout->addWidget(titleHowToPlayLabel);
-    titleHowToPlayLabel->setAlignment(Qt::AlignHCenter);
-    layout->setAlignment(titleHowToPlayLabel, Qt::AlignHCenter);
+    // Layout for the frame to organize texts
+    QVBoxLayout *frameLayout = new QVBoxLayout(frame);
+    frameLayout->setAlignment(Qt::AlignCenter);
+    frameLayout->addWidget(text1);
+    frameLayout->addWidget(text2);
+    frameLayout->addWidget(text3);
+    frame->setLayout(frameLayout);
 
-    //Rules
-    QLabel *gameRulesLabel = createGameRulesLabel();
-    layout->addWidget(gameRulesLabel);
-    layout->setAlignment(gameRulesLabel, Qt::AlignHCenter);
+    // Main layout
+    QVBoxLayout *mainLayout = new QVBoxLayout();
+    mainLayout->addWidget(frame, 1); // The frame takes available space
+    mainLayout->addStretch();
+    mainLayout->addWidget(m_mainMenuButton);
+    mainLayout->setAlignment(m_mainMenuButton, Qt::AlignHCenter | Qt::AlignBottom);
 
-    //Controls
-    QLabel *gameControlsLabel = createGameControlsLabel();
-    layout->addWidget(gameControlsLabel);
-    layout->setAlignment(gameControlsLabel, Qt::AlignHCenter);
+    QWidget *centralWidget = new QWidget(this);
+    centralWidget->setLayout(mainLayout);
+    setCentralWidget(centralWidget);
 
-    //Back to menu
-    layout->addWidget(m_mainMenuButton);
-    layout->setAlignment(m_mainMenuButton, Qt::AlignHCenter);
-    layout->addStretch();
+    // //Title
+    // QLabel *titleHowToPlayLabel = createTitleHowToPlayLabel();
+    // layout->addWidget(titleHowToPlayLabel);
+    // titleHowToPlayLabel->setAlignment(Qt::AlignHCenter);
+    // layout->setAlignment(titleHowToPlayLabel, Qt::AlignHCenter);
 
-    //Scroll
-    QWidget *scrollWidget = new QWidget();
-    scrollWidget->setLayout(layout);
-    QScrollArea *scrollArea = new QScrollArea(this);
-    scrollArea->setWidgetResizable(true);
-    scrollArea->setWidget(scrollWidget);
+    // //Rules
+    // QLabel *gameRulesLabel = createGameRulesLabel();
+    // layout->addWidget(gameRulesLabel);
+    // layout->setAlignment(gameRulesLabel, Qt::AlignHCenter);
 
-    setCentralWidget(scrollArea);
+    // //Controls
+    // QLabel *gameControlsLabel = createGameControlsLabel();
+    // layout->addWidget(gameControlsLabel);
+    // layout->setAlignment(gameControlsLabel, Qt::AlignHCenter);
+
+    // //Back to menu
+    // layout->addWidget(m_mainMenuButton);
+    // layout->setAlignment(m_mainMenuButton, Qt::AlignHCenter);
+    // layout->addStretch();
+
+    // //Scroll
+    // QWidget *scrollWidget = new QWidget();
+    // scrollWidget->setLayout(layout);
+    // QScrollArea *scrollArea = new QScrollArea(this);
+    // scrollArea->setWidgetResizable(true);
+    // scrollArea->setWidget(scrollWidget);
+
+    // setCentralWidget(scrollArea);
 
 }
 
@@ -147,5 +173,71 @@ QLabel* HowToPlayWindow::createGameControlsLabel() {
     return gameControlsLabel;
 }
 
+void HowToPlayWindow::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    QPixmap background(":/images/empty_background.png");
 
+    // Vérifier si l'image est correctement chargée
+    if (!background.isNull()) {
+        // Redimensionner l'image avec une transformation fluide
+        QPixmap scaledBackground = background.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+        // Dessiner l'image redimensionnée
+        painter.drawPixmap(0, 0, scaledBackground);
+    } else {
+        qDebug() << "Erreur : Impossible de charger l'image de fond.";
+    }
+
+    QMainWindow::paintEvent(event);
+}
+
+QLabel* HowToPlayWindow::framing() {
+    QLabel *Frame = new QLabel(this);
+    Frame->setObjectName("frameLabel"); // Set a unique object name
+    Frame->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    Frame->setStyleSheet("#frameLabel {"
+                         "border: 5px solid black;" // Apply only to this QLabel
+                         "border-radius: 15px;" // Rounded corners
+                         "background-color: rgba(0, 0, 0, 150);" // Semi-transparent background
+                         "padding: 10px;" // Space between text and border
+                         "}");
+
+    return Frame;
+}
+
+
+
+
+QWidget* HowToPlayWindow::frameTextWithImage(const QString &text, const QString &imagePath) {
+    // Create a container widget for the text and image
+    QWidget *container = new QWidget(this);
+    QHBoxLayout *layout = new QHBoxLayout(container);
+
+    // Create the text label
+    QLabel *textLabel = new QLabel(text, container);
+    textLabel->setAlignment(Qt::AlignLeft); // Align text to the left
+    QString titleStyle = "QLabel {"
+                         "color: #EEFF6A;"
+                         "font-size: 30px;"
+                         "font-weight: bold;"
+                         "background: transparent;"
+                         "}";
+    textLabel->setStyleSheet(titleStyle);
+
+    // Create the image label
+    QLabel *imageLabel = new QLabel(container);
+    QPixmap image(imagePath);
+    imageLabel->setPixmap(image);
+    imageLabel->setScaledContents(true);
+    imageLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed); // Set fixed size for image
+
+    // Add the text and image to the layout
+    layout->addWidget(textLabel);
+    layout->addWidget(imageLabel);
+
+    // Adjust the layout spacing
+    layout->setSpacing(10); // Optional: Adjust the spacing between the text and the image
+
+    return container;
+}
 
