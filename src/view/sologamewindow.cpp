@@ -53,15 +53,15 @@ void SoloGameWindow::setupUi() {
 
     // Button sizes
     m_retour->setFixedSize(this->height() * 0.07, this->height() * 0.08);
-    m_pause ->setFixedSize(this->width() *0.15, this->height() * 0.08);
+    m_pause ->setFixedSize(this->width() *0.17, this->height() * 0.08);
 
-    // Button styles
+    //Style des boutons
     QString buttonStyle = "QPushButton {"
-                          "background-color: green;"
-                          "color: white;"
-                          "border-radius: 10px;"
-                          "font-size: 25px;"
-                          "border: 2px solid black;"
+                          "background-color: #31B472;"
+                          "color: #EEFF6A;"
+                          "border-radius: 15px;"
+                          "font-size: 30px;"
+                          "border: 2px solid #EEFF6A;"
                           "}"
                           "QPushButton:hover {"
                           "background-color: #aade90;"
@@ -80,7 +80,7 @@ void SoloGameWindow::setupUi() {
     m_containerWidget->move(0,560);
 
     m_scoreWidget->setParent(this);
-    m_scoreWidget->move(450, 50);
+    m_scoreWidget->move(900, 50);
 
     m_retour->setParent(this);
     m_retour->move(50,50);
@@ -103,4 +103,22 @@ void SoloGameWindow::connectSignals() {
         m_music->playSoundEffect("click");
         emit onPauseClicked();});
 
+}
+
+void SoloGameWindow::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    QPixmap background("://images/empty_background.png");
+
+    // Vérifier si l'image est correctement chargée
+    if (!background.isNull()) {
+        // Redimensionner l'image avec une transformation fluide
+        QPixmap scaledBackground = background.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+        // Dessiner l'image redimensionnée
+        painter.drawPixmap(0, 0, scaledBackground);
+    } else {
+        qDebug() << "Erreur : Impossible de charger l'image de fond.";
+    }
+
+    QMainWindow::paintEvent(event);
 }

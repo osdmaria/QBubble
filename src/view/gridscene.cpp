@@ -23,15 +23,14 @@ GridScene::GridScene(GridModel *model, int bubble_radius, int graphic_offset, in
 
 void GridScene::setupUi() {
     QGraphicsScene *scene = new QGraphicsScene();
-    scene->setBackgroundBrush(QBrush(QColor(173, 216, 230)));
-
+    QColor semiTransparentColor(0, 0, 0, 128); // Màu xanh nhạt với độ trong suốt 50%
+    scene->setBackgroundBrush(QBrush(semiTransparentColor));
     setScene(scene);
 
     setRenderHint(QPainter::Antialiasing);
     setRenderHint(QPainter::TextAntialiasing);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
-
+    setStyleSheet("background: transparent;");
 }
 
 

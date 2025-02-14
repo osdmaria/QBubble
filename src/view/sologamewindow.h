@@ -47,6 +47,7 @@ private:
     CanonWidget *m_cannonWidget;
     Music *m_music;
     void connectSignals();
+    void paintEvent(QPaintEvent *event);
 };
 
 #endif // SOLOGAMEWINDOW_H
