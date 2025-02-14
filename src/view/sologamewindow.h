@@ -21,11 +21,11 @@ class SoloGameWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit SoloGameWindow(QWidget *parent = nullptr);
+    explicit SoloGameWindow(int widthSize, int heightSize, QWidget *parent = nullptr);
     ~SoloGameWindow();
     ScoreWidget *scoreWidget(){return m_scoreWidget;}
     GridScene *gridScene(){return m_gridScene;}
-    CanonWidget *CannonWidget(){return m_cannonWidget;}
+    CanonWidget *canonWidget(){return m_canonWidget;}
     ContainerWidget *containerWidget(){return m_containerWidget;}
     QPushButton *m_retour;
     QPushButton *m_pause;
@@ -40,14 +40,16 @@ signals:
 
 private:
     ScoreWidget *m_scoreWidget;
-    GridModel *m_gridModel;
-    CanonModel *m_canonModel;
     GridScene *m_gridScene;
+    CanonWidget *m_canonWidget;
     ContainerWidget *m_containerWidget;
-    CanonWidget *m_cannonWidget;
     Music *m_music;
     void connectSignals();
+
     void paintEvent(QPaintEvent *event);
+
+    CanonModel *m_canonModel;
+
 };
 
 #endif // SOLOGAMEWINDOW_H

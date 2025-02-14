@@ -7,7 +7,7 @@
 #include "src/view/sologamewindow.h"
 #include "src/view/alliesgamewindow.h"
 #include "src/view/enemiesgamewindow.h"
-#include "src/view/Music.h"
+#include "src/view/music.h"
 
 #include <QObject>
 #include <QPushButton>
@@ -19,17 +19,18 @@
 class WindowsController : public QObject
 {
     Q_OBJECT
+    int m_fixedWidth = 1125, m_fixedHeight = 642;
 public:
     WindowsController(QObject *parent=nullptr);
-
-    void setFixedSize(QMainWindow *w);
     void launch();
+    void setFixedSize(int width, int height, QMainWindow *window);
 
     MainMenuWindow *mainMenuWindow(){return m_mainMenuView;}
     HowToPlayWindow *howToplayWindow(){return m_howToPlayView;}
     MultiplayerChoiceWindow *multiplayerChoiceWindow(){return m_multiplayerChoiceView;}
     SoloGameWindow *soloGameWindow(){return m_soloGameView;}
     void startMusic();
+
 
 signals:
     void soloLaunched();

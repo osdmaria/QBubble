@@ -16,8 +16,13 @@
         <file>Music/pick.mp3</file>
         <file>Music/pickbutton.mp3</file>
         <file>Music/bubbleExplosion.mp3</file>
+        <file>images/bubble_red.png</file>
+        <file>images/bubble_yellow.png</file>
+        <file>images/bubble_explosive.png</file>
+        <file>images/bubble_indestructible.png</file>
         <file>images/Volume_not.png</file>
         <file>images/Volume.png</file>
         <file>images/wood.jpg</file>
+
     </qresource>
 </RCC>

@@ -1,4 +1,4 @@
-#include "Music.h"
+#include "src/view/music.h"
 #include <QUrl>
 #include <QDebug>
 #include <QTemporaryFile>
@@ -12,22 +12,24 @@ Music::Music() {
 
 void Music::playBackgroundMusic(float volume) {
     QString tempDir = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
-    QString finalPath = tempDir + "/BubbleMusicBG.mp3";
+    QString tempFilePath = tempDir + "/BubbleMusicBG.mp3";
 
-    QFile resourceFile(":/Music/BubbleMusicBG.mp3");
-    if (resourceFile.open(QIODevice::ReadOnly)) {
-        QFile tempFile(finalPath);
-        if (tempFile.open(QIODevice::WriteOnly)) {
-            tempFile.write(resourceFile.readAll());
-            tempFile.close();
+    if (!QFile::exists(tempFilePath)) {
+        QFile resourceFile(":/Music/BubbleMusicBG.mp3");
+        if (resourceFile.open(QIODevice::ReadOnly)) {
+            QFile tempFile(tempFilePath);
+            if (tempFile.open(QIODevice::WriteOnly)) {
+                tempFile.write(resourceFile.readAll());
+                tempFile.close();
+            }
+            resourceFile.close();
+        } else {
+            qDebug() << "Can't open qrc for background music.";
+            return;
         }
-        resourceFile.close();
-    } else {
-        qDebug() << "can't open qrc for background music.";
-        return;
     }
 
-    musicPlayer->setSource(QUrl::fromLocalFile(finalPath));
+    musicPlayer->setSource(QUrl::fromLocalFile(tempFilePath));
     audioOutput->setVolume(volume);
 
     QObject::connect(musicPlayer, &QMediaPlayer::mediaStatusChanged, [this](QMediaPlayer::MediaStatus status) {
@@ -39,6 +41,7 @@ void Music::playBackgroundMusic(float volume) {
 
     musicPlayer->play();
 }
+
 
 void Music::stopBackgroundMusic() {
     musicPlayer->stop();

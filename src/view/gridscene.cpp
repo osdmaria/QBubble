@@ -5,23 +5,9 @@
 #include <QRect>
 #include <QGuiApplication>
 
-GridScene::GridScene(GridModel *model, int bubble_radius, int graphic_offset, int nb_cols, int nb_rows, int nb_max_rows, QWidget *parent)
-    : QGraphicsView{parent},
-    m_graphic_offset{graphic_offset},
-    m_bubble_radius{bubble_radius},
-    m_nb_cols{nb_cols},
-    m_nb_rows{nb_rows},
-    m_nb_max_rows{nb_max_rows},
-    m_grid(nb_max_rows, QVector<BubbleView*>(nb_cols, nullptr))
+GridScene::GridScene(int windowWidth, int windowHeight, int gridRadius, int bubbleRadius,  QWidget *parent)
+    : QGraphicsView{parent}, m_gridRadius{gridRadius}, m_bubbleRadius{bubbleRadius}
 {
-    setupUi();
-    connectToModel(model);
-
-    //setFocusPolicy(Qt::StrongFocus);
-    //setFocus();
-}
-
-void GridScene::setupUi() {
     QGraphicsScene *scene = new QGraphicsScene();
     QColor semiTransparentColor(0, 0, 0, 128); // Màu xanh nhạt với độ trong suốt 50%
     scene->setBackgroundBrush(QBrush(semiTransparentColor));
@@ -30,114 +16,68 @@ void GridScene::setupUi() {
     setRenderHint(QPainter::Antialiasing);
     setRenderHint(QPainter::TextAntialiasing);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
     setStyleSheet("background: transparent;");
+
+    m_width = windowWidth * 0.7;
+    m_height = windowHeight * 0.5;
+    setFixedSize(m_width,m_height);
+
+    setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    setSceneRect(0, 0, m_width, m_height);
+
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setTransformationAnchor(QGraphicsView::NoAnchor);
+    setDragMode(QGraphicsView::NoDrag);
+
+
+    m_localCenter = QPoint(m_width/2.f,m_height/2.f);
+    int widthDiff = windowWidth - m_width;
+    int heightDiff = windowHeight - m_height;
+
+    m_globalCenter = QPointF(m_localCenter.x() + widthDiff/2.f, m_localCenter.y() + heightDiff/2.f);
+    m_globalOrigin = QPointF(m_globalCenter.x()-m_width/2.f, m_globalCenter.y()-m_height/2.f);
+
+    m_ncols = m_width/(2*m_gridRadius) +1;
+    m_nrows = qRound(m_height/(std::sqrt(3)*m_gridRadius));
+
+
+    m_bubbleMatrix = QVector<QVector<BubbleView*>>(m_nrows, QVector<BubbleView*>(m_ncols, nullptr));
+
 }
 
 
-void GridScene::connectToModel(GridModel *model) {
-    connect(model, &GridModel::bubbleAdded, this, &GridScene::onBubbleAdded);
-    connect(model, &GridModel::bubblePopped, this, &GridScene::onBubblePopped);
-    connect(model, &GridModel::rowAdded, this, &GridScene::onRowAdded);
-    connect(model, &GridModel::gameOver, this, &GridScene::onGameOver);
-    //connect(&canonWidget, &CanonWidget::bubbleShot, this, &GridModel::addBubbleInCanonPosition);
 
 
+void GridScene::onBubbleAdded(Bubble *b) {
+    BubbleView* bubbleView = new BubbleView(b->type(),m_bubbleRadius);
+    QVector<int> pos = b->gridPosition();
+    m_bubbleMatrix[pos[0]][pos[1]] = bubbleView;
 
-    connect(this, &GridScene::addRowRequested, model, &GridModel::addNewLineOfBubbles);
-    connect(this, &GridScene::addRandomBubbleRequested, model, &GridModel::addRandomBubbleInAvaibleSpace);
-
-
-}
-
-void GridScene::onBubbleAdded(Bubble* bubble, bool offset) {
-    int row = bubble->position().x();
-    int col = bubble->position().y();
-
-    BubbleView* bubbleView = new BubbleView( bubble,
-                                            m_bubble_radius, offset);
-    m_grid[row][col] = bubbleView;
-    //bubbleView->setPos(x, y);
+    bubbleView->setPos(b->position());
     scene()->addItem(bubbleView);
 }
 
-void GridScene::onBubblePopped(Bubble* bubble) {
-    if (!bubble) return;
-
-    int row = bubble->position().x();
-    int col = bubble->position().y();
-
-    bubble->popped();
-    scene()->removeItem(m_grid[row][col] );
-    delete m_grid[row][col] ;
-    m_grid[row][col] = nullptr;
+void GridScene::onBubbleDestroyed(Bubble* b) {
+    if (!b) return;
+    QVector<int> pos = b->gridPosition();
+    scene()->removeItem(m_bubbleMatrix[pos[0]][pos[1]]);
+    delete m_bubbleMatrix[pos[0]][pos[1]] ;
+    m_bubbleMatrix[pos[0]][pos[1]] = nullptr;
 }
 
-void GridScene::onRowAdded() {
-    qDebug() << "New row added!";
-    qDebug() << "size of grid" << m_grid.size();
-    redrawAllRows();
+void GridScene::onBubbleMoved(int prevRow, int prevCol, Bubble* b) {
+    if (!b) return;
+    BubbleView* bubbleView = m_bubbleMatrix[prevRow][prevCol];
+    scene()->removeItem(m_bubbleMatrix[prevRow][prevCol]);
+
+    QVector<int> pos = b->gridPosition();
+    m_bubbleMatrix[pos[0]][pos[1]] = bubbleView;
+    bubbleView->setPos(b->position());
+    scene()->addItem(bubbleView);
+
+    delete m_bubbleMatrix[prevRow][prevCol] ;
+    m_bubbleMatrix[prevRow][prevCol] = nullptr;
 }
 
-
-
-void GridScene::onGameOver() {
-    qDebug() << "Game over received by Grid View!";
-
-    // Clear all bubbles from the scene
-    scene()->clear();
-
-    // Add a "Game Over" message
-    QGraphicsTextItem *gameOverText = new QGraphicsTextItem("Game Over");
-    gameOverText->setDefaultTextColor(Qt::red);
-    gameOverText->setFont(QFont("Arial", 32, QFont::Bold));
-
-    // Center the text on the scene
-    QRectF sceneBounds = scene()->sceneRect();
-    gameOverText->setPos(sceneBounds.center().x() - gameOverText->boundingRect().width() / 2,
-                         sceneBounds.center().y() - gameOverText->boundingRect().height() / 2);
-
-    scene()->addItem(gameOverText);
-}
-
-
-
-void GridScene::redrawAllRows() {
-    qDebug() << "Redrawing all rows in Grid Scene...";
-
-
-    if (m_nb_rows >= m_nb_max_rows) {
-        qDebug() << "Cannot add more rows, maximum reached.";
-        return;
-    }
-
-    for (int col = 0; col < m_nb_cols; col++) {
-        if (m_grid[m_nb_max_rows - 1][col]) {
-            m_grid[m_nb_max_rows - 1][col] = nullptr;
-        }
-    }
-
-
-    for (int row = m_nb_max_rows - 2; row >= 0; row--) {
-        for (int col = 0; col < m_nb_cols; col++) {
-            if (m_grid[row][col]) {
-                m_grid[row+1][col] = m_grid[row][col];
-            } else {
-                m_grid[row][col] = nullptr;
-            }
-        }
-    }
-}
-
-void GridScene::keyPressEvent(QKeyEvent *event) {
-    if (event->key() == Qt::Key_A) {
-        qDebug() << "Key A pressed! Adding a row...";
-        emit addRowRequested(); // Call GridLogic to add a row
-    }
-    else if (event->key() == Qt::Key_B) {
-        qDebug() << "Key B pressed! Adding a random Bubble at first row...";
-        emit addRandomBubbleRequested();
-    }
-    else {
-        QGraphicsView::keyPressEvent(event); // Pass event to parent class
-    }
-}

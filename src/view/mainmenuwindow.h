@@ -10,7 +10,7 @@
 #include <QPixmap>
 #include <QLabel>
 
-#include "Music.h"
+#include "src/view/music.h"
 
 class MainMenuWindow : public QMainWindow
 {
