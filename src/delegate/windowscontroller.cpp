@@ -124,5 +124,5 @@ void WindowsController::setFixedSize(QMainWindow *w){
     int width = screenGeometry.width() ;
     int height = screenGeometry.height();
 
-    w->setFixedSize(1200,647);
+    w->setFixedSize(1125,642);
 }

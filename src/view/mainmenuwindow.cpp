@@ -25,8 +25,8 @@ void MainMenuWindow::setupUi() {
 
 
     //Taille des bouttons
-    int buttonWidth = this->width() *0.7;
-    int buttonHeight = this->height() * 0.15;
+    int buttonWidth = 448;//this->width() *0.7;
+    int buttonHeight = 72;//this->height() * 0.15;
     m_soloButton->setFixedSize(buttonWidth, buttonHeight);
     m_multiplayerButton->setFixedSize(buttonWidth, buttonHeight);
     m_howToPlayButton->setFixedSize(buttonWidth, buttonHeight);

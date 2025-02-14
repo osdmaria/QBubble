@@ -29,8 +29,8 @@ void MultiplayerChoiceWindow::setupUi() {
     m_enemiesButton = new QPushButton("Ennemis", this);
 
     //Taille des bouttons
-    int buttonWidth = this->width() *0.7;
-    int buttonHeight = this->height() * 0.2;
+    int buttonWidth = 448;//this->width() *0.7;
+    int buttonHeight = 72; //this->height() * 0.2;
     m_mainMenuButton->setFixedSize(buttonWidth, buttonHeight);
     m_alliesButton->setFixedSize(buttonWidth, buttonHeight);
     m_enemiesButton->setFixedSize(buttonWidth, buttonHeight);
