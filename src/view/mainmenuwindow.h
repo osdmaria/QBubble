@@ -24,6 +24,8 @@ public:
     QPushButton *m_multiplayerButton;
     QPushButton *m_howToPlayButton;
     QPushButton *m_quitButton;
+    QPushButton *m_imageButton;
+    bool m_isImageOne;
 
 signals:
     void onSoloClicked();
@@ -37,5 +39,6 @@ private:
     void paintEvent(QPaintEvent *event);
     QLabel* createTitle();
     Music *m_music;
+    void onImageButtonClicked();
 };
 #endif // MAINMENUWINDOW_H

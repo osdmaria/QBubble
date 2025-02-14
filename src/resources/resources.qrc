@@ -20,5 +20,9 @@
         <file>images/bubble_yellow.png</file>
         <file>images/bubble_explosive.png</file>
         <file>images/bubble_indestructible.png</file>
+        <file>images/Volume_not.png</file>
+        <file>images/Volume.png</file>
+        <file>images/wood.jpg</file>
+
     </qresource>
 </RCC>

@@ -98,7 +98,7 @@ void WindowsController::openEnemiesGameWindow() {
 }
 
 void WindowsController::startMusic() {
-    music->playBackgroundMusic( 0.05);
+    music->playBackgroundMusic( 0.5);
 }
 
 
@@ -107,6 +107,18 @@ void WindowsController::quit() {
     QApplication::quit();
 }
 
+
 void WindowsController::setFixedSize(int width, int height, QMainWindow *window){
     window->setFixedSize(width,height);
+
+void WindowsController::setFixedSize(QMainWindow *w){
+
+    QScreen *screen = QGuiApplication::primaryScreen();
+    QRect screenGeometry = screen->geometry();
+
+    int width = screenGeometry.width() ;
+    int height = screenGeometry.height();
+
+    w->setFixedSize(1125,642);
+
 }

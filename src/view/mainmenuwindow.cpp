@@ -20,11 +20,13 @@ void MainMenuWindow::setupUi() {
     m_multiplayerButton = new QPushButton("Partie multijoueurs", this);
     m_howToPlayButton = new QPushButton("Comment jouer", this);
     m_quitButton = new QPushButton("Quitter", this);
+    m_imageButton = new QPushButton(this);
+    m_isImageOne = true;
 
 
     //Taille des bouttons
-    int buttonWidth = this->width() *0.7;
-    int buttonHeight = this->height() * 0.2;
+    int buttonWidth = 448;//this->width() *0.7;
+    int buttonHeight = 72;//this->height() * 0.15;
     m_soloButton->setFixedSize(buttonWidth, buttonHeight);
     m_multiplayerButton->setFixedSize(buttonWidth, buttonHeight);
     m_howToPlayButton->setFixedSize(buttonWidth, buttonHeight);
@@ -50,6 +52,32 @@ void MainMenuWindow::setupUi() {
     m_howToPlayButton->setStyleSheet(buttonStyle);
     m_quitButton->setStyleSheet(buttonStyle);
 
+    //boutton du son
+    // Création du bouton image
+    QPixmap buttonImage(":/images/Volume.png");
+    if (!buttonImage.isNull()) {
+        m_imageButton->setFixedSize(buttonImage.size());
+        m_imageButton->setStyleSheet("QPushButton {"
+                                     "border: none;"
+                                     "background: transparent;"
+                                     "background-color: #31B472;"
+                                     "border: 2px solid #EEFF6A;"
+                                     "border-radius: 10px; "
+                                     "Padding : 2px;"
+                                     "}"
+                                     "QPushButton:hover {"
+                                     "background-color: #aade90;"
+                                     "}"
+                                     );
+        m_imageButton->setIcon(QIcon(buttonImage));
+        m_imageButton->setIconSize(buttonImage.size());
+    } else {
+        qDebug() << "Erreur : Impossible de charger l'image du bouton.";
+    }
+
+    QHBoxLayout *topRightLayout = new QHBoxLayout();
+    topRightLayout->addStretch();
+    topRightLayout->addWidget(m_imageButton);
 
     //Alignement des bouttons dans le layout
     QVBoxLayout *layout = new QVBoxLayout();
@@ -58,6 +86,7 @@ void MainMenuWindow::setupUi() {
 
 
     layout->addSpacerItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
+
     layout->addWidget(m_soloButton);
     layout->addWidget(m_multiplayerButton);
     layout->addWidget(m_howToPlayButton);
@@ -107,6 +136,12 @@ void MainMenuWindow::connectSignals() {
         m_music->playSoundEffect("click");
         emit onQuitClicked();
     });
+
+    connect(m_imageButton, &QPushButton::clicked, [this]() {
+        m_music->playSoundEffect("click");
+        emit onImageButtonClicked();
+    });
+
 }
 
 void MainMenuWindow::paintEvent(QPaintEvent *event) {
@@ -131,8 +166,8 @@ QLabel* MainMenuWindow::createTitle() {
 
     QLabel *title = new QLabel(this);
     title->setText("\nMKOBAM's\nQBubble++\n");
-    int width = this->width() *0.8;
-    int height = this->height() * 0.8;
+    int width = this->width() *0.7;
+    int height = this->height() * 0.7;
     title->setFixedSize(width,height);
 
     QString titleStyle = "QLabel {"
@@ -145,4 +180,27 @@ QLabel* MainMenuWindow::createTitle() {
 }
 
 
+void MainMenuWindow::onImageButtonClicked() {
+    QPixmap newImage;
+    m_isImageOne = !m_isImageOne;
 
+    // Toggle between two images based on the current state
+    if (m_isImageOne) {
+        newImage = QPixmap(":/images/Volume.png");  // Second image
+    } else {
+        newImage = QPixmap(":/images/Volume_not.png");  // First image
+    }
+    if (newImage.isNull()) {
+        qDebug() << "Erreur : Impossible de charger l'image du bouton.";
+    }
+
+    // Check if the image is loaded successfully
+    if (newImage.isNull()) {
+        qDebug() << "Erreur : Impossible de charger l'image du bouton.";
+    } else {
+        // Update button icon
+        m_imageButton->setIcon(QIcon(newImage));
+        m_imageButton->setIconSize(newImage.size());
+        m_imageButton->update();
+    }
+}

@@ -10,8 +10,7 @@ Music::Music() {
     musicPlayer->setAudioOutput(audioOutput);
 }
 
-void Music::playBackgroundMusic( float volume) {
-
+void Music::playBackgroundMusic(float volume) {
     QString tempDir = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
     QString finalPath = ":/Music/BubbleMusicBG.mp3";
 
@@ -20,19 +19,33 @@ void Music::playBackgroundMusic( float volume) {
     }
 
 
-    musicPlayer->setSource(QUrl::fromLocalFile(finalPath));
+    QFile resourceFile(":/Music/BubbleMusicBG.mp3");
+    if (resourceFile.open(QIODevice::ReadOnly)) {
+        QFile tempFile(finalPath);
+        if (tempFile.open(QIODevice::WriteOnly)) {
+            tempFile.write(resourceFile.readAll());
+            tempFile.close();
+        }
+        resourceFile.close();
+    } else {
+        qDebug() << "can't open qrc for background music.";
+        return;
+    }
 
-    // if (musicPlayer->error() != QMediaPlayer::NoError) {
-    //     qDebug() << "Error:" << musicPlayer->errorString();
-    // }
 
     audioOutput->setVolume(1);
+
+    musicPlayer->setSource(QUrl::fromLocalFile(finalPath));
+    audioOutput->setVolume(volume);
+
+
     QObject::connect(musicPlayer, &QMediaPlayer::mediaStatusChanged, [this](QMediaPlayer::MediaStatus status) {
         if (status == QMediaPlayer::EndOfMedia) {
-            musicPlayer->setPosition(0);  // Reset về đầu file
-            musicPlayer->play();          // Phát lại nhạc từ đầu
+            musicPlayer->setPosition(0);
+            musicPlayer->play();
         }
     });
+
     musicPlayer->play();
 }
 

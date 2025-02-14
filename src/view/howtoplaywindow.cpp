@@ -14,8 +14,8 @@ void HowToPlayWindow::setupUi() {
     m_mainMenuButton = new QPushButton("Retour", this);
 
     //Taille des bouttons
-    int buttonWidth = this->width() *0.7;
-    int buttonHeight = this->height() * 0.2;
+    int buttonWidth =448;// this->width() *0.7;
+    int buttonHeight =72;// this->height() * 0.2;
     m_mainMenuButton->setFixedSize(buttonWidth, buttonHeight);
 
     // Style the button
