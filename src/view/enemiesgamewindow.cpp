@@ -1,12 +1,12 @@
 #include "src/view/enemiesgamewindow.h"
 
-EnemiesGameWindow::EnemiesGameWindow(QWidget *parent)
+EnemiesGameWindow::EnemiesGameWindow(int widthSize, int heightSize, QWidget *parent)
     : QMainWindow{parent}
 {
+    setFixedSize(widthSize,heightSize);
     m_scoreWidget = new ScoreWidget();
     m_scoreWidget2 = new ScoreWidget();
-    m_gridModel = new GridModel(10,15);
-    m_gridScene = new GridScene(m_gridModel, 20, 10,15, 0, 10, this );
+    m_gridScene = new GridScene(width(),height(), 30,58,this);
     //m_cannonWidget = new CannonWidget();
     //m_cannonWidget2 = new CannonWidget();
     cannonLayout = new QHBoxLayout();

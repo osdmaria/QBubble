@@ -1,36 +1,29 @@
-
 #ifndef BUBBLEVIEW_H
 #define BUBBLEVIEW_H
 
 #include <QGraphicsItem>
 #include <QPainter>
-#include <QPixmap>
-#include <QObject>  // Add this!
-#include "src/model/bubble.h"
 
-class BubbleView : public QObject, public QGraphicsItem {  // Add QObject as a parent class
-    Q_OBJECT  // Add this!
+#include "src/model/explosivebubble.h"
+#include "src/model/coloredbubble.h"
+#include "src/model/indestructiblebubble.h"
 
+class BubbleView : public QGraphicsItem {
 public:
-    explicit BubbleView(Bubble* bubble, int radius, bool offset, QGraphicsItem *parent = nullptr);
-    ~BubbleView() override;
-
+    BubbleView(const QString bubbleType, int radius, QGraphicsItem *parent = nullptr);
     QRectF boundingRect() const override;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
+    QPixmap getImage(){return m_bubbleImage;}
+    int radius(){return m_radius;}
+    void radius(int r){m_radius = r;}
 
-    QPixmap getImage() const { return m_bubbleImage; }
-    static QPixmap loadImageByColor(const QColor &color); // Static method to get image by color
+    void loadImage(const QString s);
 
-private slots:
-    void updatePosition(QPointF newPos, bool offset);
-    void updateColor(QColor newColor);
-    void popped();
 
 private:
-    Bubble* m_bubble;
     QPixmap m_bubbleImage;
     int m_radius;
-    bool m_offset;
+
 };
 
 #endif // BUBBLEVIEW_H

@@ -19,7 +19,7 @@ class EnemiesGameWindow : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit EnemiesGameWindow(QWidget *parent = nullptr);
+    explicit EnemiesGameWindow(int widthSize, int heightSize, QWidget *parent = nullptr);
     ~EnemiesGameWindow();
     ScoreWidget *scoreWidget(){return m_scoreWidget;}
     ScoreWidget *scoreWidget2(){return m_scoreWidget2;}
@@ -37,7 +37,7 @@ signals:
 private:
     ScoreWidget *m_scoreWidget;
     ScoreWidget *m_scoreWidget2;
-    GridModel *m_gridModel;
+    //GridModel *m_gridModel;
     GridScene *m_gridScene;
     //CannonWidget *m_cannonWidget;
     //CannonWidget *m_cannonWidget2;

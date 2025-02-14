@@ -29,13 +29,15 @@ public:
     Bubble *addLeft(Bubble *b);
     Bubble *addRight(Bubble *b);
 
+public slots:
+    void updateContainer(Bubble *b);
+
 signals:
+    void containerUpdated(Bubble *b);
 
 private:
     int m_size = 3;
     Bubble *m_container[3];
-
-
 
 };
 
