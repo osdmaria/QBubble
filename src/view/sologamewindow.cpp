@@ -1,16 +1,22 @@
 #include "src/view/sologamewindow.h"
+#include <QGraphicsScene>
+#include <QGraphicsItem>
+
+#include <QPropertyAnimation>
+#include <QTimer>
 
 SoloGameWindow::SoloGameWindow(int widthSize, int heightSize, QWidget *parent)
     : QMainWindow{parent}, m_music(new Music())
 {
     setFixedSize(widthSize,heightSize);
     m_scoreWidget = new ScoreWidget();
-    //m_canonWidget = new CanonWidget();
+    m_canonModel = new CanonModel();
     m_containerWidget = new ContainerWidget();
     m_gridScene = new GridScene(width(),height(),35,70,this);
     m_containerWidget = new ContainerWidget();
     setupUi();
     connectSignals();
+    connect(m_canonModel, &CanonModel::shootSignal, this, &SoloGameWindow::shootBubble);
     //connect(m_canonModel, &CanonModel::BubbleShoot, m_gridModel, &GridModel::addBubbleInCanonPosition);
     setFocusPolicy(Qt::StrongFocus);
     setFocus();
@@ -79,7 +85,7 @@ void SoloGameWindow::setupUi() {
 
     // Position buttons and widgets on main window
     m_containerWidget->setParent(this);
-    m_containerWidget->move(0,560);
+    m_containerWidget->move(26,250);
 
     m_scoreWidget->setParent(this);
     m_scoreWidget->move(900, 50);
@@ -93,9 +99,9 @@ void SoloGameWindow::setupUi() {
 
 
 void SoloGameWindow::keyPressEvent(QKeyEvent *event) {
-    //if (m_canonWidget) {
-     //   m_canonWidget->keyPressEvent(event);
-    //}
+    if (m_canonWidget) {
+       m_canonWidget->keyPressEvent(event);
+    }
 }
 void SoloGameWindow::connectSignals() {
     connect(m_retour, &QPushButton::clicked, [this]{
@@ -123,4 +129,40 @@ void SoloGameWindow::paintEvent(QPaintEvent *event) {
     }
 
     QMainWindow::paintEvent(event);
+}
+
+void SoloGameWindow::shootBubble(int angle) {
+    // // Create a new bubble with a default color (e.g., red) and position
+    // QColor bubbleColor = Qt::red; // Example color
+    // QPointF startPosition = QPointF(m_canonWidget->getStartX(), m_canonWidget->getStartY()); // Start at the cannon's position
+    // Bubble* bubble = new Bubble(bubbleColor, startPosition, this);
+
+    // // Create a BubbleView to visually represent the bubble
+    // BubbleView* bubbleView = new BubbleView(bubble, 20, false); // Radius of 20, no offset
+    // m_gridScene->scene()->addItem(bubbleView); // Add the bubble to the scene
+
+    // // Calculate the end position of the bubble based on the angle
+    // qreal length = 500; // Length of the animation
+    // qreal endX = startPosition.x() + length * qCos(qDegreesToRadians(angle));
+    // qreal endY = startPosition.y() - length * qSin(qDegreesToRadians(angle)); // Negative Y for upward direction
+    // QPointF endPosition(endX, endY);
+
+    // // Create an animation to move the bubble
+    // QPropertyAnimation* animation = new QPropertyAnimation(bubble, "pos");
+    // animation->setDuration(1000); // Animation duration in milliseconds
+    // animation->setStartValue(startPosition);
+    // animation->setEndValue(endPosition);
+    // animation->setEasingCurve(QEasingCurve::Linear);
+
+    // // Connect the animation to remove the bubble after it finishes
+    // connect(animation, &QPropertyAnimation::finished, [bubbleView, bubble]() {
+    //     // Use a timer to remove the bubble after 3 seconds
+    //     QTimer::singleShot(3000, [bubbleView, bubble]() {
+    //         delete bubbleView; // Remove the visual representation
+    //         delete bubble;    // Delete the bubble object
+    //     });
+    // });
+
+    // // Start the animation
+    // animation->start();
 }

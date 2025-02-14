@@ -2,9 +2,8 @@
 #define CANONWIDGET_H
 
 #include <QWidget>
-#include <QKeyEvent>
 #include <QPainter>
-#include <QtMath>
+#include <QKeyEvent>
 #include "src/model/canonmodel.h"
 
 class CanonWidget : public QWidget
@@ -17,10 +16,12 @@ public:
 
     void setModel(CanonModel *model); // Set the model
     void keyPressEvent(QKeyEvent *event) override;
+    int getStartX() const { return startX; }  // Getter for startX
+    int getStartY() const { return startY; }  // Getter for startY
+
 
 protected:
     void paintEvent(QPaintEvent *event) override;
-     QSize sizeHint() const override;
 
 private slots:
     void onAngleChanged(qreal newAngle); // Slot to handle angle changes
@@ -30,6 +31,9 @@ private:
     int m_radius;
     int startX, startY;
     QPen pen;
+
+
 };
+
 
 #endif // CANONWIDGET_H

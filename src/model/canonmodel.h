@@ -20,15 +20,13 @@ public:
     void currentBubble(Bubble *bubble) {m_currentBubble = bubble;}
     Bubble *currentBubble(){return m_currentBubble;}
     void fire();
-
 public slots:
     void loadBubble(Bubble *b);
 
 signals:
     void angleChanged(qreal newAngle); // Emitted when the angle changes
-    void BubbleShoot(int angle);        // Emitted when the bubble is shot
+    void shootSignal(int angle);        // Emitted when the bubble is shot
     void cannonFired(Bubble *b);
-
 private:
     qreal angle;
     Bubble *m_currentBubble;

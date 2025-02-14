@@ -29,6 +29,7 @@ public:
     ContainerWidget *containerWidget(){return m_containerWidget;}
     QPushButton *m_retour;
     QPushButton *m_pause;
+    void shootBubble(int angle);
 
 private:
     void setupUi();
@@ -42,13 +43,11 @@ private:
     ScoreWidget *m_scoreWidget;
     GridScene *m_gridScene;
     CanonWidget *m_canonWidget;
+    CanonModel *m_canonModel;
     ContainerWidget *m_containerWidget;
     Music *m_music;
     void connectSignals();
-
     void paintEvent(QPaintEvent *event);
-
-    CanonModel *m_canonModel;
 
 };
 

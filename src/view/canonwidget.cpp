@@ -44,7 +44,7 @@ void CanonWidget::keyPressEvent(QKeyEvent *event) {
     }
     else if (event->key() == Qt::Key_Space) {
         // Emit the bubbleShot signal with the current angle
-        emit m_model->BubbleShoot(static_cast<int>(m_model->getAngle()));
+        emit m_model->shootSignal(static_cast<int>(m_model->getAngle()));
         qDebug() << "Spacebar pressed! Angle:" << m_model->getAngle();
     }
 }
@@ -88,8 +88,3 @@ void CanonWidget::paintEvent(QPaintEvent *event) {
     painter.setBrush(QBrush(QColor(181, 101, 29)));  // Same light brown color for the arrowhead
     painter.drawPath(path);
 }
-
-QSize CanonWidget::sizeHint() const {
-    return QSize(m_radius * 2, m_radius * 2);
-}
-
