@@ -13,32 +13,31 @@ MainMenuWindow::MainMenuWindow(QWidget *parent)
 MainMenuWindow::~MainMenuWindow() {}
 
 void MainMenuWindow::setupUi() {
-
+    // Créer les boutons
     m_soloButton = new QPushButton("Partie solo", this);
     m_multiplayerButton = new QPushButton("Partie multijoueurs", this);
     m_howToPlayButton = new QPushButton("Comment jouer", this);
     m_quitButton = new QPushButton("Quitter", this);
 
-
-    //Taille des bouttons
-    int buttonWidth = this->width() *0.7;
-    int buttonHeight = this->height() * 0.2;
+    // Définir la taille des boutons
+    int buttonWidth = this->width() * 0.7;
+    int buttonHeight = this->height() * 0.19;
     m_soloButton->setFixedSize(buttonWidth, buttonHeight);
     m_multiplayerButton->setFixedSize(buttonWidth, buttonHeight);
     m_howToPlayButton->setFixedSize(buttonWidth, buttonHeight);
     m_quitButton->setFixedSize(buttonWidth, buttonHeight);
 
-    //Style des boutons
+    // Style des boutons
     QString buttonStyle = "QPushButton {"
                           "background-color: #31B472;"
                           "color: #EEFF6A;"
                           "border-radius: 15px;"
                           "font-size: 30px;"
                           "border: 2px solid #EEFF6A;"
-                          "}"
+                          "} "
                           "QPushButton:hover {"
                           "background-color: #aade90;"
-                          "}"
+                          "} "
                           "QPushButton:pressed {"
                           "background-color: #6c9956;"
                           "}";
@@ -48,27 +47,25 @@ void MainMenuWindow::setupUi() {
     m_howToPlayButton->setStyleSheet(buttonStyle);
     m_quitButton->setStyleSheet(buttonStyle);
 
-    //boutton du son
-    // Création du bouton image
+    // Créer le bouton du son avec image
     m_imageButton = new QPushButton(this);
     QPixmap buttonImage(":/images/Volume.png");
 
     if (!buttonImage.isNull()) {
-        m_imageButton->setFixedSize(buttonImage.size());
+        m_imageButton->setFixedSize(60, 60);  // Taille fixe pour le bouton du son
         m_imageButton->setStyleSheet("QPushButton {"
                                      "border: none;"
                                      "background: transparent;"
                                      "background-color: #31B472;"
                                      "border: 2px solid #EEFF6A;"
                                      "border-radius: 10px; "
-                                     "Padding : 2px;"
-                                     "}"
+                                     "padding: 2px;"
+                                     "} "
                                      "QPushButton:hover {"
                                      "background-color: #aade90;"
-                                     "}"
-                                     );
+                                     "}");
         m_imageButton->setIcon(QIcon(buttonImage));
-        m_imageButton->setIconSize(buttonImage.size());
+        m_imageButton->setIconSize(QSize(40, 40));  // Taille de l'icône
     } else {
         qDebug() << "Erreur : Impossible de charger l'image du bouton.";
     }
@@ -76,32 +73,45 @@ void MainMenuWindow::setupUi() {
     m_isImageOne = true;
     connect(m_imageButton, &QPushButton::clicked, this, &MainMenuWindow::onImageButtonClicked);
 
+    // Layout pour le bouton son (à droite de la fenêtre)
+    QHBoxLayout *soundButtonLayout = new QHBoxLayout();
+    soundButtonLayout->addStretch();  // Pousser à droite
+    soundButtonLayout->addWidget(m_imageButton);  // Ajouter le bouton du son
 
-    QHBoxLayout *topRightLayout = new QHBoxLayout();
-    topRightLayout->addStretch();
-    topRightLayout->addWidget(m_imageButton);
+    // Layout pour le titre (centré)
+    QLabel *title = createTitle();
+    QHBoxLayout *titleLayout = new QHBoxLayout();
+    titleLayout->addStretch();  // Pousser le titre vers le centre
+    titleLayout->addWidget(title);  // Ajouter le titre
+    titleLayout->addStretch();  // Pousser le titre vers le centre
 
-    //Alignement des bouttons dans le layout
-    QVBoxLayout *layout = new QVBoxLayout();
-    QLabel *Title = createTitle();
-    layout->addWidget(Title, 0, Qt::AlignHCenter);
+    // Layout pour les boutons (centré avec espacement)
+    QVBoxLayout *buttonsLayout = new QVBoxLayout();
+    buttonsLayout->addSpacerItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
+    buttonsLayout->addWidget(m_soloButton);
+    buttonsLayout->addWidget(m_multiplayerButton);
+    buttonsLayout->addWidget(m_howToPlayButton);
+    buttonsLayout->addWidget(m_quitButton);
+    buttonsLayout->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed));
+    buttonsLayout->setAlignment(Qt::AlignHCenter);
+    // Layout principal pour le titre et les boutons
+    QVBoxLayout *mainContentLayout = new QVBoxLayout();
+    mainContentLayout->addLayout(titleLayout);  // Ajouter le layout du titre
+    mainContentLayout->addLayout(buttonsLayout);  // Ajouter les boutons
+    mainContentLayout->addStretch();  // Pousser le contenu vers le haut
 
+    // Layout complet pour la fenêtre (englobant tout)
+    QVBoxLayout *fullLayout = new QVBoxLayout();
+    fullLayout->addLayout(soundButtonLayout);  // Ajouter le bouton son en haut
+    fullLayout->addLayout(mainContentLayout);  // Ajouter le contenu principal
 
-    layout->addSpacerItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
-    layout->addWidget(m_soloButton);
-    layout->addWidget(m_multiplayerButton);
-    layout->addWidget(m_howToPlayButton);
-    layout->addWidget(m_quitButton);
-
-    layout->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed));
-    layout->setAlignment(Qt::AlignHCenter);
-
+    // Centraliser le widget
     QWidget *centralWidget = new QWidget(this);
-    centralWidget->setLayout(layout);
+    centralWidget->setLayout(fullLayout);
     setCentralWidget(centralWidget);
-
-
 }
+
+
 
 void MainMenuWindow::connectSignals() {
     connect(m_soloButton, &QPushButton::clicked, this, &MainMenuWindow::onSoloClicked);
@@ -148,23 +158,19 @@ QLabel* MainMenuWindow::createTitle() {
 void MainMenuWindow::onImageButtonClicked() {
     QPixmap newImage;
 
-    // Toggle between two images based on the current state
     if (m_isImageOne) {
-        newImage = QPixmap(":/images/Volume_not.png");  // Second image
+        newImage = QPixmap(":/images/Volume_not.png");
     } else {
-        newImage = QPixmap(":/images/Volume.png");  // First image
+        newImage = QPixmap(":/images/Volume.png");
     }
 
-    // Check if the image is loaded successfully
     if (newImage.isNull()) {
         qDebug() << "Erreur : Impossible de charger l'image du bouton.";
     } else {
-        // Update button icon
         m_imageButton->setIcon(QIcon(newImage));
         m_imageButton->setIconSize(newImage.size());
     }
 
-    // Toggle the image state
     m_isImageOne = !m_isImageOne;
 }
 
