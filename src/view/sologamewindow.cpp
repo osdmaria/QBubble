@@ -4,6 +4,7 @@
 
 #include <QPropertyAnimation>
 #include <QTimer>
+#include "src/model/coloredbubble.h"
 
 SoloGameWindow::SoloGameWindow(int widthSize, int heightSize, QWidget *parent)
     : QMainWindow{parent}, m_music(new Music())
@@ -33,7 +34,6 @@ void SoloGameWindow::setupUi() {
 
     m_scoreWidget->setFixedSize(300, 30);
     m_scoreWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    m_scoreWidget->move(50, 50);
 
     // Add score widget and grid scene
     mainLayout->addWidget(m_scoreWidget);
@@ -60,8 +60,8 @@ void SoloGameWindow::setupUi() {
     m_pause  = new QPushButton("Pause", this);
 
     // Button sizes
-    m_retour->setFixedSize(this->height() * 0.07, this->height() * 0.08);
-    m_pause ->setFixedSize(this->width() *0.17, this->height() * 0.08);
+    m_retour->setFixedSize(35, 50);
+    m_pause ->setFixedSize(100, 50);
 
     //Style des boutons
     QString buttonStyle = "QPushButton {"
@@ -88,13 +88,13 @@ void SoloGameWindow::setupUi() {
     m_containerWidget->move(26,250);
 
     m_scoreWidget->setParent(this);
-    m_scoreWidget->move(900, 50);
+    m_scoreWidget->move(955, 50);
 
     m_retour->setParent(this);
-    m_retour->move(50,50);
+    m_retour->move(20,50);
 
     m_pause->setParent(this);
-    m_pause->move(90, 50);
+    m_pause->move(60, 50);
 }
 
 
@@ -135,10 +135,10 @@ void SoloGameWindow::shootBubble(int angle) {
     // // Create a new bubble with a default color (e.g., red) and position
     // QColor bubbleColor = Qt::red; // Example color
     // QPointF startPosition = QPointF(m_canonWidget->getStartX(), m_canonWidget->getStartY()); // Start at the cannon's position
-    // Bubble* bubble = new Bubble(bubbleColor, startPosition, this);
+    // ColoredBubble* bubble = new ColoredBubble("bordeaux");
 
     // // Create a BubbleView to visually represent the bubble
-    // BubbleView* bubbleView = new BubbleView(bubble, 20, false); // Radius of 20, no offset
+    // BubbleView* bubbleView = new BubbleView("bordeaux", 20, false); // Radius of 20, no offset
     // m_gridScene->scene()->addItem(bubbleView); // Add the bubble to the scene
 
     // // Calculate the end position of the bubble based on the angle
@@ -147,7 +147,7 @@ void SoloGameWindow::shootBubble(int angle) {
     // qreal endY = startPosition.y() - length * qSin(qDegreesToRadians(angle)); // Negative Y for upward direction
     // QPointF endPosition(endX, endY);
 
-    // // Create an animation to move the bubble
+    // // Create an animation to move the rbubble
     // QPropertyAnimation* animation = new QPropertyAnimation(bubble, "pos");
     // animation->setDuration(1000); // Animation duration in milliseconds
     // animation->setStartValue(startPosition);
@@ -163,6 +163,6 @@ void SoloGameWindow::shootBubble(int angle) {
     //     });
     // });
 
-    // // Start the animation
-    // animation->start();
+    // // // Start the animation
+    // // animation->start();
 }
