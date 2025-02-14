@@ -1,4 +1,6 @@
 #include "src/view/enemiesgamewindow.h"
+#include <QLabel>
+#include <QPixmap>
 
 EnemiesGameWindow::EnemiesGameWindow(QWidget *parent)
     : QMainWindow{parent}
@@ -27,8 +29,8 @@ void EnemiesGameWindow::setupUi() {
     m_scoreWidget2->setFixedSize(300, 30);
     m_scoreWidget2->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    topLayout->addWidget(m_scoreWidget);
-    topLayout->addWidget(m_scoreWidget2);
+    //topLayout->addWidget(m_scoreWidget);
+    //topLayout->addWidget(m_scoreWidget2);
     topLayout->setContentsMargins(10, 10, 10, 10);
     topLayout->setSpacing(20);
 
@@ -38,10 +40,22 @@ void EnemiesGameWindow::setupUi() {
     cannonLayout->setSpacing(50);
 
     mainLayout->addLayout(topLayout);
-    mainLayout->addWidget(m_gridScene);
+    //mainLayout->addWidget(m_gridScene);
+
+
+
+    // Add an image to the game window
+    QLabel *imageLabel = new QLabel(this);
+    QPixmap pixmap(":/images/meme.png");  // Adjust the path to your image
+    pixmap = pixmap.scaled(pixmap.width(), pixmap.height() +200, Qt::KeepAspectRatio);  // Scale by 1.5x, keep aspect ratio
+    imageLabel->setPixmap(pixmap);
+    imageLabel->setAlignment(Qt::AlignCenter);  // Center the image
+    mainLayout->addWidget(imageLabel);  // Add the image to the layout
+
+
     //mainLayout->addWidget(m_cannonWidget);
     //mainLayout->addWidget(m_cannonWidget2);
-    mainLayout->addWidget(m_containerWidget);
+    //mainLayout->addWidget(m_containerWidget);
     mainLayout->setAlignment(Qt::AlignCenter);
 
     centralWidget->setLayout(mainLayout);
