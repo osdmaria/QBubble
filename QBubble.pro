@@ -26,6 +26,7 @@ SOURCES += \
     src/view/canonwidget.cpp \
     src/view/containerwidget.cpp \
     src/view/enemiesgamewindow.cpp \
+    src/view/gameoverwindow.cpp \
     src/view/gridscene.cpp \
     src/view/howtoplaywindow.cpp \
     src/view/mainmenuwindow.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
     src/view/canonwidget.h \
     src/view/containerwidget.h \
     src/view/enemiesgamewindow.h \
+    src/view/gameoverwindow.h \
     src/view/gridscene.h \
     src/view/howtoplaywindow.h \
     src/view/mainmenuwindow.h \
@@ -75,4 +77,5 @@ RESOURCES += \
     src/resources/resources.qrc
 
 FORMS += \
+    src/view/gameoverwindow.ui \
     src/view/pausewindow.ui

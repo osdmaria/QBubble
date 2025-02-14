@@ -1,5 +1,6 @@
 #include "pausewindow.h"
-
+//#include "sologamewindow.h"
+#include "src/delegate/sologamecontroller.h"
 
 
 pausewindow::pausewindow(QWidget *parent)
@@ -46,13 +47,13 @@ void pausewindow::setupUi() {
                           "QPushButton:pressed {"
                           "background-color: #6c9956;"
                           "}";
-    QPushButton *reprendreButton= new QPushButton("Reprendre", verticalLayoutWidget);
-    reprendreButton->setStyleSheet(buttonStyle);
-    verticalLayout->addWidget(reprendreButton);
+    m_reprendreButton= new QPushButton("Reprendre", verticalLayoutWidget);
+    m_reprendreButton->setStyleSheet(buttonStyle);
+    verticalLayout->addWidget(m_reprendreButton);
 
-    QPushButton *menuPrincipalButton = new QPushButton("Menu Principal", verticalLayoutWidget);
-    menuPrincipalButton->setStyleSheet(buttonStyle);
-    verticalLayout->addWidget(menuPrincipalButton);
+    m_menuPrincipalButton = new QPushButton("Menu Principal", verticalLayoutWidget);
+    m_menuPrincipalButton->setStyleSheet(buttonStyle);
+    verticalLayout->addWidget(m_menuPrincipalButton);
 
     verticalLayoutWidget->setLayout(verticalLayout);
 
@@ -62,19 +63,16 @@ void pausewindow::setupUi() {
 }
 
 void pausewindow::connectSignals() {
-    //connect(m_reprendreButton, &QPushButton::clicked, this, &MainMenuWindow::openMainWindow);
+    connect(m_reprendreButton, &QPushButton::clicked, this, &pausewindow::close);
+    //connect(m_menuPrincipalButton, &QPushButton::clicked, this, &SoloGameController::openMainMenuFromPause);
 }
 
 void pausewindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     QPixmap background(":/images/wood.jpg");
 
-    // Vérifier si l'image est correctement chargée
     if (!background.isNull()) {
-        // Redimensionner l'image avec une transformation fluide
         QPixmap scaledBackground = background.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-        // Dessiner l'image redimensionnée
         painter.drawPixmap(0, 0, scaledBackground);
     } else {
         qDebug() << "Erreur : Impossible de charger l'image de fond.";
@@ -82,4 +80,6 @@ void pausewindow::paintEvent(QPaintEvent *event) {
 
     QWidget::paintEvent(event);
 }
+
+
 

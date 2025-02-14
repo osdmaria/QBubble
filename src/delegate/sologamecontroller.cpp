@@ -5,11 +5,10 @@ SoloGameController::SoloGameController(SoloGameWindow *soloGameView,MainMenuWind
 {
     m_scoreModel = new ScoreModel();
     m_containerModel = new ContainerModel();
-    m_pauseWindow = nullptr;
     connect(m_scoreModel, &ScoreModel::scoreChanged, this, &SoloGameController::updateScore);
-
-    //connectsignal des buttons
     connectSignalsButttons();
+    //ajout important pour éviter le crash de l'appli
+    m_pauseWindow = nullptr;
 }
 
 SoloGameController::~SoloGameController(){
@@ -25,7 +24,7 @@ void SoloGameController::updateScore(int x)
 void SoloGameController::connectSignalsButttons(){
     qDebug() << "retour clicked!";
     connect(m_soloGameView, &SoloGameWindow::onRetourClicked, this, &SoloGameController::openMainMenu);
-    connect(m_soloGameView, &SoloGameWindow::onPauseClicked, this, &SoloGameController::showPauseWindow); // Connecter le bouton pause
+    connect(m_soloGameView, &SoloGameWindow::onPauseClicked, this, &SoloGameController::showPauseWindow);
 }
 
 void SoloGameController::openMainMenu() {
@@ -38,14 +37,12 @@ void SoloGameController::openMainMenu() {
 void SoloGameController::showPauseWindow() {
     qDebug() << "Pause clicked!";
 
-    // Create pause window on demand, so there's no memory issue
     if (!m_pauseWindow) {
-        m_pauseWindow = new pausewindow(m_soloGameView); // Use parent to avoid memory leaks
+        m_pauseWindow = new pausewindow(m_soloGameView);
     }
 
-    m_pauseWindow->exec(); // Show the pause window in modal mode
+    m_pauseWindow->exec();
 }
-
 
 
 

@@ -17,8 +17,6 @@ SoloGameWindow::~SoloGameWindow() {}
 
 void SoloGameWindow::setupUi() {
 
-    //widget
-
     QWidget *centralWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
 
@@ -26,28 +24,24 @@ void SoloGameWindow::setupUi() {
     m_scoreWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     m_scoreWidget->move(50, 50);
 
-    // Add score widget and grid scene
     mainLayout->addWidget(m_scoreWidget);
     mainLayout->addWidget(m_gridScene);
 
-    // Center CanonWidget
-    m_cannonWidget = new CanonWidget(this, 25, 100, 100); // Add cannon
+    m_cannonWidget = new CanonWidget(this, 25, 100, 100);
     m_cannonWidget->focusWidget();
     m_cannonWidget->setParent(this);
-    mainLayout->addWidget(m_cannonWidget, 0, Qt::AlignHCenter); // Center the canon widget horizontally
+    mainLayout->addWidget(m_cannonWidget, 0, Qt::AlignHCenter);
 
-    // Add container widget
     mainLayout->addWidget(m_containerWidget);
     mainLayout->setAlignment(Qt::AlignCenter);
+
 
     centralWidget->setLayout(mainLayout);
     setCentralWidget(centralWidget);
 
-    //button
     m_retour = new QPushButton("X", this);
     m_pause  = new QPushButton("Pause", this);
 
-    // Button sizes
     m_retour->setFixedSize(this->height() * 0.07, this->height() * 0.08);
     m_pause ->setFixedSize(this->width() *0.15, this->height() * 0.08);
 
@@ -71,7 +65,6 @@ void SoloGameWindow::setupUi() {
     mainLayout->addWidget(m_retour);
     mainLayout->addWidget(m_pause);
 
-    // Position buttons and widgets on main window
     m_containerWidget->setParent(this);
     m_containerWidget->move(0,60);
 
@@ -94,7 +87,6 @@ void SoloGameWindow::keyPressEvent(QKeyEvent *event) {
 void SoloGameWindow::connectSignals() {
     connect(m_retour, &QPushButton::clicked, this, &SoloGameWindow::onRetourClicked);
     connect(m_pause, &QPushButton::clicked, this, &SoloGameWindow::onPauseClicked);
-    //connect(ui->pauseButton, &QPushButton::clicked, this, &SoloGameWindow::onPauseClicked);
 
 }
 
@@ -102,12 +94,8 @@ void SoloGameWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     QPixmap background(":/images/empty_background.png");
 
-    // Vérifier si l'image est correctement chargée
     if (!background.isNull()) {
-        // Redimensionner l'image avec une transformation fluide
         QPixmap scaledBackground = background.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-        // Dessiner l'image redimensionnée
         painter.drawPixmap(0, 0, scaledBackground);
     } else {
         qDebug() << "Erreur : Impossible de charger l'image de fond.";

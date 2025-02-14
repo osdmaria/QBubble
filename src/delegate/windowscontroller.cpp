@@ -110,6 +110,8 @@ void WindowsController::quit() {
     QApplication::quit();
 }
 
+
+
 void WindowsController::setFixedSize(QMainWindow *w){
 
     QScreen *screen = QGuiApplication::primaryScreen();

@@ -19,8 +19,11 @@ public:
     ~pausewindow();
     QPushButton *m_reprendreButton;
     QPushButton *m_menuPrincipalButton;
+
+
 signals:
-    void resumeGame();
+    void reprendreClicked();
+    //void resumeGame();
 
 private:
 

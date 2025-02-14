@@ -24,16 +24,18 @@ public:
     ~SoloGameController();
     SoloGameWindow *soloGameView(){return m_soloGameView;}
     ScoreModel *scoreModel(){return m_scoreModel;}
-
     MainMenuWindow *mainMenuWindow(){return m_mainMenuView;}
+
 signals:
     void menuLauched();
+    void openMainMenuFromPause();
 
 private slots:
     void updateScore(int x);
 public slots:
     void openMainMenu();
     void showPauseWindow();
+
 
 
 private:
@@ -43,6 +45,7 @@ private:
     void connectSignalsButttons();
     MainMenuWindow *m_mainMenuView;
     pausewindow *m_pauseWindow;
+
 
 };
 
