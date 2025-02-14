@@ -7,6 +7,7 @@ Bubble::Bubble(QObject *parent)
 }
 
 
+
 bool Bubble::isColored(){return true;}
 bool Bubble::isDestructible(){return true;}
 bool Bubble::isExplosive(){return false;}
@@ -22,3 +23,19 @@ void Bubble::printPositions(){
     qDebug()<<"cartesian ("<<m_position.x()<<","<<m_position.y()
              <<") -- matrix2D ("<<m_gridPosition[0]<<","<<m_gridPosition[1]<<")";
 }
+
+Bubble::~Bubble() {}
+
+QPointF Bubble::pos() const {
+    return m_position;
+}
+
+void Bubble::setPos(const QPointF& pos) {
+    if (m_position != pos) {
+        m_position = pos;
+        emit posChanged();
+    }
+}
+
+
+

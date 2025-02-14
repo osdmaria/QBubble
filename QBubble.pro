@@ -31,11 +31,13 @@ SOURCES += \
     src/view/canonwidget.cpp \
     src/view/containerwidget.cpp \
     src/view/enemiesgamewindow.cpp \
+    src/view/gameoverwindow.cpp \
     src/view/gridscene.cpp \
     src/view/howtoplaywindow.cpp \
     src/view/mainmenuwindow.cpp \
     src/view/multiplayerchoicewindow.cpp \
     src/view/music.cpp \
+    src/view/pausewindow.cpp \
     src/view/scorewidget.cpp \
     src/view/sologamewindow.cpp
 
@@ -60,11 +62,13 @@ HEADERS += \
     src/view/canonwidget.h \
     src/view/containerwidget.h \
     src/view/enemiesgamewindow.h \
+    src/view/gameoverwindow.h \
     src/view/gridscene.h \
     src/view/howtoplaywindow.h \
     src/view/mainmenuwindow.h \
     src/view/multiplayerchoicewindow.h \
     src/view/music.h \
+    src/view/pausewindow.h \
     src/view/scorewidget.h \
     src/view/sologamewindow.h
 
@@ -82,3 +86,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     src/resources/resources.qrc
+
+FORMS += \
+    src/view/gameoverwindow.ui

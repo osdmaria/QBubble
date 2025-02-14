@@ -24,7 +24,7 @@ void AlliesGameWindow::setupUi() {
     m_scoreWidget->setFixedSize(300, 30);
     m_scoreWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    topLayout->addWidget(m_scoreWidget);
+    //topLayout->addWidget(m_scoreWidget);
     topLayout->setContentsMargins(0, 0, 0, 0);
     topLayout->setSpacing(0);
 
@@ -34,10 +34,20 @@ void AlliesGameWindow::setupUi() {
     cannonLayout->setSpacing(50);
 
     mainLayout->addLayout(topLayout);
-    mainLayout->addWidget(m_gridScene);
+    //mainLayout->addWidget(m_gridScene);
     //mainLayout->addWidget(m_cannonWidget);
     //mainLayout->addWidget(m_cannonWidget2);
-    mainLayout->addWidget(m_containerWidget);
+    //mainLayout->addWidget(m_containerWidget);
+
+    // Add an image to the game window
+    QLabel *imageLabel = new QLabel(this);
+    QPixmap pixmap(":/images/meme.png");  // Adjust the path to your image
+    pixmap = pixmap.scaled(pixmap.width(), pixmap.height() +200, Qt::KeepAspectRatio);  // Scale by 1.5x, keep aspect ratio
+    imageLabel->setPixmap(pixmap);
+    imageLabel->setAlignment(Qt::AlignCenter);  // Center the image
+    mainLayout->addWidget(imageLabel);  // Add the image to the layout
+
+
     mainLayout->setAlignment(Qt::AlignCenter);
 
     centralWidget->setLayout(mainLayout);

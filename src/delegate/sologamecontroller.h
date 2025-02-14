@@ -12,6 +12,7 @@
 #include "src/model/hexgridmodel.h"
 #include "src/model/canonmodel.h"
 #include "src/model/generatormodel.h"
+#include "src/view/pausewindow.h"
 
 #include <QPushButton>
 #include <QScreen>
@@ -44,11 +45,13 @@ signals:
     void menuLauched();
     void generateSingleBubble();
     void generateBubblesRow(int size);
+    void openMainMenuFromPause();
 
 private slots:
     void updateScore(int x);
 public slots:
     void openMainMenu();
+    void showPauseWindow();
 
 private:
     void connectSignalsButttons();
@@ -58,8 +61,8 @@ private:
     MainMenuWindow *m_mainMenuView;
     GeneratorModel *m_bubbleGeneratorModel;
     HexGridModel *m_hexGridModel;
-    //BurstCalculator *m_burstCalculator;
     CanonModel *m_canonModel;
+    pausewindow *m_pauseWindow;
 };
 
 #endif // SOLOGAMECONTROLLER_H

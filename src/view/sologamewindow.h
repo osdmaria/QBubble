@@ -9,6 +9,8 @@
 #include <QGraphicsView>
 #include <QLabel>
 #include <QPushButton>
+#include <QPainter>
+#include <QPixmap>
 
 #include "src/view/scorewidget.h"
 #include "src/view/gridscene.h"
@@ -38,6 +40,7 @@ private:
 signals:
     void onRetourClicked();
     void onPauseClicked();
+
 
 private:
     ScoreWidget *m_scoreWidget;

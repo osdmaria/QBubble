@@ -32,13 +32,13 @@ signals:
     void onMultiplayerClicked();
     void onHowToPlayClicked();
     void onQuitClicked();
-
+public slots:
+    void onImageButtonClicked();
 private:
     void setupUi();
     void connectSignals();
     void paintEvent(QPaintEvent *event);
     QLabel* createTitle();
     Music *m_music;
-    void onImageButtonClicked();
 };
 #endif // MAINMENUWINDOW_H

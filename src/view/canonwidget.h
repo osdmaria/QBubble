@@ -19,6 +19,7 @@ public:
     int getStartX() const { return startX; }  // Getter for startX
     int getStartY() const { return startY; }  // Getter for startY
 
+    int startX, startY;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -29,7 +30,6 @@ private slots:
 private:
     CanonModel *m_model; // Pointer to the model
     int m_radius;
-    int startX, startY;
     QPen pen;
 
 

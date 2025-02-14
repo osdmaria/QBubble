@@ -27,6 +27,7 @@ signals:
     void angleChanged(qreal newAngle); // Emitted when the angle changes
     void shootSignal(int angle);        // Emitted when the bubble is shot
     void cannonFired(Bubble *b);
+
 private:
     qreal angle;
     Bubble *m_currentBubble;

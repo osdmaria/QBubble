@@ -17,7 +17,11 @@ public:
     int radius(){return m_radius;}
     void radius(int r){m_radius = r;}
 
+
     void loadImage(const QString s);
+    QPixmap getImage() const { return m_bubbleImage; }
+    static QPixmap loadImageByColor(const QColor &color); // Static method to get image by color
+    QGraphicsItemAnimation* animationLinearMovement(qreal xBegin, qreal yBegin, qreal xEnd, qreal yEnd, int animationTime);
 
 
 private:

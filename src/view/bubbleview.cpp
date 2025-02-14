@@ -46,3 +46,27 @@ void BubbleView::loadImage(const QString s){
         m_bubbleImage = QPixmap(":/images/bubble_indestructible");
     }
 }
+
+
+QGraphicsItemAnimation* BubbleView::animationLinearMovement(qreal xBegin, qreal yBegin, qreal xEnd, qreal yEnd, int animationTime) {
+    QTimeLine* timer = new QTimeLine(animationTime);
+    QGraphicsItemAnimation* animation = new QGraphicsItemAnimation;
+    int maxFrameRange = 200;
+    timer->setFrameRange(0, maxFrameRange);
+
+    qreal distanceX = (xEnd - xBegin);
+    qreal distanceY = (yEnd - yBegin);
+
+    for (int i = 0; i <= maxFrameRange; ++i) {
+        qreal step = static_cast<qreal>(i) / maxFrameRange;
+        qreal posX = xBegin + distanceX * step;
+        qreal posY = yBegin + distanceY * step;
+        animation->setPosAt(step, QPointF(posX, posY));
+    }
+
+    animation->setItem(this);
+    animation->setTimeLine(timer);
+    timer->start();
+
+    return animation;
+}

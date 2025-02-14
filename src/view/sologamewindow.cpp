@@ -2,6 +2,10 @@
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 
+
+#include <QPropertyAnimation>
+#include <QTimer>
+
 #include <QPropertyAnimation>
 #include <QTimer>
 #include "src/model/coloredbubble.h"
@@ -18,7 +22,7 @@ SoloGameWindow::SoloGameWindow(int widthSize, int heightSize, QWidget *parent)
     setupUi();
     connectSignals();
     connect(m_canonModel, &CanonModel::shootSignal, this, &SoloGameWindow::shootBubble);
-    //connect(m_canonModel, &CanonModel::BubbleShoot, m_gridModel, &GridModel::addBubbleInCanonPosition);
+
     setFocusPolicy(Qt::StrongFocus);
     setFocus();
 }
@@ -60,15 +64,15 @@ void SoloGameWindow::setupUi() {
     m_pause  = new QPushButton("Pause", this);
 
     // Button sizes
-    m_retour->setFixedSize(35, 50);
-    m_pause ->setFixedSize(100, 50);
+    m_retour->setFixedSize(35, 40);
+    m_pause ->setFixedSize(100, 40);
 
     //Style des boutons
     QString buttonStyle = "QPushButton {"
                           "background-color: #31B472;"
                           "color: #EEFF6A;"
                           "border-radius: 15px;"
-                          "font-size: 30px;"
+                          "font-size: 28px;"
                           "border: 2px solid #EEFF6A;"
                           "}"
                           "QPushButton:hover {"
@@ -112,7 +116,6 @@ void SoloGameWindow::connectSignals() {
         emit onPauseClicked();});
 
 }
-
 void SoloGameWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     QPixmap background("://images/empty_background.png");
@@ -131,38 +134,48 @@ void SoloGameWindow::paintEvent(QPaintEvent *event) {
     QMainWindow::paintEvent(event);
 }
 
-void SoloGameWindow::shootBubble(int angle) {
-    // // Create a new bubble with a default color (e.g., red) and position
-    // QColor bubbleColor = Qt::red; // Example color
-    // QPointF startPosition = QPointF(m_canonWidget->getStartX(), m_canonWidget->getStartY()); // Start at the cannon's position
-    // ColoredBubble* bubble = new ColoredBubble("bordeaux");
 
-    // // Create a BubbleView to visually represent the bubble
-    // BubbleView* bubbleView = new BubbleView("bordeaux", 20, false); // Radius of 20, no offset
-    // m_gridScene->scene()->addItem(bubbleView); // Add the bubble to the scene
 
-    // // Calculate the end position of the bubble based on the angle
-    // qreal length = 500; // Length of the animation
-    // qreal endX = startPosition.x() + length * qCos(qDegreesToRadians(angle));
-    // qreal endY = startPosition.y() - length * qSin(qDegreesToRadians(angle)); // Negative Y for upward direction
-    // QPointF endPosition(endX, endY);
 
-    // // Create an animation to move the rbubble
-    // QPropertyAnimation* animation = new QPropertyAnimation(bubble, "pos");
-    // animation->setDuration(1000); // Animation duration in milliseconds
-    // animation->setStartValue(startPosition);
-    // animation->setEndValue(endPosition);
-    // animation->setEasingCurve(QEasingCurve::Linear);
+ void SoloGameWindow::shootBubble(int angle) {
+//     // Créez une nouvelle bulle avec une couleur et une position de départ
+//     QColor bubbleColor = Qt::red; // Exemple de couleur
+//     QPointF startPosition = QPointF(m_gridScene->width()/2,0); // Position de départ au niveau du canon
+//     Bubble* bubble = new Bubble(bubbleColor, startPosition, this);
 
-    // // Connect the animation to remove the bubble after it finishes
-    // connect(animation, &QPropertyAnimation::finished, [bubbleView, bubble]() {
-    //     // Use a timer to remove the bubble after 3 seconds
-    //     QTimer::singleShot(3000, [bubbleView, bubble]() {
-    //         delete bubbleView; // Remove the visual representation
-    //         delete bubble;    // Delete the bubble object
-    //     });
-    // });
+//     // Créez une vue pour la bulle
+//     BubbleView* bubbleView = new BubbleView(bubble, 20, false); // Rayon de 20, pas de décalage
+//     m_gridScene->scene()->addItem(bubbleView); // Ajoutez la bulle à la scène
 
-    // // // Start the animation
-    // // animation->start();
-}
+//     // Calculez la position finale en fonction de l'angle
+//     qreal length = 200; // Longueur de l'animation
+//     qreal endX = startPosition.x() + length * qCos(qDegreesToRadians(angle));
+//     qreal endY = startPosition.y() - length * qSin(qDegreesToRadians(angle)); // Y négatif pour aller vers le haut
+//     qDebug() << "positions end:" << endX << endY;
+//     QPointF endPosition(endX, endY);
+
+//     // Convertir les positions en coordonnées globales pour la scène
+//     QPointF startScenePosition = bubbleView->mapToScene(startPosition) - startPosition;
+//     QPointF endScenePosition = bubbleView->mapToScene(endPosition) - startPosition;
+
+//     // Créez l'animation en utilisant la fonction animationLinearMovement
+//     QGraphicsItemAnimation* animation = bubbleView->animationLinearMovement(
+//         startScenePosition.x(), startScenePosition.y(), // Position de départ en coordonnées globales
+//         endScenePosition.x(), endScenePosition.y(),     // Position finale en coordonnées globales
+//         1000                                              // Durée de l'animation en millisecondes
+//         );
+
+//     // Connectez l'animation pour supprimer la bulle après l'animation
+//     QTimeLine* timer = animation->timeLine();
+//     connect(timer, &QTimeLine::finished, [bubbleView, bubble]() {
+//         // Utilisez un timer pour supprimer la bulle après 3 secondes
+//         QTimer::singleShot(3000, [bubbleView, bubble]() {
+//             delete bubbleView; // Supprimez la vue de la bulle
+//             delete bubble;     // Supprimez l'objet bulle
+//         });
+//     });
+
+//     // Débogage : vérifiez que l'animation est bien démarrée
+//     qDebug() << "Démarrage de l'animation de la bulle";
+ }
+
