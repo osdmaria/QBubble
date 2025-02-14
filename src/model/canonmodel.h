@@ -16,7 +16,7 @@ public:
 
 signals:
     void angleChanged(qreal newAngle); // Emitted when the angle changes
-    void BubbleShoot(int angle);        // Emitted when the bubble is shot
+    void shootSignal(int angle);        // Emitted when the bubble is shot
 
 private:
     qreal angle;

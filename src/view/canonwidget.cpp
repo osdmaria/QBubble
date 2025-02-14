@@ -44,7 +44,7 @@ void CanonWidget::keyPressEvent(QKeyEvent *event) {
     }
     else if (event->key() == Qt::Key_Space) {
         // Emit the bubbleShot signal with the current angle
-        emit m_model->BubbleShoot(static_cast<int>(m_model->getAngle()));
+        emit m_model->shootSignal(static_cast<int>(m_model->getAngle()));
         qDebug() << "Spacebar pressed! Angle:" << m_model->getAngle();
     }
 }

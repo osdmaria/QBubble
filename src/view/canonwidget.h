@@ -16,6 +16,7 @@ public:
 
     void setModel(CanonModel *model); // Set the model
     void keyPressEvent(QKeyEvent *event) override;
+    int startX, startY;
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -26,8 +27,10 @@ private slots:
 private:
     CanonModel *m_model; // Pointer to the model
     int m_radius;
-    int startX, startY;
     QPen pen;
+
+
 };
+
 
 #endif // CANONWIDGET_H

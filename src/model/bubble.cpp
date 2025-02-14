@@ -16,3 +16,16 @@ Bubble::Bubble(QColor color, QPointF position, QObject *parent)
     m_position{position} {}
 
 Bubble::~Bubble() {}
+
+QPointF Bubble::pos() const {
+    return m_position;
+}
+
+void Bubble::setPos(const QPointF& pos) {
+    if (m_position != pos) {
+        m_position = pos;
+        emit posChanged();
+    }
+}
+
+

@@ -20,6 +20,7 @@ public:
 
     QPixmap getImage() const { return m_bubbleImage; }
     static QPixmap loadImageByColor(const QColor &color); // Static method to get image by color
+    QGraphicsItemAnimation* animationLinearMovement(qreal xBegin, qreal yBegin, qreal xEnd, qreal yEnd, int animationTime);
 
 private slots:
     void updatePosition(QPointF newPos, bool offset);

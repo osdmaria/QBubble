@@ -1,4 +1,5 @@
 #include "gridmodel.h"
+#include "qpropertyanimation.h"
 
 GridModel::GridModel(int max_number_rows, int nb_cols, QObject *parent)
     : QGraphicsScene(parent),
@@ -35,6 +36,24 @@ void GridModel::addBubble(int row, int col, QColor color) {
     emit bubbleAdded(bubble, m_offset_tab[row]);
 }
 
+
+Bubble* GridModel::addBubble(int row, int col, QColor color, int random) {
+
+    if (row < 0 || row >= m_max_nb_rows
+        || col < 0 || col >= m_nb_cols
+        || m_grid[row][col] != nullptr) {
+        return nullptr;
+    }
+
+    // Create a new bubble with the correct color
+    Bubble* bubble = new Bubble(color, QPointF(row, col));
+    m_grid[row][col] = bubble; // Store in the grid
+
+    // Notify the view
+    emit bubbleAdded(bubble, m_offset_tab[row]);
+
+    return bubble;
+}
 
 void GridModel::removeBubble(int row, int col) {
     if (row < 0 || row >= m_max_nb_rows ||
@@ -114,84 +133,116 @@ void GridModel::addNewLineOfBubbles() {
 }
 
 
-
-void GridModel::addRandomBubbleInAvaibleSpace(){
-    if (isFirstRowFull()){
-
-        QVector<Bubble*> newRow(m_nb_cols, nullptr);
-        m_grid.append(newRow);  // Add a new row at the bottom
-        if(m_curr_nb_rows == 0){
-            m_offset_tab.append(true);
-        }
-        else{
-            m_offset_tab.append(!m_offset_tab[m_curr_nb_rows-1]);    // Add a new row at the top
-        }
-        m_curr_nb_rows++;
-
-        if(isGameOver()){ return;}
-    }
-
-    QVector<QPair<int, int>> spacesToPlay = getAccessibleBlankSpace();
-
-    int randomIndex = QRandomGenerator::global()->bounded(spacesToPlay.size());
-    int row = spacesToPlay[randomIndex].first;
-    int col = spacesToPlay[randomIndex].second;
-    qDebug() << "Adding Bubble at (" << row << ", " << col << ")";
-    addBubble(row, col, getRandomColor());
-
-    handlePossiblePoppableBubbles(row,col);
-    handlePossibleDroppableBubbles();
-    handlePossibleEmptyFirstRow();
-}
-
-
-
-void GridModel::addBubbleInCanonPosition(int angle) {
+void GridModel::addRandomBubbleInAvaibleSpace() {
     if (isFirstRowFull()) {
         QVector<Bubble*> newRow(m_nb_cols, nullptr);
         m_grid.append(newRow);  // Add a new row at the bottom
         if (m_curr_nb_rows == 0) {
             m_offset_tab.append(true);
         } else {
-            m_offset_tab.append(!m_offset_tab[m_curr_nb_rows - 1]);    // Add a new row at the top
+            m_offset_tab.append(!m_offset_tab[m_curr_nb_rows - 1]); // Add a new row at the top
         }
         m_curr_nb_rows++;
 
         if (isGameOver()) { return; }
     }
 
-    // Convert angle to radians
+    QVector<QPair<int, int>> spacesToPlay = getAccessibleBlankSpace();
+    int randomIndex = QRandomGenerator::global()->bounded(spacesToPlay.size());
+    int row = spacesToPlay[randomIndex].first;
+    int col = spacesToPlay[randomIndex].second;
+    qDebug() << "Adding Bubble at (" << row << ", " << col << ")";
+
+    // Find the lowest row where a bubble exists
+    int startRow = m_curr_nb_rows - 1; // Start at the last row
+    while (startRow > 0 && (m_grid[startRow][col] == nullptr)) {
+        startRow--; // Move upwards until we find a valid bubble
+    }
+    startRow = qMin(m_curr_nb_rows - 1, startRow + 1); // Make sure it starts below the bubbles
+    int startCol = col;
+
+    qDebug() << "Start Position: (" << startRow << ", " << startCol << ")";
+    qDebug() << "Target Position: (" << row << ", " << col << ")";
+
+    Bubble* newBubble = addBubble(row, col, getRandomColor(), 1);
+    if (!newBubble) {
+        qDebug() << "Failed to create bubble!";
+        return;
+    }
+
+    // Ensure start and target positions are valid before animating
+    if (startRow >= m_grid.size() || startCol >= m_nb_cols || m_grid[startRow][startCol] == nullptr) {
+        qDebug() << "Invalid start position! Adjusting...";
+        return;
+    }
+    if (row >= m_grid.size() || col >= m_nb_cols || m_grid[row][col] == nullptr) {
+        qDebug() << "Invalid target position!";
+        return;
+    }
+
+    // Create animation
+    QPropertyAnimation* animation = new QPropertyAnimation(newBubble, "pos");
+    animation->setDuration(500); // Animation time in milliseconds
+    animation->setStartValue(m_grid[startRow][startCol]->pos()); // Use the current position
+    animation->setEndValue(m_grid[row][col]->pos()); // Use the target position
+    animation->setEasingCurve(QEasingCurve::OutBounce);  // Smooth movement
+
+    connect(animation, &QPropertyAnimation::finished, [=]() {
+        handlePossiblePoppableBubbles(row, col);
+        handlePossibleDroppableBubbles();
+        handlePossibleEmptyFirstRow();
+    });
+
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
+
+
+
+
+void GridModel::addBubbleInCanonDirection(int angle) {
+    // Gestion des lignes pleines (commun aux deux fonctions)
+    if (isFirstRowFull()) {
+        QVector<Bubble*> newRow(m_nb_cols, nullptr);
+        m_grid.append(newRow);  // Ajouter une nouvelle ligne en bas
+        if (m_curr_nb_rows == 0) {
+            m_offset_tab.append(true);
+        } else {
+            m_offset_tab.append(!m_offset_tab[m_curr_nb_rows - 1]); // Ajouter une nouvelle ligne en haut
+        }
+        m_curr_nb_rows++;
+
+        if (isGameOver()) { return; }
+    }
+
+    // Convertir l'angle en radians
     double radians = angle * M_PI / 180.0;
 
-    // Calculate direction vector
+    // Calculer le vecteur de direction
     double dx = cos(radians);
     double dy = sin(radians);
 
-    // Starting position (assuming the shooter is at the bottom center)
+    // Position de départ (en supposant que le canon est au centre en bas)
     double x = m_nb_cols / 2.0;
     double y = m_curr_nb_rows - 1;
 
-    // Simulate the bubble's path
+    // Simuler le chemin de la bulle
     while (true) {
         x += dx;
         y += dy;
 
-        // Check if the bubble is out of bounds
+        // Vérifier si la bulle est hors des limites
         if (x < 0 || x >= m_nb_cols || y < 0 || y >= m_curr_nb_rows) {
             break;
         }
 
-        // Check if the bubble hits another bubble
+        // Vérifier si la bulle touche une autre bulle
         int row = static_cast<int>(y);
         int col = static_cast<int>(x);
-        qDebug()<<"row et col:"<<row <<col;
 
         if (m_grid[row][col] != nullptr) {
-            // Place the bubble in the nearest available position
-            // You might need to adjust the position based on the grid's offset
-
+            // Ajuster la position en fonction de l'offset
             if (m_offset_tab[row]) {
-                // Adjust for offset rows
                 if (x - col > 0.5) {
                     col++;
                 }
@@ -201,17 +252,41 @@ void GridModel::addBubbleInCanonPosition(int angle) {
                 }
             }
 
-            // Ensure the column is within bounds
+            // Assurer que la colonne est dans les limites
             if (col < 0) col = 0;
             if (col >= m_nb_cols) col = m_nb_cols - 1;
 
-            // Add the bubble at the calculated position
+            // Ajouter la bulle à la position calculée
             qDebug() << "Adding Bubble at (" << row << ", " << col << ")";
-            addBubble(row, col, getRandomColor());
+            Bubble* newBubble = addBubble(row, col, getRandomColor(), 1);
+            if (!newBubble) {
+                qDebug() << "Failed to create bubble!";
+                return;
+            }
 
-            handlePossiblePoppableBubbles(row, col);
-            handlePossibleDroppableBubbles();
-            handlePossibleEmptyFirstRow();
+            // Trouver la ligne la plus basse où une bulle existe
+            int startRow = m_curr_nb_rows - 1; // Commencer à la dernière ligne
+            while (startRow > 0 && (m_grid[startRow][col] == nullptr)) {
+                startRow--; // Remonter jusqu'à trouver une bulle valide
+            }
+            startRow = qMin(m_curr_nb_rows - 1, startRow + 1); // S'assurer qu'elle commence en dessous des bulles
+            int startCol = col;
+
+            // Créer l'animation
+            QPropertyAnimation* animation = new QPropertyAnimation(newBubble, "pos");
+            animation->setDuration(500); // Durée de l'animation en millisecondes
+            animation->setStartValue(m_grid[startRow][startCol]->pos()); // Utiliser la position actuelle
+            animation->setEndValue(m_grid[row][col]->pos()); // Utiliser la position cible
+            animation->setEasingCurve(QEasingCurve::OutBounce);  // Mouvement fluide
+
+            connect(animation, &QPropertyAnimation::finished, [=]() {
+                handlePossiblePoppableBubbles(row, col);
+                handlePossibleDroppableBubbles();
+                handlePossibleEmptyFirstRow();
+            });
+
+            animation->start(QAbstractAnimation::DeleteWhenStopped);
+
             break;
         }
     }

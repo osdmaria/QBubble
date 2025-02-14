@@ -29,6 +29,7 @@ public:
     ContainerWidget *containerWidget(){return m_containerWidget;}
     QPushButton *m_retour;
     QPushButton *m_pause;
+    void shootBubble(int angle);
 
 private:
     void setupUi();
@@ -37,6 +38,7 @@ private:
 signals:
     void onRetourClicked();
     void onPauseClicked();
+
 
 private:
     ScoreWidget *m_scoreWidget;

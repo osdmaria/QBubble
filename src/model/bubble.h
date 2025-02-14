@@ -1,14 +1,23 @@
 #ifndef BUBBLE_H
 #define BUBBLE_H
 
-#include <QObject>
-#include <QColor>
+#include <QGraphicsItem>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsItemAnimation>
+#include <QPropertyAnimation>
+#include <QTimer>
+#include <QPainter>
+#include <QStyleOptionGraphicsItem>
+#include <QRectF>
+#include <QPixmap>
 #include <QPointF>
-#include <QDebug>
-
+#include <QTimeLine>
+#include <QLabel>
 class Bubble : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QPointF pos READ pos WRITE setPos NOTIFY posChanged)
 
 private:
     QColor m_color;
@@ -57,6 +66,9 @@ public:
         }
     }
 
+    QPointF pos() const;
+    void setPos(const QPointF& pos);
+
 signals:
     void popped();
     void positionChanged(QPointF newPosition, bool offset);
@@ -64,6 +76,7 @@ signals:
 
     void scoreValueChanged(int newScoreValue);
     void destructibleChanged(bool newDestructible);
+    void posChanged();
 };
 
 #endif // BUBBLE_H
