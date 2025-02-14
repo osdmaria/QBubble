@@ -1,4 +1,4 @@
-#include "Music.h"
+#include "src/view/music.h"
 #include <QUrl>
 #include <QDebug>
 #include <QTemporaryFile>
@@ -12,7 +12,12 @@ Music::Music() {
 
 void Music::playBackgroundMusic(float volume) {
     QString tempDir = QStandardPaths::writableLocation(QStandardPaths::TempLocation);
-    QString finalPath = tempDir + "/BubbleMusicBG.mp3";
+    QString finalPath = ":/Music/BubbleMusicBG.mp3";
+
+    if (!QFile::exists(finalPath)) {
+        qDebug() << "Le fichier audio n'existe pas :" << finalPath;
+    }
+
 
     QFile resourceFile(":/Music/BubbleMusicBG.mp3");
     if (resourceFile.open(QIODevice::ReadOnly)) {
@@ -27,8 +32,12 @@ void Music::playBackgroundMusic(float volume) {
         return;
     }
 
+
+    audioOutput->setVolume(1);
+
     musicPlayer->setSource(QUrl::fromLocalFile(finalPath));
     audioOutput->setVolume(volume);
+
 
     QObject::connect(musicPlayer, &QMediaPlayer::mediaStatusChanged, [this](QMediaPlayer::MediaStatus status) {
         if (status == QMediaPlayer::EndOfMedia) {

@@ -18,12 +18,16 @@ ContainerWidget::ContainerWidget(QWidget *parent)
     layout->addWidget(m_spotBubble2, 0, Qt::AlignCenter);
     layout->addWidget(m_spotBubble3, 0, Qt::AlignCenter);
 
-    QPixmap test1(":/images/bubble_bordeaux");
-    test1 = test1.scaled(30, 30, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    QPixmap test1(":/images/bubble_explosive");
+    QPixmap test2(":/images/bubble_indestructible");
+    QPixmap test3(":/images/bubble_lightblue");
+    test1 = test1.scaled(60, 60, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    test2 = test2.scaled(60, 60, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    test3 = test3.scaled(60, 60, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
     m_spotBubble1->setPixmap(test1);
-    m_spotBubble2->setPixmap(test1);
-    m_spotBubble3->setPixmap(test1);
+    m_spotBubble2->setPixmap(test2);
+    m_spotBubble3->setPixmap(test3);
 
 
     setLayout(layout);

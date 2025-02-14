@@ -89,3 +89,7 @@ void CanonWidget::paintEvent(QPaintEvent *event) {
     painter.drawPath(path);
 }
 
+QSize CanonWidget::sizeHint() const {
+    return QSize(m_radius * 2, m_radius * 2);
+}
+

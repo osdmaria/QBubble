@@ -1,18 +1,24 @@
-
 #include "bubble.h"
 
-Bubble::Bubble(QColor color, int scoreValue, bool isDestructible, QPointF position, QObject *parent)
-    : QObject{parent},
-    m_color{color},
-    m_scoreValue{scoreValue},
-    m_isDestructible{isDestructible},
-    m_position{position} {}
+Bubble::Bubble(QObject *parent)
+    : QObject{parent}
+{
+    m_gridPosition.fill(-1);
+}
 
-Bubble::Bubble(QColor color, QPointF position, QObject *parent)
-    : QObject{parent},
-    m_color{color},
-    m_scoreValue{1},
-    m_isDestructible{true},
-    m_position{position} {}
 
-Bubble::~Bubble() {}
+bool Bubble::isColored(){return true;}
+bool Bubble::isDestructible(){return true;}
+bool Bubble::isExplosive(){return false;}
+
+void Bubble::printType() {
+    qDebug()<< "Bulle";
+}
+
+QString Bubble::type() const {return "Bulle";}
+
+
+void Bubble::printPositions(){
+    qDebug()<<"cartesian ("<<m_position.x()<<","<<m_position.y()
+             <<") -- matrix2D ("<<m_gridPosition[0]<<","<<m_gridPosition[1]<<")";
+}

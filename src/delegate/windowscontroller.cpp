@@ -6,31 +6,22 @@ WindowsController::WindowsController(QObject *parent) :QObject(parent)
     m_mainMenuView = new MainMenuWindow();
     m_howToPlayView = new HowToPlayWindow();
     m_multiplayerChoiceView = new MultiplayerChoiceWindow();
-    m_soloGameView = new SoloGameWindow();
-    m_alliesGameView = new AlliesGameWindow();
-    m_enemiesGameView = new EnemiesGameWindow();
+    m_soloGameView = new SoloGameWindow(m_fixedWidth,m_fixedHeight);
+    m_alliesGameView = new AlliesGameWindow(m_fixedWidth,m_fixedHeight);
+    m_enemiesGameView = new EnemiesGameWindow(m_fixedWidth,m_fixedHeight);
     music = new Music();
 
     //Menu principal
+    setFixedSize(m_fixedWidth,m_fixedHeight,m_mainMenuView);
     connectSignalsMainMenu();
-    setFixedSize(m_mainMenuView);
 
     //Comment jouer
+    setFixedSize(m_fixedWidth,m_fixedHeight,m_howToPlayView);
     connectSignalsHowToplay();
-    setFixedSize(m_howToPlayView);
 
     //Choix Multijoueurs
+    setFixedSize(m_fixedWidth,m_fixedHeight,m_multiplayerChoiceView);
     connectSignalsMultiplayerChoice();
-    setFixedSize(m_multiplayerChoiceView);
-
-    //Solo
-    setFixedSize(m_soloGameView);
-
-    //Allies
-    setFixedSize(m_alliesGameView);
-
-    //Enemies
-    setFixedSize(m_enemiesGameView);
 }
 
 void WindowsController::connectSignalsMainMenu(){
@@ -116,6 +107,10 @@ void WindowsController::quit() {
     QApplication::quit();
 }
 
+
+void WindowsController::setFixedSize(int width, int height, QMainWindow *window){
+    window->setFixedSize(width,height);
+
 void WindowsController::setFixedSize(QMainWindow *w){
 
     QScreen *screen = QGuiApplication::primaryScreen();
@@ -125,4 +120,5 @@ void WindowsController::setFixedSize(QMainWindow *w){
     int height = screenGeometry.height();
 
     w->setFixedSize(1125,642);
+
 }

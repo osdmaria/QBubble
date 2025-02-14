@@ -151,7 +151,7 @@ void MainMenuWindow::paintEvent(QPaintEvent *event) {
     // Vérifier si l'image est correctement chargée
     if (!background.isNull()) {
         // Redimensionner l'image avec une transformation fluide
-        QPixmap scaledBackground = background.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        QPixmap scaledBackground = background.scaled(size(), Qt::KeepAspectRatio , Qt::SmoothTransformation);
 
         // Dessiner l'image redimensionnée
         painter.drawPixmap(0, 0, scaledBackground);

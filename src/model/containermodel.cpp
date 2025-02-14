@@ -1,11 +1,22 @@
 #include "containermodel.h"
+#include "src/model/coloredbubble.h"
+#include "src/model/explosivebubble.h"
+#include "src/model/indestructiblebubble.h"
 
 ContainerModel::ContainerModel(QObject *parent)
     : QObject{parent}
 {
+    m_container[0] =  new ColoredBubble("lightblue");
+    m_container[1] = new IndestructibleBubble();
+    m_container[2] = new ExplosiveBubble(2);
 }
 
-ContainerModel::~ContainerModel() {}
+ContainerModel::~ContainerModel() {
+    for (int i = 0; i < 3; ++i) {
+        delete m_container[i];
+        m_container[i] = nullptr;
+    }
+}
 
 Bubble *ContainerModel::popRight(){
     Bubble *toReturn = getBubbleAt(m_size-1);
@@ -46,3 +57,8 @@ Bubble *ContainerModel::addRight(Bubble *b){
     return toReturn;
 }
 
+void ContainerModel::updateContainer(Bubble *b){
+    Bubble *bubble = addLeft(b);
+    qDebug() << "Réservoir mis à jour";
+    emit containerUpdated(bubble);
+}

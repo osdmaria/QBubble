@@ -9,8 +9,6 @@ MainController::MainController(QObject *parent)
     m_windowsController->launch();
     m_windowsController->startMusic();
     //QTimer::singleShot(500, m_windowsController, &WindowsController::startMusic);
-
-
     connect(m_windowsController->mainMenuWindow(), &MainMenuWindow::onSoloClicked, this, &MainController::soloLaunched);
 }
 
@@ -22,6 +20,7 @@ MainController::~MainController() {
 
 void MainController::soloLaunched(){
     m_soloGameController = new SoloGameController(m_windowsController->soloGameWindow(),m_windowsController->mainMenuWindow());
+    m_soloGameController->start();
 }
 
 void MainController::soloEnded(){

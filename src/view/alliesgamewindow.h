@@ -18,10 +18,10 @@
 
 class AlliesGameWindow : public QMainWindow
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
-    explicit AlliesGameWindow(QWidget *parent = nullptr);
+    explicit AlliesGameWindow(int widthSize, int heightSize, QWidget *parent = nullptr);
     ~AlliesGameWindow();
     ScoreWidget *scoreWidget(){return m_scoreWidget;}
     GridScene *gridScene(){return m_gridScene;}
@@ -37,7 +37,7 @@ signals:
 
 private:
     ScoreWidget *m_scoreWidget;
-    GridModel *m_gridModel;
+    //GridModel *m_gridModel;
     GridScene *m_gridScene;
     //CannonWidget *m_cannonWidget;
     //CannonWidget *m_cannonWidget2;
