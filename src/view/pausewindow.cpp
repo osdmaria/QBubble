@@ -53,9 +53,9 @@ void pausewindow::setupUi() {
     m_reprendreButton->setStyleSheet(buttonStyle);
     verticalLayout->addWidget(m_reprendreButton);
 
-    m_menuPrincipalButton = new QPushButton("Menu Principal", verticalLayoutWidget);
-    m_menuPrincipalButton->setStyleSheet(buttonStyle);
-    verticalLayout->addWidget(m_menuPrincipalButton);
+    m_nouvellePartieButton = new QPushButton("NouvellePartie", verticalLayoutWidget);
+    m_nouvellePartieButton->setStyleSheet(buttonStyle);
+    verticalLayout->addWidget(m_nouvellePartieButton);
 
     verticalLayoutWidget->setLayout(verticalLayout);
 
