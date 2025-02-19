@@ -52,8 +52,7 @@ void MainMenuWindow::setupUi() {
     m_howToPlayButton->setStyleSheet(buttonStyle);
     m_quitButton->setStyleSheet(buttonStyle);
 
-    //boutton du son
-    // Création du bouton image
+    
     QPixmap buttonImage(":/images/Volume.png");
     if (!buttonImage.isNull()) {
         m_imageButton->setFixedSize(buttonImage.size());
@@ -75,19 +74,16 @@ void MainMenuWindow::setupUi() {
         qDebug() << "Erreur : Impossible de charger l'image du bouton.";
     }
 
-    // Layout pour le bouton son (à droite de la fenêtre)
     QHBoxLayout *soundButtonLayout = new QHBoxLayout();
-    soundButtonLayout->addStretch();  // Pousser à droite
-    soundButtonLayout->addWidget(m_imageButton);  // Ajouter le bouton du son
+    soundButtonLayout->addStretch(); 
+    soundButtonLayout->addWidget(m_imageButton);  
 
-    // Layout pour le titre (centré)
     QLabel *title = createTitle();
     QHBoxLayout *titleLayout = new QHBoxLayout();
-    titleLayout->addStretch();  // Pousser le titre vers le centre
-    titleLayout->addWidget(title);  // Ajouter le titre
-    titleLayout->addStretch();  // Pousser le titre vers le centre
+    titleLayout->addStretch(); 
+    titleLayout->addWidget(title);  
+    titleLayout->addStretch();  
 
-    // Layout pour les boutons (centré avec espacement)
     QVBoxLayout *buttonsLayout = new QVBoxLayout();
     buttonsLayout->addSpacerItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
     buttonsLayout->addWidget(m_soloButton);
@@ -96,16 +92,16 @@ void MainMenuWindow::setupUi() {
     buttonsLayout->addWidget(m_quitButton);
     buttonsLayout->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed));
     buttonsLayout->setAlignment(Qt::AlignHCenter);
-    // Layout principal pour le titre et les boutons
-    QVBoxLayout *mainContentLayout = new QVBoxLayout();
-    mainContentLayout->addLayout(titleLayout);  // Ajouter le layout du titre
-    mainContentLayout->addLayout(buttonsLayout);  // Ajouter les boutons
-    mainContentLayout->addStretch();  // Pousser le contenu vers le haut
 
-    // Layout complet pour la fenêtre (englobant tout)
+    
+    QVBoxLayout *mainContentLayout = new QVBoxLayout();
+    mainContentLayout->addLayout(titleLayout);  
+    mainContentLayout->addLayout(buttonsLayout);  
+    mainContentLayout->addStretch();  
+
     QVBoxLayout *fullLayout = new QVBoxLayout();
-    fullLayout->addLayout(soundButtonLayout);  // Ajouter le bouton son en haut
-    fullLayout->addLayout(mainContentLayout);  // Ajouter le contenu principal
+    fullLayout->addLayout(soundButtonLayout);  
+    fullLayout->addLayout(mainContentLayout);  
 
     // Centraliser le widget
     QWidget *centralWidget = new QWidget(this);
@@ -146,12 +142,8 @@ void MainMenuWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     QPixmap background(":/images/empty_background.png");
 
-    // Vérifier si l'image est correctement chargée
     if (!background.isNull()) {
-        // Redimensionner l'image avec une transformation fluide
         QPixmap scaledBackground = background.scaled(size(), Qt::KeepAspectRatio , Qt::SmoothTransformation);
-
-        // Dessiner l'image redimensionnée
         painter.drawPixmap(0, 0, scaledBackground);
     } else {
         qDebug() << "Erreur : Impossible de charger l'image de fond.";
@@ -163,7 +155,7 @@ void MainMenuWindow::paintEvent(QPaintEvent *event) {
 QLabel* MainMenuWindow::createTitle() {
 
     QLabel *title = new QLabel(this);
-    title->setText("\nMKOBAM's\nQBubble++\n");
+    title->setText("\nMKOBAT's\nQBubble++\n");
     int width = this->width() *0.7;
     int height = this->height() * 0.7;
     title->setFixedSize(width,height);
