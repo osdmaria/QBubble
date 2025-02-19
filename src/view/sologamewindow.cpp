@@ -5,9 +5,6 @@
 
 #include <QPropertyAnimation>
 #include <QTimer>
-
-#include <QPropertyAnimation>
-#include <QTimer>
 #include "src/model/coloredbubble.h"
 
 SoloGameWindow::SoloGameWindow(int widthSize, int heightSize, QWidget *parent)
@@ -18,7 +15,6 @@ SoloGameWindow::SoloGameWindow(int widthSize, int heightSize, QWidget *parent)
     m_canonModel = new CanonModel();
     m_containerWidget = new ContainerWidget();
     m_gridScene = new GridScene(width(),height(),35,70,this);
-    m_containerWidget = new ContainerWidget();
     setupUi();
     connectSignals();
     connect(m_canonModel, &CanonModel::shootSignal, this, &SoloGameWindow::shootBubble);

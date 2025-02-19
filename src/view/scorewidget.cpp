@@ -16,8 +16,11 @@ ScoreWidget::~ScoreWidget(){}
 void ScoreWidget::setupUi() {
     QGraphicsDropShadowEffect *shadow = new QGraphicsDropShadowEffect(this);
     shadow->setBlurRadius(15);
-    shadow->setColor(Qt::darkGray);
+    shadow->setColor(Qt::white);
     shadow->setOffset(0, 0);
+    m_scoreLabel->setStyleSheet("color: #EEFF6A; "
+                                "font-size: 24px; "
+                                "font-weight: bold;");
     m_scoreLabel->setGraphicsEffect(shadow);
 }
 

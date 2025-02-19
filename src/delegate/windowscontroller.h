@@ -29,6 +29,8 @@ public:
     HowToPlayWindow *howToplayWindow(){return m_howToPlayView;}
     MultiplayerChoiceWindow *multiplayerChoiceWindow(){return m_multiplayerChoiceView;}
     SoloGameWindow *soloGameWindow(){return m_soloGameView;}
+    AlliesGameWindow *alliesGameWindow(){return m_alliesGameView;}
+    EnemiesGameWindow *enemiesGameWindow(){return m_enemiesGameView;}
     void startMusic();
 
 
