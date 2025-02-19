@@ -191,11 +191,16 @@ void EnemiesGameController::connectCannon(){
 }
 
 void EnemiesGameController::connectHexGrid(){
+    connect(m_hexGridModel, &HexGridModel::lastRowReached, this, &EnemiesGameController::handleLastRow);
+    connect(m_hexGridModel, &HexGridModel::shotHandled , this, &EnemiesGameController::handleBubblesBurst);
+    connect(m_hexGridModel, &HexGridModel::findDisconnectedBubbles , m_burstCalculator, &BurstCalculator::burstDisconnectedBubbles);
+    connect(m_hexGridModel, &HexGridModel::shotOutOfGrid , m_bubbleGeneratorModel, &GeneratorModel::genSingleBubble);
     connect(m_bubbleGeneratorModel, &GeneratorModel::bubblesRowGenerated, m_hexGridModel, &HexGridModel::addRow);
 }
 
 void EnemiesGameController::connectGridScene(){
     connect(m_hexGridModel, &HexGridModel::bubbleAdded, m_enemiesGameView->gridScene(), &GridScene::onBubbleAdded);
+    connect(m_hexGridModel, &HexGridModel::bubbleDestroyed, m_enemiesGameView->gridScene(), &GridScene::onBubbleDestroyed);
     connect(m_hexGridModel, &HexGridModel::bubbleMoved, m_enemiesGameView->gridScene(), &GridScene::onBubbleMoved);
 }
 

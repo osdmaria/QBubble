@@ -144,7 +144,7 @@ void SoloGameController::gameWon(){
 }
 
 void SoloGameController::openMainMenu() {
-    m_soloGameView->hide();
+    delete m_soloGameView;
     m_mainMenuView->show();
     emit menuLauched();
 }
