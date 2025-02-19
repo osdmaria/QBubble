@@ -8,6 +8,7 @@ SoloGameController::SoloGameController(SoloGameWindow *soloGameView,MainMenuWind
     m_canonModel = new CanonModel();
     m_bubbleGeneratorModel = new GeneratorModel();
     m_pauseWindow = nullptr;
+
     m_hexGridModel = new HexGridModel(soloGameView->gridScene()->width(),
                                       soloGameView->gridScene()->height(),
                                       m_soloGameView->gridScene()->gridRadius(),
@@ -16,7 +17,6 @@ SoloGameController::SoloGameController(SoloGameWindow *soloGameView,MainMenuWind
                                       );
     m_gridInitializer = new GridInitializer(m_hexGridModel);
     m_burstCalculator = new BurstCalculator(m_hexGridModel);
-
 
     //connectsignal des buttons
     connectSignalsButttons();
@@ -27,7 +27,6 @@ SoloGameController::SoloGameController(SoloGameWindow *soloGameView,MainMenuWind
     connectGridScene();
     connectScore();
     connectBurstCalculator();
-
 }
 
 SoloGameController::~SoloGameController(){

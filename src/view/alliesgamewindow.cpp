@@ -1,14 +1,9 @@
 #include "src/view/alliesgamewindow.h"
-#include <QLabel>
-#include <QPixmap>
 #include <QGraphicsScene>
 #include <QGraphicsItem>
-
-
 #include <QPropertyAnimation>
 #include <QTimer>
 #include "src/model/coloredbubble.h"
-
 
 AlliesGameWindow::AlliesGameWindow(int widthSize, int heightSize, QWidget *parent)
     : QMainWindow{parent}, m_music(new Music())
@@ -22,6 +17,7 @@ AlliesGameWindow::AlliesGameWindow(int widthSize, int heightSize, QWidget *paren
     m_containerWidget2 = new ContainerWidget(bubbleRadius);
     setupUi();
     connectSignals();
+
     setFocusPolicy(Qt::StrongFocus);
     setFocus();
 }
@@ -49,7 +45,7 @@ void AlliesGameWindow::setupUi() {
     // Center CanonWidget2
     m_canonWidget2 = new CanonWidget(m_gridScene->bubbleRadius(),25, 100, 100,this); // Add cannon
     qDebug()<<m_canonWidget2;
-    m_canonWidget2->focusWidget();
+    //m_canonWidget2->focusWidget();
     m_canonWidget2->setParent(this);
     m_canonWidget2->move(530,500);
     m_canonWidget2->show(); // Ensure it's visible
@@ -110,6 +106,13 @@ void AlliesGameWindow::setupUi() {
     m_pause->move(60, 10);
 
 
+}
+
+void AlliesGameWindow::showEvent(QShowEvent *event) {
+    QMainWindow::showEvent(event);
+
+    QPoint globalPos = m_gridScene->mapToParent(QPoint(0, 0));
+    qDebug()<<"Origine grille"<< globalPos;
 }
 
 void AlliesGameWindow::keyPressEvent(QKeyEvent *event) {

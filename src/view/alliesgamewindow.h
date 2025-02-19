@@ -30,8 +30,6 @@ public:
     ScoreWidget *scoreWidget(){return m_scoreWidget;}
 
     GridScene *gridScene(){return m_gridScene;}
-    //CanonModel *cannonModel(){return m_canonModel;}
-    //CanonModel *cannonModel2(){return m_canonModel2;}
     CanonWidget *canonWidget(){return m_canonWidget;}
     CanonWidget *canonWidget2(){return m_canonWidget2;}
     ContainerWidget *containerWidget(){return m_containerWidget;}
@@ -61,6 +59,7 @@ private:
     Music *m_music;
     void connectSignals();
     void paintEvent(QPaintEvent *event);
+    void showEvent(QShowEvent *event);
 };
 
 #endif // ALLIESGAMEWINDOW_H

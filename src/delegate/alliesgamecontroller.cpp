@@ -18,7 +18,7 @@ AlliesGameController::AlliesGameController(AlliesGameWindow *alliesGameView, Mai
     m_gridInitializer = new GridInitializer(m_hexGridModel);
     m_burstCalculator = new BurstCalculator(m_hexGridModel);
 
-
+    //connectsignal des buttons
     connectSignalsButttons();
     connectGenerator();
     connectContainer();
