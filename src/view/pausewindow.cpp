@@ -53,9 +53,9 @@ void pausewindow::setupUi() {
     m_reprendreButton->setStyleSheet(buttonStyle);
     verticalLayout->addWidget(m_reprendreButton);
 
-    m_nouvellePartieButton = new QPushButton("NouvellePartie", verticalLayoutWidget);
-    m_nouvellePartieButton->setStyleSheet(buttonStyle);
-    verticalLayout->addWidget(m_nouvellePartieButton);
+    m_saveGameButton = new QPushButton("Enregistrer la partie", verticalLayoutWidget);
+    m_saveGameButton->setStyleSheet(buttonStyle);
+    verticalLayout->addWidget(m_saveGameButton);
 
     verticalLayoutWidget->setLayout(verticalLayout);
 
