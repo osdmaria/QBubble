@@ -18,18 +18,23 @@ void MainMenuWindow::setupUi() {
 
     m_soloButton = new QPushButton("Partie solo", this);
     m_multiplayerButton = new QPushButton("Partie multijoueurs", this);
-    m_howToPlayButton = new QPushButton("Comment jouer", this);
     m_quitButton = new QPushButton("Quitter", this);
+    m_loadgameButton  = new QPushButton("Charger", this);
+    m_niveauButton  = new QPushButton("Choisir le niveau", this);
+
     m_imageButton = new QPushButton(this);
+    m_howToPlayButton = new QPushButton(this);
     m_isImageOne = true;
 
 
     //Taille des bouttons
     int buttonWidth = 400;//this->width() *0.7;
-    int buttonHeight = 58;//this->height() * 0.15;
+    int buttonHeight = 50;//this->height() * 0.15;
+
     m_soloButton->setFixedSize(buttonWidth, buttonHeight);
     m_multiplayerButton->setFixedSize(buttonWidth, buttonHeight);
-    m_howToPlayButton->setFixedSize(buttonWidth, buttonHeight);
+    m_loadgameButton->setFixedSize(buttonWidth, buttonHeight);
+    m_niveauButton->setFixedSize(buttonWidth, buttonHeight);
     m_quitButton->setFixedSize(buttonWidth, buttonHeight);
 
     //Style des boutons
@@ -49,11 +54,11 @@ void MainMenuWindow::setupUi() {
 
     m_soloButton->setStyleSheet(buttonStyle);
     m_multiplayerButton->setStyleSheet(buttonStyle);
-    m_howToPlayButton->setStyleSheet(buttonStyle);
     m_quitButton->setStyleSheet(buttonStyle);
+    m_loadgameButton->setStyleSheet(buttonStyle);
+    m_niveauButton ->setStyleSheet(buttonStyle);
 
-    //boutton du son
-    // Création du bouton image
+    
     QPixmap buttonImage(":/images/Volume.png");
     if (!buttonImage.isNull()) {
         m_imageButton->setFixedSize(buttonImage.size());
@@ -70,42 +75,64 @@ void MainMenuWindow::setupUi() {
                                      "}"
                                      );
         m_imageButton->setIcon(QIcon(buttonImage));
-        m_imageButton->setIconSize(buttonImage.size());
+        m_imageButton->setIconSize(QSize(40, 40));
+    } else {
+        qDebug() << "Erreur : Impossible de charger l'image du bouton.";
+    }
+    QPixmap buttonImagePlay(":/images/how_to_play_icon.png");
+    if (!buttonImagePlay.isNull()) {
+        m_howToPlayButton->setFixedSize(buttonImagePlay.size());
+        m_howToPlayButton->setStyleSheet("QPushButton {"
+                                     "border: none;"
+                                     "background: transparent;"
+                                     "background-color: #31B472;"
+                                     "border: 2px solid #EEFF6A;"
+                                     "border-radius: 10px; "
+                                     "Padding : 2px;"
+                                     "}"
+                                     "QPushButton:hover {"
+                                     "background-color: #aade90;"
+                                     "}"
+                                     );
+        m_howToPlayButton->setIcon(QIcon(buttonImagePlay));
+        m_howToPlayButton->setIconSize(QSize(40, 40));
     } else {
         qDebug() << "Erreur : Impossible de charger l'image du bouton.";
     }
 
-    // Layout pour le bouton son (à droite de la fenêtre)
-    QHBoxLayout *soundButtonLayout = new QHBoxLayout();
-    soundButtonLayout->addStretch();  // Pousser à droite
-    soundButtonLayout->addWidget(m_imageButton);  // Ajouter le bouton du son
 
-    // Layout pour le titre (centré)
+    QHBoxLayout *soundButtonLayout = new QHBoxLayout();
+    soundButtonLayout->addStretch(); 
+    soundButtonLayout->addWidget(m_imageButton);
+    soundButtonLayout->addWidget(m_howToPlayButton);
+
     QLabel *title = createTitle();
     QHBoxLayout *titleLayout = new QHBoxLayout();
-    titleLayout->addStretch();  // Pousser le titre vers le centre
-    titleLayout->addWidget(title);  // Ajouter le titre
-    titleLayout->addStretch();  // Pousser le titre vers le centre
+    titleLayout->addStretch(); 
+    titleLayout->addWidget(title);  
+    titleLayout->addStretch();  
 
-    // Layout pour les boutons (centré avec espacement)
     QVBoxLayout *buttonsLayout = new QVBoxLayout();
     buttonsLayout->addSpacerItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
     buttonsLayout->addWidget(m_soloButton);
     buttonsLayout->addWidget(m_multiplayerButton);
-    buttonsLayout->addWidget(m_howToPlayButton);
+    buttonsLayout->addWidget(m_loadgameButton);
+    buttonsLayout->addWidget(m_niveauButton);
     buttonsLayout->addWidget(m_quitButton);
+
+
     buttonsLayout->addSpacerItem(new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed));
     buttonsLayout->setAlignment(Qt::AlignHCenter);
-    // Layout principal pour le titre et les boutons
-    QVBoxLayout *mainContentLayout = new QVBoxLayout();
-    mainContentLayout->addLayout(titleLayout);  // Ajouter le layout du titre
-    mainContentLayout->addLayout(buttonsLayout);  // Ajouter les boutons
-    mainContentLayout->addStretch();  // Pousser le contenu vers le haut
 
-    // Layout complet pour la fenêtre (englobant tout)
+    
+    QVBoxLayout *mainContentLayout = new QVBoxLayout();
+    mainContentLayout->addLayout(titleLayout);  
+    mainContentLayout->addLayout(buttonsLayout);  
+    mainContentLayout->addStretch();  
+
     QVBoxLayout *fullLayout = new QVBoxLayout();
-    fullLayout->addLayout(soundButtonLayout);  // Ajouter le bouton son en haut
-    fullLayout->addLayout(mainContentLayout);  // Ajouter le contenu principal
+    fullLayout->addLayout(soundButtonLayout);  
+    fullLayout->addLayout(mainContentLayout);  
 
     // Centraliser le widget
     QWidget *centralWidget = new QWidget(this);
@@ -139,6 +166,14 @@ void MainMenuWindow::connectSignals() {
         m_music->playSoundEffect("click");
         emit onImageButtonClicked();
     });
+    connect(m_loadgameButton, &QPushButton::clicked, [this]() {
+        m_music->playSoundEffect("click");
+
+    });
+    connect(m_niveauButton, &QPushButton::clicked, [this]() {
+        m_music->playSoundEffect("click");
+
+    });
 
 }
 
@@ -146,12 +181,8 @@ void MainMenuWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     QPixmap background(":/images/empty_background.png");
 
-    // Vérifier si l'image est correctement chargée
     if (!background.isNull()) {
-        // Redimensionner l'image avec une transformation fluide
         QPixmap scaledBackground = background.scaled(size(), Qt::KeepAspectRatio , Qt::SmoothTransformation);
-
-        // Dessiner l'image redimensionnée
         painter.drawPixmap(0, 0, scaledBackground);
     } else {
         qDebug() << "Erreur : Impossible de charger l'image de fond.";
@@ -163,7 +194,7 @@ void MainMenuWindow::paintEvent(QPaintEvent *event) {
 QLabel* MainMenuWindow::createTitle() {
 
     QLabel *title = new QLabel(this);
-    title->setText("\nMKOBAM's\nQBubble++\n");
+    title->setText("\nMKOBAT's\nQBubble++\n");
     int width = this->width() *0.7;
     int height = this->height() * 0.7;
     title->setFixedSize(width,height);

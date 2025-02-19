@@ -25,6 +25,8 @@ public:
     QPushButton *m_howToPlayButton;
     QPushButton *m_quitButton;
     QPushButton *m_imageButton;
+    QPushButton *m_loadgameButton;
+    QPushButton *m_niveauButton;
     bool m_isImageOne;
 
 signals:

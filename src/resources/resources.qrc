@@ -24,5 +24,6 @@
         <file>images/Volume.png</file>
         <file>images/wood.jpg</file>
         <file>images/meme.png</file>
+	<file>images/how_to_play_icon.png</file>
     </qresource>
 </RCC>
