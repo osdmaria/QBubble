@@ -20,7 +20,8 @@ GridScene::GridScene(int windowWidth, int windowHeight, int gridRadius, int bubb
     setStyleSheet("background: transparent;");
 
     m_width = windowWidth * 0.7;
-    m_height = windowHeight * 0.5;
+    m_height = windowHeight * 0.7;
+    qDebug()<<m_width << " "<< m_height ;
     setFixedSize(m_width,m_height);
 
     setAlignment(Qt::AlignLeft | Qt::AlignTop);

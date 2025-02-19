@@ -188,8 +188,6 @@ void EnemiesGameController::connectCannon(){
     connect(m_enemiesGameView->canonWidget(), &CanonWidget::updateAngle, m_canonModel, &CanonModel::updateAngle);
     connect(m_canonModel, &CanonModel::angleChanged, m_enemiesGameView->canonWidget(), &CanonWidget::onAngleChanged);
     connect(m_canonModel, &CanonModel::cannonLoaded, this, &EnemiesGameController::handleLoadCannon);
-
-
 }
 
 void EnemiesGameController::connectHexGrid(){

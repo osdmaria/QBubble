@@ -42,7 +42,7 @@ void SoloGameWindow::setupUi() {
     qDebug()<<m_canonWidget;
     m_canonWidget->focusWidget();
     m_canonWidget->setParent(this);
-    mainLayout->addWidget(m_canonWidget, 0, Qt::AlignHCenter); // Center the canon widget horizontally
+    m_canonWidget->move(420,450);//// Center the canon widget horizontally
     m_canonWidget->show(); // Ensure it's visible
 
 
@@ -83,10 +83,13 @@ void SoloGameWindow::setupUi() {
 
     // Position buttons and widgets on main window
     m_containerWidget->setParent(this);
-    m_containerWidget->move(26,250);
+    m_containerWidget->move(26,450);
+
+    m_gridScene->setParent(this);
+    m_gridScene->move(180, 10);
 
     m_scoreWidget->setParent(this);
-    m_scoreWidget->move(955, 50);
+    m_scoreWidget->move(970, 50);
 
     m_retour->setParent(this);
     m_retour->move(20,50);
