@@ -6,7 +6,6 @@
 #include "src/view/sologamewindow.h"
 
 #include "src/model/scoremodel.h"
-#include <QApplication>
 #include "src/model/containermodel.h"
 #include "src/view/mainmenuwindow.h"
 #include "src/model/hexgridmodel.h"
@@ -16,6 +15,7 @@
 #include "src/model/gridinitializer.h"
 #include "src/model/burstcalculator.h"
 
+#include <QApplication>
 #include <QPushButton>
 #include <QScreen>
 #include <QGuiApplication>

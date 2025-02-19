@@ -103,7 +103,6 @@
 #define __INT32_MAX__ 0x7fffffff
 #define __INT_WIDTH__ 32
 #define __SIZEOF_LONG__ 4
-#define __cpp_constexpr 201603L
 #define __UINT16_C(c) c
 #define __DECIMAL_DIG__ 21
 #define __FLT64_EPSILON__ 2.22044604925031308084726333618164062e-16F64
@@ -389,6 +388,7 @@
 #define __FLT32X_NORM_MAX__ 1.79769313486231570814527423731704357e+308F32x
 #define __CHAR32_TYPE__ unsigned int
 #define __FLT_MAX__ 3.40282346638528859811704183484516925e+38F
+#define __cpp_constexpr 201603L
 #define __SSE2__ 1
 #define __cpp_deduction_guides 201703L
 #define __INT32_TYPE__ int

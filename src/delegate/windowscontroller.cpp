@@ -9,9 +9,6 @@ WindowsController::WindowsController(QObject *parent) :QObject(parent)
     //A changer !
     m_howToPlayView = new HowToPlayWindow();
     m_multiplayerChoiceView = new MultiplayerChoiceWindow();
-    m_soloGameView = new SoloGameWindow(m_fixedWidth,m_fixedHeight);
-    m_alliesGameView = new AlliesGameWindow(m_fixedWidth,m_fixedHeight);
-    m_enemiesGameView = new EnemiesGameWindow(m_fixedWidth,m_fixedHeight);
     music = new Music();
 
     //Menu principal
@@ -80,7 +77,7 @@ void WindowsController::openMainMenuFromMultiplayerChoice() {
 
 //SOLO GAME -> openSolo
 void WindowsController::openSoloGame() {
-
+    m_soloGameView = new SoloGameWindow(m_fixedWidth,m_fixedHeight);
     m_mainMenuView->hide();
     m_soloGameView->show();
     emit soloLaunched();
@@ -88,6 +85,7 @@ void WindowsController::openSoloGame() {
 
 void WindowsController::openAlliesGameWindow() {
     qDebug() << "Allies clicked!";
+    m_alliesGameView = new AlliesGameWindow(m_fixedWidth,m_fixedHeight);
     m_multiplayerChoiceView->hide();
     m_alliesGameView->show();
     emit alliesLauched();
@@ -95,6 +93,7 @@ void WindowsController::openAlliesGameWindow() {
 
 void WindowsController::openEnemiesGameWindow() {
     qDebug() << "Enemies clicked!";
+    m_enemiesGameView = new EnemiesGameWindow(m_fixedWidth,m_fixedHeight);
     m_multiplayerChoiceView->hide();
     m_enemiesGameView->show();
     emit enemiesLauched();

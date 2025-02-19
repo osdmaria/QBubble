@@ -2,7 +2,6 @@
 #include <QGraphicsScene>
 #include <QGraphicsItem>
 #include <QPropertyAnimation>
-#include <QPropertyAnimation>
 #include <QTimer>
 #include "src/model/coloredbubble.h"
 
@@ -11,6 +10,7 @@ SoloGameWindow::SoloGameWindow(int widthSize, int heightSize, QWidget *parent)
 {
     setFixedSize(widthSize,heightSize);
     m_scoreWidget = new ScoreWidget();
+
     int bubbleRadius = 67;
     m_gridScene = new GridScene(width(),height(),34,bubbleRadius,this);
     m_containerWidget = new ContainerWidget(bubbleRadius);

@@ -153,7 +153,7 @@ void SoloGameController::openMainMenu() {
 
 
 void SoloGameController::connectSignalsButttons(){
-    qDebug() << "retour clicked!";
+    qDebug() << "connectSignalsButttons() clicked!";
     connect(m_soloGameView, &SoloGameWindow::onRetourClicked, this, &SoloGameController::openMainMenu);
     connect(m_soloGameView, &SoloGameWindow::onPauseClicked, this, &SoloGameController::showPauseWindow);
 }
@@ -169,7 +169,9 @@ void SoloGameController::connectScore(){
     connect(m_burstCalculator, &BurstCalculator::bubblesDisconnected , m_scoreModel, &ScoreModel::calculScore);
     connect(m_scoreModel, &ScoreModel::calculScoreHandled, m_hexGridModel, &HexGridModel::handleBurst);
     connect(m_scoreModel, &ScoreModel::scoreChanged, m_soloGameView->scoreWidget(),&ScoreWidget::updateLabel);
-
+    //delete m_soloGameView;
+    m_mainMenuView->show();
+    emit menuLauched();
 }
 
 void SoloGameController::connectGenerator(){
