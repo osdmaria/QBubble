@@ -20,7 +20,7 @@ public:
     explicit pausewindow(QWidget *parent = nullptr);
     ~pausewindow();
     QPushButton *m_reprendreButton;
-    QPushButton *m_menuPrincipalButton;
+    QPushButton *m_nouvellePartieButton;
 
 
 signals:
