@@ -18,11 +18,13 @@ SOURCES += \
     src/delegate/sologamecontroller.cpp \
     src/delegate/windowscontroller.cpp \
     src/model/bubble.cpp \
+    src/model/burstcalculator.cpp \
     src/model/canonmodel.cpp \
     src/model/coloredbubble.cpp \
     src/model/containermodel.cpp \
     src/model/explosivebubble.cpp \
     src/model/generatormodel.cpp \
+    src/model/gridinitializer.cpp \
     src/model/hexgridmodel.cpp \
     src/model/indestructiblebubble.cpp \
     src/model/scoremodel.cpp \
@@ -49,11 +51,13 @@ HEADERS += \
     src/delegate/sologamecontroller.h \
     src/delegate/windowscontroller.h \
     src/model/bubble.h \
+    src/model/burstcalculator.h \
     src/model/canonmodel.h \
     src/model/coloredbubble.h \
     src/model/containermodel.h \
     src/model/explosivebubble.h \
     src/model/generatormodel.h \
+    src/model/gridinitializer.. \
     src/model/hexgridmodel.h \
     src/model/indestructiblebubble.h \
     src/model/scoremodel.h \

@@ -4,33 +4,47 @@
 #include <QWidget>
 #include <QPainter>
 #include <QKeyEvent>
-#include "src/model/canonmodel.h"
+#include <QPixmap>
+#include <QLabel>
+#include <QHBoxLayout>
+
+#include "src/view/bubbleview.h"
 
 class CanonWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit CanonWidget(QWidget *parent = nullptr,CanonModel *m_model=nullptr , int radius = 100, int startX = 125, int startY = 200);
+    explicit CanonWidget(int bubbleRadius , int radius = 100, int startX = 125, int startY = 20, QWidget *parent = nullptr);
     ~CanonWidget();
 
-    void setModel(CanonModel *model); // Set the model
     void keyPressEvent(QKeyEvent *event) override;
     int getStartX() const { return startX; }  // Getter for startX
     int getStartY() const { return startY; }  // Getter for startY
 
     int startX, startY;
+    void updateBubble(BubbleView *b);
+
+signals:
+    void shootSignal();
+    void updateAngle(int direction);
+
 
 protected:
     void paintEvent(QPaintEvent *event) override;
 
-private slots:
+
+public slots:
     void onAngleChanged(qreal newAngle); // Slot to handle angle changes
 
 private:
-    CanonModel *m_model; // Pointer to the model
+    int m_currentAngle = 90;
     int m_radius;
     QPen pen;
+    BubbleView *m_bubble = nullptr;
+    QLabel *m_spotBubble = nullptr;
+    QHBoxLayout *m_layout = nullptr;
+
 
 
 };

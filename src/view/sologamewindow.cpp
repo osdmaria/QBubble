@@ -1,11 +1,7 @@
 #include "src/view/sologamewindow.h"
 #include <QGraphicsScene>
 #include <QGraphicsItem>
-
-
 #include <QPropertyAnimation>
-#include <QTimer>
-
 #include <QPropertyAnimation>
 #include <QTimer>
 #include "src/model/coloredbubble.h"
@@ -15,13 +11,11 @@ SoloGameWindow::SoloGameWindow(int widthSize, int heightSize, QWidget *parent)
 {
     setFixedSize(widthSize,heightSize);
     m_scoreWidget = new ScoreWidget();
-    m_canonModel = new CanonModel();
-    m_containerWidget = new ContainerWidget();
-    m_gridScene = new GridScene(width(),height(),35,70,this);
-    m_containerWidget = new ContainerWidget();
+    int bubbleRadius = 67;
+    m_gridScene = new GridScene(width(),height(),34,bubbleRadius,this);
+    m_containerWidget = new ContainerWidget(bubbleRadius);
     setupUi();
     connectSignals();
-    connect(m_canonModel, &CanonModel::shootSignal, this, &SoloGameWindow::shootBubble);
 
     setFocusPolicy(Qt::StrongFocus);
     setFocus();
@@ -30,7 +24,6 @@ SoloGameWindow::SoloGameWindow(int widthSize, int heightSize, QWidget *parent)
 SoloGameWindow::~SoloGameWindow() {}
 
 void SoloGameWindow::setupUi() {
-
     //widget
 
     QWidget *centralWidget = new QWidget(this);
@@ -43,8 +36,9 @@ void SoloGameWindow::setupUi() {
     mainLayout->addWidget(m_scoreWidget);
     mainLayout->addWidget(m_gridScene);
 
+
     // Center CanonWidget
-    m_canonWidget = new CanonWidget(this, m_canonModel,25, 100, 100); // Add cannon
+    m_canonWidget = new CanonWidget(m_gridScene->bubbleRadius(), 25, 100, 100,this); // Add cannon
     qDebug()<<m_canonWidget;
     m_canonWidget->focusWidget();
     m_canonWidget->setParent(this);
@@ -99,6 +93,13 @@ void SoloGameWindow::setupUi() {
 
     m_pause->setParent(this);
     m_pause->move(60, 50);
+}
+
+void SoloGameWindow::showEvent(QShowEvent *event) {
+    QMainWindow::showEvent(event);
+
+    QPoint globalPos = m_gridScene->mapToParent(QPoint(0, 0));
+    qDebug()<<"Origine grille"<< globalPos;
 }
 
 

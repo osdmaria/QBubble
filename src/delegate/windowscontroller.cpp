@@ -4,6 +4,9 @@
 WindowsController::WindowsController(QObject *parent) :QObject(parent)
 {
     m_mainMenuView = new MainMenuWindow();
+
+    //Il faut que les view se créenent uniquement lorsqu'on en a bseoin et pas par défaut
+    //A changer !
     m_howToPlayView = new HowToPlayWindow();
     m_multiplayerChoiceView = new MultiplayerChoiceWindow();
     m_soloGameView = new SoloGameWindow(m_fixedWidth,m_fixedHeight);

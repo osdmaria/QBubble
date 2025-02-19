@@ -36,10 +36,16 @@ GridScene::GridScene(int windowWidth, int windowHeight, int gridRadius, int bubb
     int widthDiff = windowWidth - m_width;
     int heightDiff = windowHeight - m_height;
 
-    m_globalCenter = QPointF(m_localCenter.x() + widthDiff/2.f, m_localCenter.y() + heightDiff/2.f);
-    m_globalOrigin = QPointF(m_globalCenter.x()-m_width/2.f, m_globalCenter.y()-m_height/2.f);
+    //m_globalCenter = QPointF(m_localCenter.x() + widthDiff/2.f, m_localCenter.y() + heightDiff/2.f);
+    //m_globalOrigin = QPointF(m_globalCenter.x()-m_width/2.f, m_globalCenter.y()-m_height/2.f);
+    m_globalOrigin = QPointF(169+bubbleRadius/2,32+bubbleRadius/2);
+    m_globalCenter = QPointF(169+m_width/2,32+m_height/2);
 
-    m_ncols = m_width/(2*m_gridRadius) +1;
+
+
+
+    //m_ncols = m_width/(2*m_gridRadius) +1;
+    m_ncols = 12;
     m_nrows = qRound(m_height/(std::sqrt(3)*m_gridRadius));
 
 
@@ -54,7 +60,6 @@ void GridScene::onBubbleAdded(Bubble *b) {
     BubbleView* bubbleView = new BubbleView(b->type(),m_bubbleRadius);
     QVector<int> pos = b->gridPosition();
     m_bubbleMatrix[pos[0]][pos[1]] = bubbleView;
-
     bubbleView->setPos(b->position());
     scene()->addItem(bubbleView);
 }
@@ -75,6 +80,7 @@ void GridScene::onBubbleMoved(int prevRow, int prevCol, Bubble* b) {
     QVector<int> pos = b->gridPosition();
     m_bubbleMatrix[pos[0]][pos[1]] = bubbleView;
     bubbleView->setPos(b->position());
+    //bubbleView->setPos(b->position()-QPoint(m_bubbleRadius/2,m_bubbleRadius/2));
     scene()->addItem(bubbleView);
 
     delete m_bubbleMatrix[prevRow][prevCol] ;

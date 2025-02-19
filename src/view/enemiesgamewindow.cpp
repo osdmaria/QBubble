@@ -8,11 +8,12 @@ EnemiesGameWindow::EnemiesGameWindow(int widthSize, int heightSize, QWidget *par
     setFixedSize(widthSize,heightSize);
     m_scoreWidget = new ScoreWidget();
     m_scoreWidget2 = new ScoreWidget();
-    m_gridScene = new GridScene(width(),height(), 30,58,this);
+    int bubbleRadius = 67;
+    m_gridScene = new GridScene(width(),height(), 30,bubbleRadius,this);
     //m_cannonWidget = new CannonWidget();
     //m_cannonWidget2 = new CannonWidget();
     cannonLayout = new QHBoxLayout();
-    m_containerWidget = new ContainerWidget();
+    m_containerWidget = new ContainerWidget(bubbleRadius);
     setupUi();
 }
 

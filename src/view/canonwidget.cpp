@@ -1,57 +1,62 @@
 #include "canonwidget.h"
 #include "qpainterpath.h"
-
-CanonWidget::CanonWidget(QWidget *parent, CanonModel *model, int radius, int startX, int startY)
-    : QWidget(parent), m_model(model), m_radius(radius), startX(startX), startY(startY)
+#include <QLabel>
+#include <QHBoxLayout>
+CanonWidget::CanonWidget(int bubbleRadius, int radius, int startX, int startY, QWidget *parent)
+    : QWidget(parent), m_radius(radius), startX(startX), startY(startY)
 {
     if (radius <= 0) {
         qDebug() << "Error: Invalid radius!";
         return;
     }
 
+    m_spotBubble = new QLabel(this);
+    m_spotBubble->setFixedSize(bubbleRadius, bubbleRadius);
+    //m_layout = new QHBoxLayout(this);
+    //m_layout->addWidget(m_spotBubble, 0, Qt::AlignCenter);
+    //setLayout(m_layout);
+    m_spotBubble->move(65,100);
+
     setFocusPolicy(Qt::StrongFocus); // Make the widget focusable
     setFocus();
 
     // Set the size of the widget
     setFixedSize(250, 250);
-    setModel(model);
 }
 
 CanonWidget::~CanonWidget() {}
 
-void CanonWidget::setModel(CanonModel *model) {
-    this->m_model = model;
+void CanonWidget::updateBubble(BubbleView *b){
+    if(m_bubble){
+        //m_layout->removeWidget(m_spotBubble);
+        m_spotBubble->clear();
+        m_bubble = nullptr;
+    }
+    m_bubble = b;
+    if(b){
+        m_spotBubble->setPixmap(b->getImage());
+    }
 
-    // Connect the model's signals to the widget's slots
-    connect(model, &CanonModel::angleChanged, this, &CanonWidget::onAngleChanged);
 }
 
 void CanonWidget::onAngleChanged(qreal newAngle) {
-    // Update the UI when the angle changes
+    m_currentAngle = newAngle;
     update();
 }
 
 void CanonWidget::keyPressEvent(QKeyEvent *event) {
-    if (!m_model) return; // Ensure the model is set
-
     if (event->key() == Qt::Key_Left) {
-        m_model->updateAngle(-1); // Left arrow -> decrease angle
-        qDebug() << "Left arrow pressed. Current angle:" << m_model->getAngle();
+        emit updateAngle(-1);
     }
     else if (event->key() == Qt::Key_Right) {
-        m_model->updateAngle(1); // Right arrow -> increase angle
-        qDebug() << "Right arrow pressed. Current angle:" << m_model->getAngle();
+        emit updateAngle(1);
     }
     else if (event->key() == Qt::Key_Space) {
-        // Emit the bubbleShot signal with the current angle
-        emit m_model->shootSignal(static_cast<int>(m_model->getAngle()));
-        qDebug() << "Spacebar pressed! Angle:" << m_model->getAngle();
+        emit shootSignal();
     }
 }
 
 void CanonWidget::paintEvent(QPaintEvent *event) {
-    if (!m_model) return; // Ensure the model is set
-
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -63,8 +68,8 @@ void CanonWidget::paintEvent(QPaintEvent *event) {
 
     // Calculate the end point of the cannon line based on the angle
     qreal length = m_radius * 3;
-    qreal endX = startX + length * qCos(qDegreesToRadians(m_model->getAngle()));
-    qreal endY = startY - length * qSin(qDegreesToRadians(m_model->getAngle())); // Negative Y for upward direction
+    qreal endX = startX + length * qCos(qDegreesToRadians(m_currentAngle));
+    qreal endY = startY - length * qSin(qDegreesToRadians(m_currentAngle)); // Negative Y for upward direction
 
     // Draw the line
     painter.drawLine(startX, startY, endX, endY);
@@ -74,7 +79,7 @@ void CanonWidget::paintEvent(QPaintEvent *event) {
     path.moveTo(endX, endY);  // Start at the end of the line
     // Draw the arrow (a triangle)
     qreal arrowSize = 10; // Size of the arrow
-    qreal angleRad = qDegreesToRadians(-m_model->getAngle());
+    qreal angleRad = qDegreesToRadians(-m_currentAngle);
 
     // Calculate the two points for the sides of the arrow
     QPointF p1(endX - arrowSize * qCos(angleRad - M_PI_4), endY - arrowSize * qSin(angleRad - M_PI_4));

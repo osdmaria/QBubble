@@ -6,9 +6,12 @@
 ContainerModel::ContainerModel(QObject *parent)
     : QObject{parent}
 {
-    m_container[0] =  new ColoredBubble("lightblue");
-    m_container[1] = new IndestructibleBubble();
-    m_container[2] = new ExplosiveBubble(2);
+    //m_container[0] =  new ColoredBubble("lightblue");
+    //m_container[1] = new IndestructibleBubble();
+    //m_container[2] = new ExplosiveBubble(2);
+    m_container[0] =  nullptr;
+    m_container[1] = nullptr;
+    m_container[2] = nullptr;
 }
 
 ContainerModel::~ContainerModel() {
@@ -57,8 +60,17 @@ Bubble *ContainerModel::addRight(Bubble *b){
     return toReturn;
 }
 
-void ContainerModel::updateContainer(Bubble *b){
+void ContainerModel::initContainer(QVector<Bubble*> bubbles){
+    m_container[0] = bubbles[0];
+    m_container[1] = bubbles[1];
+    m_container[2] = bubbles[2];
+    emit bubblesChanged();
+}
+
+void ContainerModel::fill(Bubble *b){
     Bubble *bubble = addLeft(b);
-    qDebug() << "Réservoir mis à jour";
-    emit containerUpdated(bubble);
+    if(bubble){
+        emit transmitBubble(bubble);
+        emit bubblesChanged();
+    }
 }

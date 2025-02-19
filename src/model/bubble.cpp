@@ -30,12 +30,5 @@ QPointF Bubble::pos() const {
     return m_position;
 }
 
-void Bubble::setPos(const QPointF& pos) {
-    if (m_position != pos) {
-        m_position = pos;
-        emit posChanged();
-    }
-}
-
 
 

@@ -46,11 +46,11 @@ private:
     ScoreWidget *m_scoreWidget;
     GridScene *m_gridScene;
     CanonWidget *m_canonWidget;
-    CanonModel *m_canonModel;
     ContainerWidget *m_containerWidget;
     Music *m_music;
     void connectSignals();
     void paintEvent(QPaintEvent *event);
+    void showEvent(QShowEvent *event);
 
 };
 

@@ -7,7 +7,6 @@ GeneratorModel::GeneratorModel(QObject *parent) :
 
 void GeneratorModel::genSingleBubble(){
     Bubble *b = genRandomBubble();
-    qDebug() << "Une bulle est générée";
     emit bubbleGenerated(b);
 }
 

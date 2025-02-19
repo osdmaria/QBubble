@@ -6,6 +6,7 @@
 #include "src/model/coloredbubble.h"
 #include "src/model/explosivebubble.h"
 #include "src/model/indestructiblebubble.h"
+#include "src/model/hexgridmodel.h"
 
 class CanonModel : public QObject
 {
@@ -15,22 +16,25 @@ public:
     explicit CanonModel(QObject *parent = nullptr);
     ~CanonModel();
     qreal getAngle() const;
-    void updateAngle(int direction);
-
     void currentBubble(Bubble *bubble) {m_currentBubble = bubble;}
     Bubble *currentBubble(){return m_currentBubble;}
-    void fire();
+
+
 public slots:
+    void updateAngle(int direction);
     void loadBubble(Bubble *b);
+    void fire();
 
 signals:
-    void angleChanged(qreal newAngle); // Emitted when the angle changes
-    void shootSignal(int angle);        // Emitted when the bubble is shot
-    void cannonFired(Bubble *b);
+    void angleChanged(qreal newAngle);
+    void cannonLoaded();
+    void cannonFired(int angle, Bubble *b);
 
 private:
     qreal angle;
-    Bubble *m_currentBubble;
+    Bubble *m_currentBubble = nullptr;
+    HexGridModel *m_hexGrid;
+
 };
 
 #endif // CANONMODEL_H

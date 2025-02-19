@@ -29,11 +29,14 @@ public:
     Bubble *addLeft(Bubble *b);
     Bubble *addRight(Bubble *b);
 
+    void initContainer(QVector<Bubble*> bubbles);
+
 public slots:
-    void updateContainer(Bubble *b);
+    void fill(Bubble *b);
 
 signals:
-    void containerUpdated(Bubble *b);
+    void transmitBubble(Bubble *b);
+    void bubblesChanged();
 
 private:
     int m_size = 3;

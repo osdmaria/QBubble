@@ -17,6 +17,9 @@ public:
     int gridRadius() {return m_gridRadius;}
     int bubbleRadius() {return m_bubbleRadius;}
 
+    void width(int w){m_width=w;}
+    void height(int h){m_height=h;}
+
 public slots:
     void onBubbleAdded(Bubble *b);
     void onBubbleDestroyed(Bubble *b);

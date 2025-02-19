@@ -6,10 +6,11 @@ AlliesGameWindow::AlliesGameWindow(int widthSize, int heightSize, QWidget *paren
     setFixedSize(widthSize,heightSize);
     m_scoreWidget = new ScoreWidget();
     //m_gridModel = new GridModel(10,15);
-    m_gridScene = new GridScene(width(),height(), 30,58,this);
+    int bubbleRadius = 67;
+    m_gridScene = new GridScene(width(),height(), 30,bubbleRadius,this);
     //m_cannonWidget = new CannonWidget();
     //m_cannonWidget2 = new CannonWidget();
-    m_containerWidget = new ContainerWidget();
+    m_containerWidget = new ContainerWidget(bubbleRadius);
     setupUi();
 }
 
