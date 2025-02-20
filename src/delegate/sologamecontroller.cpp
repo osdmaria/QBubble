@@ -7,6 +7,7 @@ SoloGameController::SoloGameController(SoloGameWindow *soloGameView, QObject *pa
     m_containerModel = new ContainerModel();
     m_canonModel = new CanonModel();
     m_bubbleGeneratorModel = new GeneratorModel();
+    m_levelMenu = new LevelMenu();
 
     m_hexGridModel = new HexGridModel(soloGameView->gridScene()->width(),
                                       soloGameView->gridScene()->height(),
@@ -34,18 +35,20 @@ SoloGameController::~SoloGameController(){
     delete m_hexGridModel;
     delete m_gridInitializer;
     delete m_canonModel;
+    delete m_levelMenu;
 
 }
 
-void SoloGameController::start(){
+void SoloGameController::start(int level){
     m_running = true;
     m_gameOver = false;
     m_gameWon = false;
 
-    loadLevel(1);
+    loadLevel(level);
     initContainer();
     emit generateSingleBubble();
 }
+
 
 
 void SoloGameController::initContainer(){
@@ -53,6 +56,23 @@ void SoloGameController::initContainer(){
     m_containerModel->initContainer(vec);
 
 }
+
+
+
+void SoloGameController::startLevelSelection() {
+    m_levelMenu->show();
+
+    connect(m_levelMenu, &LevelMenu::levelSelected, this, [this](int level) {
+        m_levelMenu->close();
+        m_levelMenu = nullptr;
+
+        qDebug() << "Level selected:" << level;
+        start(level);
+    });
+}
+
+
+
 
 void SoloGameController::loadLevel(int level){
 
@@ -63,9 +83,9 @@ void SoloGameController::loadLevel(int level){
     case 2:
         m_gridInitializer->initLevel2();
         break;
-    // case 3:
-    //     m_gridInitializer->initLevel3();
-    //     break;
+    case 3:
+        m_gridInitializer->initLevel3();
+        break;
     default:
         m_gridInitializer->initLevel1();
         break;
@@ -137,6 +157,7 @@ void SoloGameController::gameOver(){
     m_gameOver = true;
     m_running = false;
     m_gameWon = false;
+    //m_soloGameView->gameOver();
     qDebug()<<"GAME OVER";
 }
 

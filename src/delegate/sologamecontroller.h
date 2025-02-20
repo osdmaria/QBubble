@@ -11,6 +11,8 @@
 #include "src/model/generatormodel.h"
 #include "src/model/gridinitializer.h"
 #include "src/model/burstcalculator.h"
+#include "src/view/levelmenu.h"
+#include "src/view/gameoverwindow.h"
 
 #include <QApplication>
 #include <QPushButton>
@@ -30,6 +32,7 @@ public:
     HexGridModel *hexGridModel(){return m_hexGridModel;}
     CanonModel *canonModel(){return m_canonModel;}
     GridInitializer *gridInitializer(){return m_gridInitializer;}
+    LevelMenu *levelMenu(){return m_levelMenu;}
 
     void connectGenerator();
     void connectContainer();
@@ -39,12 +42,13 @@ public:
     void connectGridScene();
     void connectScore();
 
-    void start();
+    void start(int level);
     void gameOver();
     void gameWon();
 
     void initContainer();
     void loadLevel(int level);
+    void startLevelSelection();
 
 signals:
     void menuLauched();
@@ -56,6 +60,8 @@ signals:
     void burstFromExplosiveBubble(int row, int col);
     void burstDisconnectedBubbles();
     void burst(QVector<Bubble*> vec);
+
+    void showGameOver();
 
 public slots:
     void handleLastRow();
@@ -74,6 +80,7 @@ private:
     GridInitializer *m_gridInitializer;
     CanonModel *m_canonModel;
     BurstCalculator *m_burstCalculator;
+    LevelMenu *m_levelMenu;
 
     bool m_running = false;
     bool m_gameOver = false;

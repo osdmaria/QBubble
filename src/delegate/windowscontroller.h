@@ -9,6 +9,8 @@
 #include "src/view/enemiesgamewindow.h"
 #include "src/view/music.h"
 
+#include "src/delegate/sologamecontroller.h"
+
 #include <QObject>
 #include <QPushButton>
 #include <QApplication>
@@ -29,6 +31,7 @@ public:
     SoloGameWindow *soloGameWindow(){return m_soloGameView;}
     AlliesGameWindow *alliesGameWindow(){return m_alliesGameView;}
     EnemiesGameWindow *enemiesGameWindow(){return m_enemiesGameView;}
+    SoloGameController *soloGameController(){return m_soloGameController;}
     void startMusic();
 
 
@@ -55,6 +58,7 @@ public slots:
     void openEnemiesGameWindow();
     void openAlliesGameWindow();
 
+
     //pause and back main menu
     void handleRetour();
     void openPause();
@@ -70,6 +74,7 @@ private:
     MainMenuWindow *m_mainMenuView;
     HowToPlayWindow *m_howToPlayView;
     MultiplayerChoiceWindow *m_multiplayerChoiceView;
+    SoloGameController *m_soloGameController;
 
     SoloGameWindow *m_soloGameView;
     AlliesGameWindow *m_alliesGameView;

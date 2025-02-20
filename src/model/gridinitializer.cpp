@@ -24,7 +24,7 @@ void GridInitializer::initLevel1(){
 
 }
 
-void GridInitializer::initLevel2(){
+void GridInitializer::initLevel3(){
     for(int i=0; i<m_hexGridModel->ncols();i++){
         if(i%2==0)
             m_hexGridModel->addBubbleMatrix(0,i,new ColoredBubble("green"));
@@ -40,4 +40,33 @@ void GridInitializer::initLevel2(){
     }
 
 }
+
+
+
+void GridInitializer::initLevel2() {
+    int cols = m_hexGridModel->ncols();
+    int rows = 5;
+
+    for(int row = 0; row < rows; row++) {
+        for(int col = 0; col < cols; col++) {
+            if (row == 0 || row == rows - 1) {
+                m_hexGridModel->addBubbleMatrix(row, col, new ColoredBubble("bordeaux"));
+            } else if ((row + col) % 2 == 0) {
+                if (row % 2 == 0)
+                    m_hexGridModel->addBubbleMatrix(row, col, new ColoredBubble("green"));
+                else
+                    m_hexGridModel->addBubbleMatrix(row, col, new ColoredBubble("brown"));
+            } else {
+                m_hexGridModel->addBubbleMatrix(row, col, new ColoredBubble("lightblue"));
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
 

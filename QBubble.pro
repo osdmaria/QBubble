@@ -36,6 +36,7 @@ SOURCES += \
     src/view/gameoverwindow.cpp \
     src/view/gridscene.cpp \
     src/view/howtoplaywindow.cpp \
+    src/view/levelmenu.cpp \
     src/view/mainmenuwindow.cpp \
     src/view/multiplayerchoicewindow.cpp \
     src/view/music.cpp \
@@ -69,6 +70,7 @@ HEADERS += \
     src/view/gameoverwindow.h \
     src/view/gridscene.h \
     src/view/howtoplaywindow.h \
+    src/view/levelmenu.h \
     src/view/mainmenuwindow.h \
     src/view/multiplayerchoicewindow.h \
     src/view/music.h \

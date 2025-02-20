@@ -1,6 +1,5 @@
 #include "pausewindow.h"
 //#include "sologamewindow.h"
-#include "src/delegate/sologamecontroller.h"
 
 
 PauseWindow::PauseWindow(QWidget *parent)
