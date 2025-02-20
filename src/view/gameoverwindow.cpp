@@ -27,11 +27,13 @@ void gameOverWindow::setupUi() {
     mainLayout->addWidget(label);
 
     QHBoxLayout *buttonLayout = new QHBoxLayout();
-    QPushButton *replayButton = new QPushButton("Rejouer", this);
-    QPushButton *menuButton = new QPushButton("Menu Principal", this);
 
-    buttonLayout->addWidget(replayButton);
-    buttonLayout->addWidget(menuButton);
+
+    m_rejouerButton = new QPushButton("Rejouer", this);
+    m_menuPrincipalButton = new QPushButton("Menu Principal", this);
+
+    buttonLayout->addWidget(m_rejouerButton);
+    buttonLayout->addWidget(m_menuPrincipalButton);
 
     mainLayout->addLayout(buttonLayout);
 
@@ -41,5 +43,20 @@ void gameOverWindow::setupUi() {
 }
 
 void gameOverWindow::connectSignals() {
-    //connect(m_reprendreButton, &QPushButton::clicked, this, &MainMenuWindow::openMainWindow);
+    if (!m_menuPrincipalButton) {
+        qDebug() << "ERROR: m_reprendreButton nullptr!";
+    }
+    if (!m_rejouerButton) {
+        qDebug() << "ERROR: m_retryButton nullptr!";
+    }
+
+    connect(m_menuPrincipalButton, &QPushButton::clicked, [this]() {
+        qDebug() << "Reprendre clicked!";
+        emit backMenuClicked();
+    });
+
+    connect(m_rejouerButton, &QPushButton::clicked, [this]() {
+        qDebug() << "Retry clicked!";
+        emit replayClicked();
+    });
 }

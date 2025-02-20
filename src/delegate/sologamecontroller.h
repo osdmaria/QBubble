@@ -12,7 +12,6 @@
 #include "src/model/gridinitializer.h"
 #include "src/model/burstcalculator.h"
 #include "src/view/levelmenu.h"
-#include "src/view/gameoverwindow.h"
 
 #include <QApplication>
 #include <QPushButton>
@@ -44,6 +43,8 @@ public:
 
     void start(int level);
     void gameOver();
+    void backMenu();
+    void replay();
     void gameWon();
 
     void initContainer();
@@ -60,6 +61,9 @@ signals:
     void burstFromExplosiveBubble(int row, int col);
     void burstDisconnectedBubbles();
     void burst(QVector<Bubble*> vec);
+
+    void replayTheGame();
+    void returnToMainMenu();
 
     void showGameOver();
 
@@ -81,6 +85,7 @@ private:
     CanonModel *m_canonModel;
     BurstCalculator *m_burstCalculator;
     LevelMenu *m_levelMenu;
+
 
     bool m_running = false;
     bool m_gameOver = false;

@@ -20,10 +20,15 @@ public:
     ~gameOverWindow();
     QPushButton *m_rejouerButton;
     QPushButton *m_menuPrincipalButton;
+
+signals:
+    void replayClicked();
+    void backMenuClicked();
 private:
 
     void setupUi();
     void connectSignals();
 };
+
 
 #endif // GAMEOVERWINDOW_H

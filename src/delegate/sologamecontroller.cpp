@@ -157,8 +157,22 @@ void SoloGameController::gameOver(){
     m_gameOver = true;
     m_running = false;
     m_gameWon = false;
-    //m_soloGameView->gameOver();
+    connect(m_soloGameView->gameOver(), &gameOverWindow::replayClicked, this, &SoloGameController::replay);
+    connect(m_soloGameView->gameOver(), &gameOverWindow::backMenuClicked, this, &SoloGameController::backMenu);
+    m_soloGameView->gameOver()->exec();
     qDebug()<<"GAME OVER";
+}
+
+void SoloGameController::replay() {
+    qDebug() << "Replay";
+    m_soloGameView->gameOver()->hide();
+    emit replayTheGame();
+}
+
+void SoloGameController::backMenu() {
+    qDebug() << "Back to Menu";
+    emit returnToMainMenu();
+
 }
 
 void SoloGameController::gameWon(){

@@ -137,11 +137,16 @@ void WindowsController::setFixedSize(int width, int height, QMainWindow *window)
     window->setFixedSize(width,height);
 }
 
-void WindowsController::connectSignalsSolo(){
+void WindowsController::connectSignalsSolo() {
     connect(m_soloGameView, &SoloGameWindow::onRetourClicked, this, &WindowsController::handleRetour);
     connect(m_soloGameView, &SoloGameWindow::onPauseClicked, this, &WindowsController::openPause);
-}
 
+    // Connecter les signaux de SoloGameController aux slots de WindowsController
+    // if (m_soloGameController) {
+    //     connect(m_soloGameController, &SoloGameController::replayTheGame, this, &WindowsController::handleReplayTheGame);
+    //     connect(m_soloGameController, &SoloGameController::returnToMainMenu, this, &WindowsController::handleReturnToMainMenu);
+    // }
+}
 
 void WindowsController::handleRetour(){
     if(m_soloGameView)
@@ -193,5 +198,20 @@ void WindowsController::retry(){
     }
     if(m_alliesGameView){}
     if(m_enemiesGameView){}
+}
+
+void WindowsController::handleReplayTheGame() {
+    qDebug() << "Replay the game";
+    if (m_soloGameView) {
+        m_soloGameView->hide();
+        delete m_soloGameView;
+        m_soloGameView = nullptr;
+    }
+    openSoloGame();  // Ouvrir une nouvelle partie solo
+}
+
+void WindowsController::handleReturnToMainMenu() {
+    qDebug() << "Return to main menu";
+    openMainMenu();  // Retourner au menu principal
 }
 
