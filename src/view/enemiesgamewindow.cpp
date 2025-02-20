@@ -22,7 +22,8 @@ EnemiesGameWindow::EnemiesGameWindow(int widthSize, int heightSize, QWidget *par
     setFocus();
 
     m_pauseWindow = nullptr;
-    m_gameOverWindow = nullptr;
+    m_gameOverWindow = new gameOverWindow;
+    m_menuLevels = new LevelMenu;
 }
 
 EnemiesGameWindow::~EnemiesGameWindow(){
@@ -58,7 +59,7 @@ void EnemiesGameWindow::setupUi() {
     m_canonWidget = new CanonWidget(m_gridScene->bubbleRadius(), 25, 100, 100,this); // Add cannon
     m_canonWidget->focusWidget();
     m_canonWidget->setParent(this);
-    m_canonWidget->move(420,500);// Center the canon widget horizontally
+    m_canonWidget->move(420,450);// Center the canon widget horizontally
     m_canonWidget->show(); // Ensure it's visible
 
     // Center CanonWidget2
@@ -66,7 +67,7 @@ void EnemiesGameWindow::setupUi() {
     qDebug()<<m_canonWidget2;
     m_canonWidget2->focusWidget();
     m_canonWidget2->setParent(this);
-    m_canonWidget2->move(530,500);
+    m_canonWidget2->move(530,450);
     m_canonWidget2->show(); // Ensure it's visible
 
     // Add container widget

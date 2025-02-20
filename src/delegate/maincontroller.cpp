@@ -50,7 +50,10 @@ void MainController::soloEnded(){
 
 void MainController::enemieLaunched(){
     m_enemieGameController = new EnemiesGameController(m_windowsController->enemiesGameWindow(),this);
+    connect(m_enemieGameController, &EnemiesGameController::requestLevelSelection, m_windowsController, &WindowsController::showLevelMenu);
+    connect(m_windowsController, &WindowsController::sendSelectedLevel, m_enemieGameController, &EnemiesGameController::start);
     m_enemieGameController->startLevelSelection();
+    connect(m_enemieGameController, &EnemiesGameController::showGameOver, m_windowsController, &WindowsController::handleGameOver);
 }
 
 void MainController::enemieEnded(){
@@ -59,7 +62,10 @@ void MainController::enemieEnded(){
 
 void MainController::allieLaunched(){
     m_alliesGameController = new AlliesGameController(m_windowsController->alliesGameWindow(),this);
+    connect(m_alliesGameController, &AlliesGameController::requestLevelSelection, m_windowsController, &WindowsController::showLevelMenu);
+    connect(m_windowsController, &WindowsController::sendSelectedLevel, m_alliesGameController, &AlliesGameController::start);
     m_alliesGameController->startLevelSelection();
+    connect(m_alliesGameController, &AlliesGameController::showGameOver, m_windowsController, &WindowsController::handleGameOver);
 }
 
 void MainController::allieEnded(){

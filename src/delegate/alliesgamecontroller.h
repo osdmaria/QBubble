@@ -4,8 +4,6 @@
 #include <QObject>
 
 #include "src/view/alliesgamewindow.h"
-
-#include "src/model/scoremodel.h"
 #include "src/model/scoremodel.h"
 #include "src/model/containermodel.h"
 #include "src/model/hexgridmodel.h"
@@ -14,8 +12,6 @@
 #include "src/model/gridinitializer.h"
 #include "src/model/burstcalculator.h"
 #include "src/view/levelmenu.h"
-#include "src/view/mainmenuwindow.h"
-#include "src/view/pausewindow.h"
 
 #include <QApplication>
 #include <QPushButton>
@@ -66,7 +62,12 @@ signals:
     void burstDisconnectedBubbles();
     void burst(QVector<Bubble*> vec);
 
-    void showGameOver();
+    void replayTheGame();
+    void returnToMainMenu();
+
+    void showGameOver(int score);
+
+    void requestLevelSelection();
 
 public slots:
     void handleLastRow();

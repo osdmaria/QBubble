@@ -108,9 +108,21 @@ void WindowsController::handleGameOver(int score){
     if(m_soloGameView){
         connect(m_soloGameView->gameOver(), &gameOverWindow::replayClicked, this, &WindowsController::replay);
         connect(m_soloGameView->gameOver(), &gameOverWindow::backMenuClicked, this, &WindowsController::handleRetour);
+        m_soloGameView->gameOver()->setScore(score);
+        m_soloGameView->gameOver()->exec();
     }
-    m_soloGameView->gameOver()->setScore(score);
-    m_soloGameView->gameOver()->exec();
+    if(m_enemiesGameView){
+        connect(m_enemiesGameView->gameOver(), &gameOverWindow::replayClicked, this, &WindowsController::replay);
+        connect(m_enemiesGameView->gameOver(), &gameOverWindow::backMenuClicked, this, &WindowsController::handleRetour);
+        m_enemiesGameView->gameOver()->setScore(score);
+        m_enemiesGameView->gameOver()->exec();
+    }
+    if(m_alliesGameView){
+        connect(m_alliesGameView->gameOver(), &gameOverWindow::replayClicked, this, &WindowsController::replay);
+        connect(m_alliesGameView->gameOver(), &gameOverWindow::backMenuClicked, this, &WindowsController::handleRetour);
+        m_alliesGameView->gameOver()->setScore(score);
+        m_alliesGameView->gameOver()->exec();
+    }
 }
 
 void WindowsController::replay(){
@@ -128,8 +140,32 @@ void WindowsController::replay(){
             qDebug()<<"check 4";
         }
     }
-    if(m_alliesGameView){}
-    if(m_enemiesGameView){}
+    if(m_alliesGameView){
+        if(m_alliesGameView->gameOver()){
+            m_alliesGameView->gameOver()->close();
+            m_alliesGameView->hide();
+            qDebug()<<"check 1";
+            emit alliesEnded();
+            qDebug()<<"check 2";
+            delete m_alliesGameView ;
+            qDebug()<<"check 3";
+            openAlliesGameWindow();
+            qDebug()<<"check 4";
+        }
+    }
+    if(m_enemiesGameView){
+        if(m_enemiesGameView->gameOver()){
+            m_enemiesGameView->gameOver()->close();
+            m_enemiesGameView->hide();
+            qDebug()<<"check 1";
+            emit enemiesEnded();
+            qDebug()<<"check 2";
+            delete m_enemiesGameView ;
+            qDebug()<<"check 3";
+            openEnemiesGameWindow();
+            qDebug()<<"check 4";
+        }
+    }
 }
 
 void WindowsController::backMenu(){

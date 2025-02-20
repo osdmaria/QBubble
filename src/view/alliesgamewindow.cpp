@@ -22,7 +22,8 @@ AlliesGameWindow::AlliesGameWindow(int widthSize, int heightSize, QWidget *paren
     setFocus();
 
     m_pauseWindow = nullptr;
-    m_gameOverWindow = nullptr;
+    m_gameOverWindow = new gameOverWindow;
+    m_menuLevels = new LevelMenu;
 }
 
 AlliesGameWindow::~AlliesGameWindow(){
@@ -54,7 +55,7 @@ void AlliesGameWindow::setupUi() {
     qDebug()<<m_canonWidget;
     m_canonWidget->focusWidget();
     m_canonWidget->setParent(this);
-    m_canonWidget->move(420,500);// Center the canon widget horizontally
+    m_canonWidget->move(420,450);// Center the canon widget horizontally
     m_canonWidget->show(); // Ensure it's visible
 
     // Center CanonWidget2
@@ -62,7 +63,7 @@ void AlliesGameWindow::setupUi() {
     qDebug()<<m_canonWidget2;
     //m_canonWidget2->focusWidget();
     m_canonWidget2->setParent(this);
-    m_canonWidget2->move(530,500);
+    m_canonWidget2->move(530,450);
     m_canonWidget2->show(); // Ensure it's visible
 
     // Add container widget

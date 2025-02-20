@@ -64,7 +64,12 @@ signals:
     void burstDisconnectedBubbles();
     void burst(QVector<Bubble*> vec);
 
-    void showGameOver();
+    void replayTheGame();
+    void returnToMainMenu();
+
+    void showGameOver(int score);
+
+    void requestLevelSelection();
 
 public slots:
     void handleLastRow();
