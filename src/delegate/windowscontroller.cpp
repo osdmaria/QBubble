@@ -103,12 +103,13 @@ void WindowsController::openSoloGame() {
     connectSignalsSolo();
 }
 
-void WindowsController::handleGameOver(){
+void WindowsController::handleGameOver(int score){
     qDebug()<<"handleGameOver calledd";
     if(m_soloGameView){
         connect(m_soloGameView->gameOver(), &gameOverWindow::replayClicked, this, &WindowsController::replay);
         connect(m_soloGameView->gameOver(), &gameOverWindow::backMenuClicked, this, &WindowsController::handleRetour);
     }
+    m_soloGameView->gameOver()->setScore(score);
     m_soloGameView->gameOver()->exec();
 }
 

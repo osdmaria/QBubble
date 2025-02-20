@@ -20,6 +20,7 @@ public:
     ~gameOverWindow();
     QPushButton *m_rejouerButton;
     QPushButton *m_menuPrincipalButton;
+    void setScore(int score);
 
 signals:
     void replayClicked();
@@ -28,6 +29,7 @@ private:
 
     void setupUi();
     void connectSignals();
+    QLabel *m_scoreLabel;
 };
 
 

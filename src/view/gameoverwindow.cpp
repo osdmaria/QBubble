@@ -20,27 +20,24 @@ gameOverWindow::gameOverWindow(QWidget *parent)
 gameOverWindow::~gameOverWindow() {}
 
 void gameOverWindow::setupUi() {
-
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
+
     QLabel *label = new QLabel("Game Over", this);
     label->setAlignment(Qt::AlignCenter);
     mainLayout->addWidget(label);
 
+    m_scoreLabel = new QLabel("Score: 0", this); // Initialize the score label
+    m_scoreLabel->setAlignment(Qt::AlignCenter);
+    mainLayout->addWidget(m_scoreLabel);
+
     QHBoxLayout *buttonLayout = new QHBoxLayout();
-
-
     m_rejouerButton = new QPushButton("Rejouer", this);
     m_menuPrincipalButton = new QPushButton("Menu Principal", this);
-
     buttonLayout->addWidget(m_rejouerButton);
     buttonLayout->addWidget(m_menuPrincipalButton);
-
     mainLayout->addLayout(buttonLayout);
-
-
-
-
 }
+
 
 void gameOverWindow::connectSignals() {
     if (!m_menuPrincipalButton) {
@@ -59,4 +56,8 @@ void gameOverWindow::connectSignals() {
         qDebug() << "Retry button clicked!";
         emit replayClicked();
     });
+}
+
+void gameOverWindow::setScore(int score) {
+    m_scoreLabel->setText("Score: " + QString::number(score));
 }

@@ -63,7 +63,7 @@ signals:
     void replayTheGame();
     void returnToMainMenu();
 
-    void showGameOver();
+    void showGameOver(int score);
 
     void requestLevelSelection();
 

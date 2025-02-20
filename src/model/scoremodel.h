@@ -11,6 +11,7 @@ public:
     explicit ScoreModel(QObject *parent = nullptr);
     void addPoints(int x);
     void resetScore();
+    int score(){return m_score;}
 
 signals:
     void scoreChanged(int x);

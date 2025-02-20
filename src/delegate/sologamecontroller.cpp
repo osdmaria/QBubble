@@ -160,7 +160,7 @@ void SoloGameController::gameOver(){
     m_gameOver = true;
     m_running = false;
     m_gameWon = false;
-    emit showGameOver();
+    emit showGameOver(m_scoreModel->score());
     qDebug()<<"GAME OVER";
 }
 

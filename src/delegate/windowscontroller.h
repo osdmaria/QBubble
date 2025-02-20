@@ -54,7 +54,7 @@ public slots:
     void openHowToPlay();
     void quit();
 
-    void handleGameOver();
+    void handleGameOver(int score);
 
     //Multiplayer choice window
     void openEnemiesGameWindow();
