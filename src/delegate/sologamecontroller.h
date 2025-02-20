@@ -60,7 +60,12 @@ signals:
     void burstDisconnectedBubbles();
     void burst(QVector<Bubble*> vec);
 
-    void showGameOver();
+    void replayTheGame();
+    void returnToMainMenu();
+
+    void showGameOver(int score);
+
+    void requestLevelSelection();
 
 public slots:
     void handleLastRow();
@@ -80,6 +85,7 @@ private:
     CanonModel *m_canonModel;
     BurstCalculator *m_burstCalculator;
     LevelMenu *m_levelMenu;
+
 
     bool m_running = false;
     bool m_gameOver = false;

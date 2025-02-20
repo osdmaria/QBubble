@@ -25,17 +25,27 @@ SoloGameController::SoloGameController(SoloGameWindow *soloGameView, QObject *pa
     connectGridScene();
     connectScore();
     connectBurstCalculator();
+
 }
 
 SoloGameController::~SoloGameController(){
+    qDebug()<<"check score model";
     delete m_scoreModel;
+    qDebug()<<"check container model";
     delete m_containerModel;
+    qDebug()<<"check generateur model";
     delete m_bubbleGeneratorModel;
+    qDebug()<<"check burst calculator model";
     delete m_burstCalculator;
+    qDebug()<<"check hex grid model";
     delete m_hexGridModel;
+    qDebug()<<"check grid init model";
     delete m_gridInitializer;
+    qDebug()<<"check canon model";
     delete m_canonModel;
+    qDebug()<<"check level menu";
     delete m_levelMenu;
+    qDebug()<<"check after level menu";
 
 }
 
@@ -60,15 +70,8 @@ void SoloGameController::initContainer(){
 
 
 void SoloGameController::startLevelSelection() {
-    m_levelMenu->show();
-
-    connect(m_levelMenu, &LevelMenu::levelSelected, this, [this](int level) {
-        m_levelMenu->close();
-        m_levelMenu = nullptr;
-
-        qDebug() << "Level selected:" << level;
-        start(level);
-    });
+    qDebug()<<"started selection";
+    emit requestLevelSelection();
 }
 
 
@@ -157,9 +160,10 @@ void SoloGameController::gameOver(){
     m_gameOver = true;
     m_running = false;
     m_gameWon = false;
-    //m_soloGameView->gameOver();
+    emit showGameOver(m_scoreModel->score());
     qDebug()<<"GAME OVER";
 }
+
 
 void SoloGameController::gameWon(){
     m_gameOver = true;

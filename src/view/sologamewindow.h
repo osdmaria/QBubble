@@ -12,6 +12,7 @@
 #include <QPainter>
 #include <QPixmap>
 
+#include "src/view/LevelMenu.h"
 #include "src/view/scorewidget.h"
 #include "src/view/gridscene.h"
 #include "src/view/bubbleview.h"
@@ -44,6 +45,9 @@ public:
     //pause
     QPushButton *pause(){return m_pause;}
 
+    //select level
+    LevelMenu *menuLevels(){return m_menuLevels;}
+
 signals:
     void onRetourClicked();
     void onPauseClicked();
@@ -58,6 +62,7 @@ private:
     QPushButton *m_pause;
     PauseWindow *m_pauseWindow;
     gameOverWindow *m_gameOverWindow;
+    LevelMenu *m_menuLevels;
     void connectSignals();
     void paintEvent(QPaintEvent *event);
     void setupUi();

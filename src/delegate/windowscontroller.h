@@ -8,7 +8,6 @@
 #include "src/view/alliesgamewindow.h"
 #include "src/view/enemiesgamewindow.h"
 #include "src/view/music.h"
-
 #include "src/delegate/sologamecontroller.h"
 #include "src//delegate//enemiesgamecontroller.h"
 #include "src/delegate/alliesgamecontroller.h"
@@ -38,7 +37,6 @@ public:
     AlliesGameController *alliesGameController(){return m_alliesGameController;}
     void startMusic();
 
-
 signals:
     void soloLaunched();
     void soloEnded();
@@ -49,6 +47,9 @@ signals:
     void enemiesLauched();
     void enemiesEnded();
 
+    void sendSelectedLevel(int level);
+
+
 
 public slots:
     //Main menu window
@@ -57,6 +58,8 @@ public slots:
     void openMultiplayerChoice();
     void openHowToPlay();
     void quit();
+
+    void handleGameOver(int score);
 
     //Multiplayer choice window
     void openEnemiesGameWindow();
@@ -68,6 +71,15 @@ public slots:
     void openPause();
     void closePause();
     void retry();
+
+    // game over back to menu and retry:
+    void handleReplayTheGame();
+    void handleReturnToMainMenu();
+
+    void backMenu();
+    void replay();
+
+    void showLevelMenu();
 
 private:
     void connectSignalsMainMenu();

@@ -5,11 +5,12 @@ CanonModel::CanonModel(QObject *parent) : QObject(parent), angle(90) {
 
 CanonModel::~CanonModel() {
     //qDebug()<<"last bubble is going to be deleted";
-    if(m_currentBubble)
-        delete m_currentBubble;
+    //if(m_currentBubble)
+    //    delete m_currentBubble;
     // else
     //     qDebug()<<"the is no bubble to delete";
     // qDebug()<<"last bubble deleted";
+
 }
 
 qreal CanonModel::getAngle() const {
@@ -40,8 +41,8 @@ void CanonModel::fire(){
         if(tmp==m_currentBubble)
             m_currentBubble = nullptr;
     } else {
+        //m_currentBubble = nullptr;
         //qDebug()<<"Cannon unloaded";
     }
 }
-
 

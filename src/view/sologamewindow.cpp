@@ -21,19 +21,31 @@ SoloGameWindow::SoloGameWindow(int widthSize, int heightSize, QWidget *parent)
     setFocus();
 
     m_pauseWindow = nullptr;
-    m_gameOverWindow = nullptr;
+    m_gameOverWindow = new gameOverWindow;
+    m_menuLevels = new LevelMenu;
 }
 
 SoloGameWindow::~SoloGameWindow() {
+    qDebug()<<"check score";
     delete m_scoreWidget;
+    qDebug()<<"check m_scoreWidget";
     delete m_gridScene;
+    qDebug()<<"check m_gridScene";
     delete m_canonWidget;
+    qDebug()<<"check m_canonWidget";
     delete m_containerWidget;
+    qDebug()<<"check m_containerWidget";
     delete m_music;
+    qDebug()<<"check m_music";
     delete m_retour;
+    qDebug()<<"check m_retour";
     delete m_pause;
+    qDebug()<<"check m_pause";
     delete m_pauseWindow;
+    qDebug()<<"check m_pauseWindow";
     delete m_gameOverWindow;
+    qDebug()<<"check m_gameOverWindow";
+
 }
 
 void SoloGameWindow::setupUi() {

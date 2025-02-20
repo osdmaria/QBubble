@@ -16,6 +16,8 @@ MainController::MainController(QObject *parent)
     connect(m_windowsController, &WindowsController::soloEnded, this, &MainController::soloEnded);
     connect(m_windowsController, &WindowsController::alliesEnded, this, &MainController::allieEnded);
     connect(m_windowsController, &WindowsController::enemiesEnded, this, &MainController::enemieEnded);
+
+
 }
 
 MainController::~MainController() {
@@ -30,7 +32,14 @@ void MainController::soloLaunched() {
     qDebug() << "Launching Solo Game...";
 
     m_soloGameController = new SoloGameController(m_windowsController->soloGameWindow(), this);
+
+    connect(m_soloGameController, &SoloGameController::requestLevelSelection, m_windowsController, &WindowsController::showLevelMenu);
+    connect(m_windowsController, &WindowsController::sendSelectedLevel, m_soloGameController, &SoloGameController::start);
     m_soloGameController->startLevelSelection();
+
+    connect(m_soloGameController, &SoloGameController::showGameOver, m_windowsController, &WindowsController::handleGameOver);
+
+
 }
 
 
