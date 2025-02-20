@@ -19,8 +19,8 @@ void MainMenuWindow::setupUi() {
     m_soloButton = new QPushButton("Partie solo", this);
     m_multiplayerButton = new QPushButton("Partie multijoueurs", this);
     m_quitButton = new QPushButton("Quitter", this);
-    m_loadgameButton  = new QPushButton("Charger", this);
-    m_niveauButton  = new QPushButton("Choisir le niveau", this);
+    //m_loadgameButton  = new QPushButton("Charger", this);
+    //m_niveauButton  = new QPushButton("Choisir le niveau", this);
 
     m_imageButton = new QPushButton(this);
     m_howToPlayButton = new QPushButton(this);
@@ -28,13 +28,11 @@ void MainMenuWindow::setupUi() {
 
 
     //Taille des bouttons
-    int buttonWidth = 400;//this->width() *0.7;
-    int buttonHeight = 50;//this->height() * 0.15;
+    int buttonWidth = this->width() *0.7;
+    int buttonHeight = this->height() * 0.15;
 
     m_soloButton->setFixedSize(buttonWidth, buttonHeight);
     m_multiplayerButton->setFixedSize(buttonWidth, buttonHeight);
-    m_loadgameButton->setFixedSize(buttonWidth, buttonHeight);
-    m_niveauButton->setFixedSize(buttonWidth, buttonHeight);
     m_quitButton->setFixedSize(buttonWidth, buttonHeight);
 
     //Style des boutons
@@ -55,8 +53,7 @@ void MainMenuWindow::setupUi() {
     m_soloButton->setStyleSheet(buttonStyle);
     m_multiplayerButton->setStyleSheet(buttonStyle);
     m_quitButton->setStyleSheet(buttonStyle);
-    m_loadgameButton->setStyleSheet(buttonStyle);
-    m_niveauButton ->setStyleSheet(buttonStyle);
+
 
     
     QPixmap buttonImage(":/images/Volume.png");
@@ -116,8 +113,7 @@ void MainMenuWindow::setupUi() {
     buttonsLayout->addSpacerItem(new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding));
     buttonsLayout->addWidget(m_soloButton);
     buttonsLayout->addWidget(m_multiplayerButton);
-    buttonsLayout->addWidget(m_loadgameButton);
-    buttonsLayout->addWidget(m_niveauButton);
+
     buttonsLayout->addWidget(m_quitButton);
 
 
@@ -166,14 +162,7 @@ void MainMenuWindow::connectSignals() {
         m_music->playSoundEffect("click");
         emit onImageButtonClicked();
     });
-    connect(m_loadgameButton, &QPushButton::clicked, [this]() {
-        m_music->playSoundEffect("click");
 
-    });
-    connect(m_niveauButton, &QPushButton::clicked, [this]() {
-        m_music->playSoundEffect("click");
-
-    });
 
 }
 

@@ -40,3 +40,17 @@ LevelMenu::LevelMenu(QWidget *parent) : QWidget(parent) {
     setLayout(layout);
 }
 
+
+void LevelMenu::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    QPixmap background(":/images/wood.jpg");
+
+    if (!background.isNull()) {
+        QPixmap scaledBackground = background.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        painter.drawPixmap(0, 0, scaledBackground);
+    } else {
+        qDebug() << "Erreur : Impossible de charger l'image de fond.";
+    }
+
+    QWidget::paintEvent(event);
+}
