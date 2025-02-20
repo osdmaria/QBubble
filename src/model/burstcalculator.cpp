@@ -2,7 +2,9 @@
 
 BurstCalculator::BurstCalculator(HexGridModel *hexGrid, QObject *parent) :
     QObject{parent}, m_hexGrid{hexGrid}
-{}
+{
+    m_music = new Music();
+}
 
 
 
@@ -118,6 +120,7 @@ void BurstCalculator::burstFromColoredBubble(int row, int col){
     if(res.size()>0){
         emit bubblesToBurst(res);
         m_destroyedBubbles += res.size();
+        m_music->soundEffectExplore("explore");
     } else {
         emit amountDestroyedBubbles(m_destroyedBubbles);
         m_destroyedBubbles = 0;
@@ -133,6 +136,7 @@ void BurstCalculator::burstFromExplosiveBubble(int row, int col){
         emit amountDestroyedBubbles(m_destroyedBubbles);
         m_destroyedBubbles = 0;
     }
+    m_music->soundEffectExplore("explore");
 }
 
 void BurstCalculator::burstDisconnectedBubbles(){

@@ -29,6 +29,7 @@ public:
     GridScene *gridScene(){return m_gridScene;}
     CanonWidget *canonWidget(){return m_canonWidget;}
     ContainerWidget *containerWidget(){return m_containerWidget;}
+    Music *music(){return m_music;}
     QPushButton *m_retour;
     QPushButton *m_pause;
     void shootBubble(int angle);

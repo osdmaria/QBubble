@@ -50,6 +50,7 @@ public:
 
     void initContainer();
     void loadLevel(int level);
+    void animateBubble(BubbleView* bubbleView, int angle);
 
 signals:
     void menuLauched();

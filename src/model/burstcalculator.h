@@ -6,6 +6,7 @@
 #include <QQueue>
 
 #include "src/model/hexgridmodel.h"
+#include "src/view/music.h"
 
 class BurstCalculator : public QObject
 {
@@ -30,6 +31,7 @@ public slots:
 private:
     HexGridModel *m_hexGrid = nullptr;
     int m_destroyedBubbles = 0;
+    Music *m_music;
 };
 
 #endif // BURSTCALCULATOR_H
