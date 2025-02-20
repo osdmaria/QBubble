@@ -108,20 +108,22 @@ void WindowsController::openSoloGame() {
 void WindowsController::openAlliesGameWindow() {
     m_alliesGameView = new AlliesGameWindow(m_fixedWidth,m_fixedHeight);
     m_alliesGameView->show();
-    m_multiplayerChoiceView->hide();
-    delete m_multiplayerChoiceView;
-    m_multiplayerChoiceView = nullptr;
+    if (m_multiplayerChoiceView){
+        m_multiplayerChoiceView->hide();
+        delete m_multiplayerChoiceView;
+        m_multiplayerChoiceView = nullptr;
+    }
     emit alliesLauched();
 }
 
 void WindowsController::openEnemiesGameWindow() {
     m_enemiesGameView = new EnemiesGameWindow(m_fixedWidth,m_fixedHeight);
     m_enemiesGameView->show();
-    m_multiplayerChoiceView->hide();
-    delete m_multiplayerChoiceView;
-    m_multiplayerChoiceView = nullptr;
-    if(m_mainMenuView)
-        m_mainMenuView->hide();
+    if (m_multiplayerChoiceView){
+        m_multiplayerChoiceView->hide();
+        delete m_multiplayerChoiceView;
+        m_multiplayerChoiceView = nullptr;
+    }
     emit enemiesLauched();
     connectSignalsEnemies();
 }
@@ -218,6 +220,7 @@ void WindowsController::retry(){
             m_enemiesGameView->hide();
             emit enemiesEnded();
             delete m_enemiesGameView ;
+
             openEnemiesGameWindow();
         }
     }

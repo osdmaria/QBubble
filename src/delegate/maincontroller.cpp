@@ -13,12 +13,6 @@ MainController::MainController(QObject *parent)
     connect(m_windowsController, &WindowsController::alliesLauched, this, &MainController::allieLaunched);
     connect(m_windowsController, &WindowsController::enemiesLauched, this, &MainController::enemieLaunched);
 
-    //changer c'est le windows controller qui doit envoyer les signaux
-    qDebug() << "Checking multiplayerChoiceWindow:" << m_windowsController->multiplayerChoiceWindow();
-
-    //connect(m_windowsController->multiplayerChoiceWindow(), &MultiplayerChoiceWindow::onEnemiesClicked, this, &MainController::enemieLaunched);
-    //connect(m_windowsController->multiplayerChoiceWindow(), &MultiplayerChoiceWindow::onAlliesClicked, this, &MainController::allieLaunched);
-
     connect(m_windowsController, &WindowsController::soloEnded, this, &MainController::soloEnded);
     connect(m_windowsController, &WindowsController::alliesEnded, this, &MainController::allieEnded);
     connect(m_windowsController, &WindowsController::enemiesEnded, this, &MainController::enemieEnded);

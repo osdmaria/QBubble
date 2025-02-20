@@ -4,8 +4,11 @@ EnemiesGameController::EnemiesGameController(EnemiesGameWindow *enemiesGameView,
     : QObject{parent}, m_enemiesGameView{enemiesGameView}
 {
     m_scoreModel = new ScoreModel();
+    m_scoreModel = new ScoreModel();
     m_containerModel = new ContainerModel();
+    m_containerModel2 = new ContainerModel();
     m_canonModel = new CanonModel();
+    m_canonModel2 = new CanonModel();
     m_bubbleGeneratorModel = new GeneratorModel();
     m_levelMenu = new LevelMenu();
 
@@ -29,12 +32,15 @@ EnemiesGameController::EnemiesGameController(EnemiesGameWindow *enemiesGameView,
 
 EnemiesGameController::~EnemiesGameController(){
     delete m_scoreModel;
+    delete m_scoreModel2;
     delete m_containerModel;
+    delete m_containerModel2;
     delete m_bubbleGeneratorModel;
     delete m_burstCalculator;
     delete m_hexGridModel;
     delete m_gridInitializer;
     delete m_canonModel;
+    delete m_canonModel2;
     delete m_levelMenu;
 }
 
@@ -55,7 +61,6 @@ void EnemiesGameController::initContainer(){
 }
 void EnemiesGameController::startLevelSelection() {
     m_levelMenu->show();
-    qDebug() << "startLevelSelection enemies Game...";
     connect(m_levelMenu, &LevelMenu::levelSelected, this, [this](int level) {
         m_levelMenu->close();
         m_levelMenu = nullptr;
