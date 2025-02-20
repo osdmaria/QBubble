@@ -40,7 +40,6 @@ void MainController::soloEnded(){
 }
 
 void MainController::enemieLaunched(){
-    qDebug() << "Launching enemies Game...";
     m_enemieGameController = new EnemiesGameController(m_windowsController->enemiesGameWindow(),this);
     m_enemieGameController->startLevelSelection();
 }
@@ -50,8 +49,8 @@ void MainController::enemieEnded(){
 }
 
 void MainController::allieLaunched(){
-    m_alliesGameController = new AlliesGameController(m_windowsController->alliesGameWindow(),m_windowsController->mainMenuWindow());
-    m_alliesGameController->start();
+    m_alliesGameController = new AlliesGameController(m_windowsController->alliesGameWindow(),this);
+    m_alliesGameController->startLevelSelection();
 }
 
 void MainController::allieEnded(){

@@ -11,6 +11,7 @@
 
 #include "src/delegate/sologamecontroller.h"
 #include "src//delegate//enemiesgamecontroller.h"
+#include "src/delegate/alliesgamecontroller.h"
 
 #include <QObject>
 #include <QPushButton>
@@ -34,6 +35,7 @@ public:
     EnemiesGameWindow *enemiesGameWindow(){return m_enemiesGameView;}
     SoloGameController *soloGameController(){return m_soloGameController;}
     EnemiesGameController *enemiesGameController(){return m_enemiesGameController;}
+    AlliesGameController *alliesGameController(){return m_alliesGameController;}
     void startMusic();
 
 
@@ -73,12 +75,14 @@ private:
     void connectSignalsMultiplayerChoice();
     void connectSignalsSolo();
     void connectSignalsEnemies();
+    void connectSignalsAllies();
 
     MainMenuWindow *m_mainMenuView;
     HowToPlayWindow *m_howToPlayView;
     MultiplayerChoiceWindow *m_multiplayerChoiceView;
     SoloGameController *m_soloGameController;
     EnemiesGameController *m_enemiesGameController;
+    AlliesGameController *m_alliesGameController;
 
     SoloGameWindow *m_soloGameView;
     AlliesGameWindow *m_alliesGameView;

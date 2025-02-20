@@ -114,6 +114,7 @@ void WindowsController::openAlliesGameWindow() {
         m_multiplayerChoiceView = nullptr;
     }
     emit alliesLauched();
+    connectSignalsAllies();
 }
 
 void WindowsController::openEnemiesGameWindow() {
@@ -152,6 +153,11 @@ void WindowsController::connectSignalsEnemies(){
     connect(m_enemiesGameView, &EnemiesGameWindow::onPauseClicked1, this, &WindowsController::openPause);
 }
 
+void WindowsController::connectSignalsAllies(){
+    connect(m_alliesGameView, &AlliesGameWindow::onRetourClicked1, this, &WindowsController::handleRetour);
+    connect(m_alliesGameView, &AlliesGameWindow::onPauseClicked1, this, &WindowsController::openPause);
+}
+
 
 void WindowsController::handleRetour(){
     if(m_soloGameView)
@@ -173,7 +179,14 @@ void WindowsController::openPause(){
         }
     }
 
-    if(m_alliesGameView){}
+    if(m_alliesGameView){
+        if(!m_alliesGameView->pauseWindow()){
+            m_alliesGameView->pauseWindow(new PauseWindow(m_alliesGameView));
+            connect(m_alliesGameView->pauseWindow(), &PauseWindow::reprendreClicked, this, &WindowsController::closePause);
+            connect(m_alliesGameView->pauseWindow(), &PauseWindow::retryClicked, this, &WindowsController::retry);
+            m_alliesGameView->pauseWindow()->exec();
+        }
+    }
     if(m_enemiesGameView){
         if(!m_enemiesGameView->pauseWindow()){
             m_enemiesGameView->pauseWindow(new PauseWindow(m_enemiesGameView));
@@ -193,7 +206,13 @@ void WindowsController::closePause(){
         }
     }
 
-    if(m_alliesGameView){}
+    if(m_alliesGameView){
+        if(m_alliesGameView->pauseWindow()){
+            m_alliesGameView->pauseWindow()->close();
+            delete m_alliesGameView->pauseWindow();
+            m_alliesGameView->pauseWindow(nullptr);
+        }
+    }
     if(m_enemiesGameView){
         if(m_enemiesGameView->pauseWindow()){
             m_enemiesGameView->pauseWindow()->close();
@@ -213,7 +232,16 @@ void WindowsController::retry(){
             openSoloGame();
         }
     }
-    if(m_alliesGameView){}
+    if(m_alliesGameView){
+        if(m_alliesGameView->pauseWindow()){
+            m_alliesGameView->pauseWindow()->close();
+            m_alliesGameView->hide();
+            emit alliesEnded();
+            delete m_alliesGameView ;
+
+            openAlliesGameWindow();
+        }
+    }
     if(m_enemiesGameView){
         if(m_enemiesGameView->pauseWindow()){
             m_enemiesGameView->pauseWindow()->close();

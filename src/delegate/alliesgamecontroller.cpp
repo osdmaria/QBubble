@@ -1,13 +1,16 @@
 #include "src/delegate/alliesgamecontroller.h"
 
-AlliesGameController::AlliesGameController(AlliesGameWindow *alliesGameView, MainMenuWindow *mainMenuView, QObject *parent)
-    : QObject{parent}, m_alliesGameView{alliesGameView},m_mainMenuView{mainMenuView}
+AlliesGameController::AlliesGameController(AlliesGameWindow *alliesGameView, QObject *parent)
+    : QObject{parent}, m_alliesGameView{alliesGameView}
 {
     m_scoreModel = new ScoreModel();
     m_containerModel = new ContainerModel();
+    m_containerModel2 = new ContainerModel();
     m_canonModel = new CanonModel();
+    m_canonModel2 = new CanonModel();
     m_bubbleGeneratorModel = new GeneratorModel();
-    m_pauseWindow = nullptr;
+    m_levelMenu = new LevelMenu();
+
 
     m_hexGridModel = new HexGridModel(alliesGameView->gridScene()->width(),
                                       alliesGameView->gridScene()->height(),
@@ -19,7 +22,6 @@ AlliesGameController::AlliesGameController(AlliesGameWindow *alliesGameView, Mai
     m_burstCalculator = new BurstCalculator(m_hexGridModel);
 
     //connectsignal des buttons
-    connectSignalsButttons();
     connectGenerator();
     connectContainer();
     connectCannon();
@@ -32,18 +34,23 @@ AlliesGameController::AlliesGameController(AlliesGameWindow *alliesGameView, Mai
 AlliesGameController::~AlliesGameController(){
     delete m_scoreModel;
     delete m_containerModel;
+    delete m_containerModel2;
     delete m_canonModel;
+    delete m_canonModel2;
+    delete m_burstCalculator;
     delete m_bubbleGeneratorModel;
     delete m_hexGridModel;
+    delete m_gridInitializer;
+    delete m_levelMenu;
 }
 
 
-void AlliesGameController::start(){
+void AlliesGameController::start(int level){
     m_running = true;
     m_gameOver = false;
     m_gameWon = false;
 
-    loadLevel(2);
+    loadLevel(level);
     initContainer();
     emit generateSingleBubble();
 }
@@ -52,6 +59,16 @@ void AlliesGameController::initContainer(){
     QVector<Bubble*> vec = {new ColoredBubble("bordeaux"),new ColoredBubble("green"),new ColoredBubble("bordeaux")};
     m_containerModel->initContainer(vec);
 
+}
+void AlliesGameController::startLevelSelection() {
+    m_levelMenu->show();
+    connect(m_levelMenu, &LevelMenu::levelSelected, this, [this](int level) {
+        m_levelMenu->close();
+        m_levelMenu = nullptr;
+
+        qDebug() << "Level selected:" << level;
+        start(level);
+    });
 }
 
 void AlliesGameController::loadLevel(int level){
@@ -63,9 +80,9 @@ void AlliesGameController::loadLevel(int level){
     case 2:
         m_gridInitializer->initLevel2();
         break;
-    // case 3:
-    //     m_gridInitializer->initLevel3();
-    //     break;
+    case 3:
+        m_gridInitializer->initLevel3();
+        break;
     default:
         m_gridInitializer->initLevel1();
         break;
@@ -147,11 +164,6 @@ void AlliesGameController::gameWon(){
     qDebug()<<"GAME WON";
 }
 
-void AlliesGameController::connectSignalsButttons(){
-    qDebug() << "connectSignalsButttons() called!";
-    connect(m_alliesGameView, &AlliesGameWindow::onRetourClicked1, this, &AlliesGameController::openMainMenu);
-    connect(m_alliesGameView, &AlliesGameWindow::onPauseClicked1, this, &AlliesGameController::showPauseWindow);
-}
 
 void AlliesGameController::connectBurstCalculator(){
     connect(m_burstCalculator,&BurstCalculator::amountDestroyedBubbles,this,&AlliesGameController::handleAmountDestroyedBubbles);
@@ -164,16 +176,8 @@ void AlliesGameController::connectScore(){
     connect(m_burstCalculator, &BurstCalculator::bubblesDisconnected , m_scoreModel, &ScoreModel::calculScore);
     connect(m_scoreModel, &ScoreModel::calculScoreHandled, m_hexGridModel, &HexGridModel::handleBurst);
     connect(m_scoreModel, &ScoreModel::scoreChanged, m_alliesGameView->scoreWidget(),&ScoreWidget::updateLabel);
-    //delete m_alliesGameView;
-    m_mainMenuView->show();
-    emit menuLauched();
 }
 
-void AlliesGameController::openMainMenu() {
-    delete m_alliesGameView;
-    m_mainMenuView->show();
-    emit menuLauched();
-}
 
 void AlliesGameController::connectGenerator(){
     connect(this, &AlliesGameController::generateSingleBubble, m_bubbleGeneratorModel, &GeneratorModel::genSingleBubble);
@@ -207,14 +211,4 @@ void AlliesGameController::connectGridScene(){
     connect(m_hexGridModel, &HexGridModel::bubbleAdded, m_alliesGameView->gridScene(), &GridScene::onBubbleAdded);
     connect(m_hexGridModel, &HexGridModel::bubbleDestroyed, m_alliesGameView->gridScene(), &GridScene::onBubbleDestroyed);
     connect(m_hexGridModel, &HexGridModel::bubbleMoved, m_alliesGameView->gridScene(), &GridScene::onBubbleMoved);
-}
-
-void AlliesGameController::showPauseWindow() {
-    qDebug() << "Pause clicked!";
-
-    if (!m_pauseWindow) {
-        m_pauseWindow = new PauseWindow(m_alliesGameView);
-    }
-
-    m_pauseWindow->exec();
 }
