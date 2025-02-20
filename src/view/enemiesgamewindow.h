@@ -12,7 +12,7 @@
 #include <QPainter>
 #include <QPixmap>
 
-#include "src/view/LevelMenu.h"
+#include "src/view/levelmenu.h"
 #include "src/view/scorewidget.h"
 #include "src/view/gridscene.h"
 #include "src/view/bubbleview.h"

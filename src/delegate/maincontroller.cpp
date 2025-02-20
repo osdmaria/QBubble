@@ -21,10 +21,10 @@ MainController::MainController(QObject *parent)
 }
 
 MainController::~MainController() {
-    delete m_windowsController;
-    delete m_soloGameController;
-    delete m_enemieGameController;
-    delete m_alliesGameController;
+    // delete m_windowsController;
+    // delete m_soloGameController;
+    // delete m_enemieGameController;
+    // delete m_alliesGameController;
 }
 
 
