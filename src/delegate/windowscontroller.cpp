@@ -120,7 +120,10 @@ void WindowsController::openEnemiesGameWindow() {
     m_multiplayerChoiceView->hide();
     delete m_multiplayerChoiceView;
     m_multiplayerChoiceView = nullptr;
+    if(m_mainMenuView)
+        m_mainMenuView->hide();
     emit enemiesLauched();
+    connectSignalsEnemies();
 }
 
 void WindowsController::startMusic() {
@@ -140,6 +143,11 @@ void WindowsController::setFixedSize(int width, int height, QMainWindow *window)
 void WindowsController::connectSignalsSolo(){
     connect(m_soloGameView, &SoloGameWindow::onRetourClicked, this, &WindowsController::handleRetour);
     connect(m_soloGameView, &SoloGameWindow::onPauseClicked, this, &WindowsController::openPause);
+}
+
+void WindowsController::connectSignalsEnemies(){
+    connect(m_enemiesGameView, &EnemiesGameWindow::onRetourClicked1, this, &WindowsController::handleRetour);
+    connect(m_enemiesGameView, &EnemiesGameWindow::onPauseClicked1, this, &WindowsController::openPause);
 }
 
 
@@ -164,7 +172,14 @@ void WindowsController::openPause(){
     }
 
     if(m_alliesGameView){}
-    if(m_enemiesGameView){}
+    if(m_enemiesGameView){
+        if(!m_enemiesGameView->pauseWindow()){
+            m_enemiesGameView->pauseWindow(new PauseWindow(m_enemiesGameView));
+            connect(m_enemiesGameView->pauseWindow(), &PauseWindow::reprendreClicked, this, &WindowsController::closePause);
+            connect(m_enemiesGameView->pauseWindow(), &PauseWindow::retryClicked, this, &WindowsController::retry);
+            m_enemiesGameView->pauseWindow()->exec();
+        }
+    }
 }
 
 void WindowsController::closePause(){
@@ -177,7 +192,13 @@ void WindowsController::closePause(){
     }
 
     if(m_alliesGameView){}
-    if(m_enemiesGameView){}
+    if(m_enemiesGameView){
+        if(m_enemiesGameView->pauseWindow()){
+            m_enemiesGameView->pauseWindow()->close();
+            delete m_enemiesGameView->pauseWindow();
+            m_enemiesGameView->pauseWindow(nullptr);
+        }
+    }
 }
 
 void WindowsController::retry(){
@@ -191,6 +212,14 @@ void WindowsController::retry(){
         }
     }
     if(m_alliesGameView){}
-    if(m_enemiesGameView){}
+    if(m_enemiesGameView){
+        if(m_enemiesGameView->pauseWindow()){
+            m_enemiesGameView->pauseWindow()->close();
+            m_enemiesGameView->hide();
+            emit enemiesEnded();
+            delete m_enemiesGameView ;
+            openEnemiesGameWindow();
+        }
+    }
 }
 

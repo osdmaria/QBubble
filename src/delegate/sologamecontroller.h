@@ -12,7 +12,6 @@
 #include "src/model/gridinitializer.h"
 #include "src/model/burstcalculator.h"
 #include "src/view/levelmenu.h"
-#include "src/view/gameoverwindow.h"
 
 #include <QApplication>
 #include <QPushButton>

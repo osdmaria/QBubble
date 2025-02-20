@@ -43,7 +43,6 @@ public:
     QPushButton *retour(){return m_retour;}
     //pause
     QPushButton *pause(){return m_pause;}
-    //void shootBubble(int angle);
 
 signals:
     void onRetourClicked();
@@ -61,7 +60,6 @@ private:
     gameOverWindow *m_gameOverWindow;
     void connectSignals();
     void paintEvent(QPaintEvent *event);
-    //void showEvent(QShowEvent *event);
     void setupUi();
     void keyPressEvent(QKeyEvent *event);
 

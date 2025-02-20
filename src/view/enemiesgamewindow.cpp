@@ -1,14 +1,9 @@
 #include "src/view/enemiesgamewindow.h"
-#include <QLabel>
-#include <QPixmap>
 #include <QGraphicsScene>
 #include <QGraphicsItem>
-
-
 #include <QPropertyAnimation>
 #include <QTimer>
 #include "src/model/coloredbubble.h"
-
 
 EnemiesGameWindow::EnemiesGameWindow(int widthSize, int heightSize, QWidget *parent)
     : QMainWindow{parent}, m_music(new Music())
@@ -18,7 +13,6 @@ EnemiesGameWindow::EnemiesGameWindow(int widthSize, int heightSize, QWidget *par
     m_scoreWidget2 = new ScoreWidget();
     int bubbleRadius = 67;
     m_gridScene = new GridScene(width(),height(), 34,bubbleRadius,this);
-
     m_containerWidget = new ContainerWidget(bubbleRadius);
     m_containerWidget2 = new ContainerWidget(bubbleRadius);
     setupUi();
@@ -26,18 +20,34 @@ EnemiesGameWindow::EnemiesGameWindow(int widthSize, int heightSize, QWidget *par
 
     setFocusPolicy(Qt::StrongFocus);
     setFocus();
+
+    m_pauseWindow = nullptr;
+    m_gameOverWindow = nullptr;
 }
 
-EnemiesGameWindow::~EnemiesGameWindow(){}
+EnemiesGameWindow::~EnemiesGameWindow(){
+    delete m_scoreWidget;
+    delete m_scoreWidget2;
+    delete m_gridScene;
+    delete m_canonWidget;
+    delete m_canonWidget2;
+    delete m_containerWidget;
+    delete m_containerWidget2;
+    delete m_music;
+    delete m_retour;
+    delete m_pause;
+    delete m_pauseWindow;
+    delete m_gameOverWindow;
+}
 
 void EnemiesGameWindow::setupUi() {
     QWidget *centralWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
 
-    m_scoreWidget->setFixedSize(300, 30);
+    m_scoreWidget->setFixedSize(300, 100);
     m_scoreWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    m_scoreWidget2->setFixedSize(300, 30);
+    m_scoreWidget2->setFixedSize(300, 100);
     m_scoreWidget2->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     mainLayout->addWidget(m_scoreWidget);
@@ -46,7 +56,6 @@ void EnemiesGameWindow::setupUi() {
 
     // Center CanonWidget
     m_canonWidget = new CanonWidget(m_gridScene->bubbleRadius(), 25, 100, 100,this); // Add cannon
-    qDebug()<<m_canonWidget;
     m_canonWidget->focusWidget();
     m_canonWidget->setParent(this);
     m_canonWidget->move(420,500);// Center the canon widget horizontally
@@ -153,44 +162,3 @@ void EnemiesGameWindow::paintEvent(QPaintEvent *event) {
     QMainWindow::paintEvent(event);
 }
 
-void EnemiesGameWindow::shootBubble(int angle) {
-    //     // Créez une nouvelle bulle avec une couleur et une position de départ
-    //     QColor bubbleColor = Qt::red; // Exemple de couleur
-    //     QPointF startPosition = QPointF(m_gridScene->width()/2,0); // Position de départ au niveau du canon
-    //     Bubble* bubble = new Bubble(bubbleColor, startPosition, this);
-
-    //     // Créez une vue pour la bulle
-    //     BubbleView* bubbleView = new BubbleView(bubble, 20, false); // Rayon de 20, pas de décalage
-    //     m_gridScene->scene()->addItem(bubbleView); // Ajoutez la bulle à la scène
-
-    //     // Calculez la position finale en fonction de l'angle
-    //     qreal length = 200; // Longueur de l'animation
-    //     qreal endX = startPosition.x() + length * qCos(qDegreesToRadians(angle));
-    //     qreal endY = startPosition.y() - length * qSin(qDegreesToRadians(angle)); // Y négatif pour aller vers le haut
-    //     qDebug() << "positions end:" << endX << endY;
-    //     QPointF endPosition(endX, endY);
-
-    //     // Convertir les positions en coordonnées globales pour la scène
-    //     QPointF startScenePosition = bubbleView->mapToScene(startPosition) - startPosition;
-    //     QPointF endScenePosition = bubbleView->mapToScene(endPosition) - startPosition;
-
-    //     // Créez l'animation en utilisant la fonction animationLinearMovement
-    //     QGraphicsItemAnimation* animation = bubbleView->animationLinearMovement(
-    //         startScenePosition.x(), startScenePosition.y(), // Position de départ en coordonnées globales
-    //         endScenePosition.x(), endScenePosition.y(),     // Position finale en coordonnées globales
-    //         1000                                              // Durée de l'animation en millisecondes
-    //         );
-
-    //     // Connectez l'animation pour supprimer la bulle après l'animation
-    //     QTimeLine* timer = animation->timeLine();
-    //     connect(timer, &QTimeLine::finished, [bubbleView, bubble]() {
-    //         // Utilisez un timer pour supprimer la bulle après 3 secondes
-    //         QTimer::singleShot(3000, [bubbleView, bubble]() {
-    //             delete bubbleView; // Supprimez la vue de la bulle
-    //             delete bubble;     // Supprimez l'objet bulle
-    //         });
-    //     });
-
-    //     // Débogage : vérifiez que l'animation est bien démarrée
-    //     qDebug() << "Démarrage de l'animation de la bulle";
-}
