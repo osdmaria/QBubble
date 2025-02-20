@@ -10,10 +10,14 @@ MainController::MainController(QObject *parent)
 
     //QTimer::singleShot(500, m_windowsController, &WindowsController::startMusic);
     connect(m_windowsController, &WindowsController::soloLaunched, this, &MainController::soloLaunched);
+    connect(m_windowsController, &WindowsController::alliesLauched, this, &MainController::allieLaunched);
+    connect(m_windowsController, &WindowsController::enemiesLauched, this, &MainController::enemieLaunched);
 
     //changer c'est le windows controller qui doit envoyer les signaux
-    connect(m_windowsController->multiplayerChoiceWindow(), &MultiplayerChoiceWindow::onEnemiesClicked, this, &MainController::enemieLaunched);
-    connect(m_windowsController->multiplayerChoiceWindow(), &MultiplayerChoiceWindow::onAlliesClicked, this, &MainController::allieLaunched);
+    qDebug() << "Checking multiplayerChoiceWindow:" << m_windowsController->multiplayerChoiceWindow();
+
+    //connect(m_windowsController->multiplayerChoiceWindow(), &MultiplayerChoiceWindow::onEnemiesClicked, this, &MainController::enemieLaunched);
+    //connect(m_windowsController->multiplayerChoiceWindow(), &MultiplayerChoiceWindow::onAlliesClicked, this, &MainController::allieLaunched);
 
     connect(m_windowsController, &WindowsController::soloEnded, this, &MainController::soloEnded);
     connect(m_windowsController, &WindowsController::alliesEnded, this, &MainController::allieEnded);
@@ -28,11 +32,6 @@ MainController::~MainController() {
 }
 
 
-// <<<<<<< HEAD
-// void MainController::soloLaunched(){
-//     m_soloGameController = new SoloGameController(m_windowsController->soloGameWindow(),m_windowsController->mainMenuWindow());
-//     m_soloGameController->start(1);
-// =======
 void MainController::soloLaunched() {
     qDebug() << "Launching Solo Game...";
 
@@ -47,8 +46,9 @@ void MainController::soloEnded(){
 }
 
 void MainController::enemieLaunched(){
-    m_enemieGameController = new EnemiesGameController(m_windowsController->enemiesGameWindow(),m_windowsController->mainMenuWindow());
-    m_enemieGameController->start();
+    qDebug() << "Launching enemies Game...";
+    m_enemieGameController = new EnemiesGameController(m_windowsController->enemiesGameWindow(),this);
+    m_enemieGameController->startLevelSelection();
 }
 
 void MainController::enemieEnded(){

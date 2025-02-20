@@ -18,6 +18,8 @@
 #include "src/view/canonwidget.h"
 #include "src/view/containerwidget.h"
 #include "src/view/music.h"
+#include "src/view/pausewindow.h"
+#include "src/view/gameoverwindow.h"
 
 class EnemiesGameWindow : public QMainWindow
 {
@@ -31,13 +33,20 @@ public:
     CanonWidget *canonWidget(){return m_canonWidget;}
     CanonWidget *canonWidget2(){return m_canonWidget2;}
     ContainerWidget *containerWidget(){return m_containerWidget;}
-    QPushButton *m_retour;
-    QPushButton *m_pause;
-    void shootBubble(int angle);
+    //pause
+    PauseWindow *pauseWindow(){return m_pauseWindow;}
+    void pauseWindow(PauseWindow *pause){m_pauseWindow = pause;}
+    //game over
+    gameOverWindow *gameOver(){return m_gameOverWindow;}
+    //music
+    Music *music(){return m_music;}
+    void music(Music *m){m_music=m;}
+    //retour
+    QPushButton *retour(){return m_retour;}
+    //pause
+    QPushButton *pause(){return m_pause;}
 
-private:
-    void setupUi();
-    void keyPressEvent(QKeyEvent *event);
+
 
 signals:
     void onRetourClicked1();
@@ -53,9 +62,15 @@ private:
     CanonWidget *m_canonWidget2;
     ContainerWidget *m_containerWidget;
     ContainerWidget *m_containerWidget2;
+    QPushButton *m_retour;
+    QPushButton *m_pause;
+    PauseWindow *m_pauseWindow;
+    gameOverWindow *m_gameOverWindow;
     Music *m_music;
     void connectSignals();
     void paintEvent(QPaintEvent *event);
+    void setupUi();
+    void keyPressEvent(QKeyEvent *event);
 };
 
 #endif // ENEMIESGAMEWINDOW_H

@@ -1,13 +1,13 @@
 #include "enemiesgamecontroller.h"
 
-EnemiesGameController::EnemiesGameController(EnemiesGameWindow *enemiesGameView,MainMenuWindow *mainMenuView, QObject *parent)
-    : QObject{parent}, m_enemiesGameView{enemiesGameView},m_mainMenuView{mainMenuView}
+EnemiesGameController::EnemiesGameController(EnemiesGameWindow *enemiesGameView, QObject *parent)
+    : QObject{parent}, m_enemiesGameView{enemiesGameView}
 {
     m_scoreModel = new ScoreModel();
     m_containerModel = new ContainerModel();
     m_canonModel = new CanonModel();
     m_bubbleGeneratorModel = new GeneratorModel();
-    m_pauseWindow = nullptr;
+    m_levelMenu = new LevelMenu();
 
     m_hexGridModel = new HexGridModel(enemiesGameView->gridScene()->width(),
                                       enemiesGameView->gridScene()->height(),
@@ -15,11 +15,9 @@ EnemiesGameController::EnemiesGameController(EnemiesGameWindow *enemiesGameView,
                                       enemiesGameView->gridScene()->globalOrigin(),
                                       m_enemiesGameView->canonWidget()->pos()
                                       );
-
     m_gridInitializer = new GridInitializer(m_hexGridModel);
     m_burstCalculator = new BurstCalculator(m_hexGridModel);
 
-    connectSignalsButttons1();
     connectGenerator();
     connectContainer();
     connectCannon();
@@ -31,14 +29,21 @@ EnemiesGameController::EnemiesGameController(EnemiesGameWindow *enemiesGameView,
 
 EnemiesGameController::~EnemiesGameController(){
     delete m_scoreModel;
+    delete m_containerModel;
+    delete m_bubbleGeneratorModel;
+    delete m_burstCalculator;
+    delete m_hexGridModel;
+    delete m_gridInitializer;
+    delete m_canonModel;
+    delete m_levelMenu;
 }
 
-void EnemiesGameController::start(){
+void EnemiesGameController::start(int level){
     m_running = true;
     m_gameOver = false;
     m_gameWon = false;
 
-    loadLevel(2);
+    loadLevel(level);
     initContainer();
     emit generateSingleBubble();
 }
@@ -47,6 +52,17 @@ void EnemiesGameController::initContainer(){
     QVector<Bubble*> vec = {new ColoredBubble("bordeaux"),new ColoredBubble("green"),new ColoredBubble("bordeaux")};
     m_containerModel->initContainer(vec);
 
+}
+void EnemiesGameController::startLevelSelection() {
+    m_levelMenu->show();
+    qDebug() << "startLevelSelection enemies Game...";
+    connect(m_levelMenu, &LevelMenu::levelSelected, this, [this](int level) {
+        m_levelMenu->close();
+        m_levelMenu = nullptr;
+
+        qDebug() << "Level selected:" << level;
+        start(level);
+    });
 }
 
 void EnemiesGameController::loadLevel(int level){
@@ -58,9 +74,9 @@ void EnemiesGameController::loadLevel(int level){
     case 2:
         m_gridInitializer->initLevel2();
         break;
-    // case 3:
-    //     m_gridInitializer->initLevel3();
-    //     break;
+    case 3:
+        m_gridInitializer->initLevel3();
+        break;
     default:
         m_gridInitializer->initLevel1();
         break;
@@ -96,8 +112,9 @@ void EnemiesGameController::handleBubblesBurst(Bubble *b){
     } else if(explosive) {
         emit burstFromExplosiveBubble(b->gridPosition()[0],b->gridPosition()[1]);
     } else {
+        emit generateSingleBubble();
     }
-    emit generateSingleBubble();
+
 }
 
 
@@ -142,11 +159,6 @@ void EnemiesGameController::gameWon(){
     qDebug()<<"GAME WON";
 }
 
-void EnemiesGameController::connectSignalsButttons1(){
-    qDebug() << "connectSignalsButttons() called!";
-    connect(m_enemiesGameView, &EnemiesGameWindow::onRetourClicked1, this, &EnemiesGameController::openMainMenu);
-    connect(m_enemiesGameView, &EnemiesGameWindow::onPauseClicked1, this, &EnemiesGameController::showPauseWindow);
-}
 
 void EnemiesGameController::connectBurstCalculator(){
     connect(m_burstCalculator,&BurstCalculator::amountDestroyedBubbles,this,&EnemiesGameController::handleAmountDestroyedBubbles);
@@ -159,16 +171,8 @@ void EnemiesGameController::connectScore(){
     connect(m_burstCalculator, &BurstCalculator::bubblesDisconnected , m_scoreModel, &ScoreModel::calculScore);
     connect(m_scoreModel, &ScoreModel::calculScoreHandled, m_hexGridModel, &HexGridModel::handleBurst);
     connect(m_scoreModel, &ScoreModel::scoreChanged, m_enemiesGameView->scoreWidget(),&ScoreWidget::updateLabel);
-    //delete m_enemiesGameView;
-    m_mainMenuView->show();
-    emit menuLauched();
 }
 
-void EnemiesGameController::openMainMenu() {
-    delete m_enemiesGameView;
-    m_mainMenuView->show();
-    emit menuLauched();
-}
 
 void EnemiesGameController::connectGenerator(){
     connect(this, &EnemiesGameController::generateSingleBubble, m_bubbleGeneratorModel, &GeneratorModel::genSingleBubble);
@@ -204,12 +208,3 @@ void EnemiesGameController::connectGridScene(){
     connect(m_hexGridModel, &HexGridModel::bubbleMoved, m_enemiesGameView->gridScene(), &GridScene::onBubbleMoved);
 }
 
-void EnemiesGameController::showPauseWindow() {
-    qDebug() << "Pause clicked!";
-
-    if (!m_pauseWindow) {
-        m_pauseWindow = new PauseWindow(m_enemiesGameView);
-    }
-
-    m_pauseWindow->exec();
-}
