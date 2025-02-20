@@ -39,7 +39,7 @@ public:
     void connectGridScene();
     void connectScore();
 
-    void start();
+    void start(int level);
     void gameOver();
     void gameWon();
 

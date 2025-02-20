@@ -9,6 +9,7 @@
 #include <QWidget>
 #include <QPainter>
 #include <QDialog>
+#include <QSpacerItem>
 
 #include "src/view/music.h"
 

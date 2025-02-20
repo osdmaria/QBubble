@@ -40,7 +40,7 @@ public:
     QPushButton *retour(){return m_retour;}
     //pause
     QPushButton *pause(){return m_pause;}
-    void shootBubble(int angle);
+    //void shootBubble(int angle);
 
 signals:
     void onRetourClicked();
@@ -57,7 +57,7 @@ private:
     PauseWindow *m_pauseWindow;
     void connectSignals();
     void paintEvent(QPaintEvent *event);
-    void showEvent(QShowEvent *event);
+    //void showEvent(QShowEvent *event);
     void setupUi();
     void keyPressEvent(QKeyEvent *event);
 

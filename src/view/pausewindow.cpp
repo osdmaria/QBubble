@@ -1,6 +1,4 @@
 #include "pausewindow.h"
-//#include "sologamewindow.h"
-#include "src/delegate/sologamecontroller.h"
 
 
 PauseWindow::PauseWindow(QWidget *parent)
@@ -25,23 +23,20 @@ PauseWindow::~PauseWindow() {
 }
 
 void PauseWindow::setupUi() {
+    setFixedSize(400, 250);
 
-    setGeometry(0, 0, 400, 300);
-    setWindowTitle("Dialog");
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setAlignment(Qt::AlignCenter);
+    QSpacerItem *topSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    mainLayout->addItem(topSpacer);
 
-    QWidget *verticalLayoutWidget = new QWidget(this);
-    verticalLayoutWidget->setGeometry(QRect(100, 90, 203, 97));
-
-    QVBoxLayout *verticalLayout = new QVBoxLayout(verticalLayoutWidget);
-    verticalLayout->setContentsMargins(0, 0, 0, 0);
-
-    //Style des boutons
     QString buttonStyle = "QPushButton {"
                           "background-color: #31B472;"
                           "color: #EEFF6A;"
                           "border-radius: 15px;"
                           "font-size: 20px;"
                           "border: 2px solid #EEFF6A;"
+                          "padding: 10px 20px;"
                           "}"
                           "QPushButton:hover {"
                           "background-color: #aade90;"
@@ -49,24 +44,25 @@ void PauseWindow::setupUi() {
                           "QPushButton:pressed {"
                           "background-color: #6c9956;"
                           "}";
-    m_reprendreButton= new QPushButton("Reprendre", verticalLayoutWidget);
+
+    m_reprendreButton = new QPushButton("Reprendre", this);
+    m_retryButton = new QPushButton("Recommencer", this);
+
+    m_reprendreButton->setFixedSize(200, 60);
+    m_retryButton->setFixedSize(200, 60);
+
     m_reprendreButton->setStyleSheet(buttonStyle);
-    verticalLayout->addWidget(m_reprendreButton);
-
-    // m_saveGameButton = new QPushButton("Enregistrer", verticalLayoutWidget);
-    // m_saveGameButton->setStyleSheet(buttonStyle);
-    // verticalLayout->addWidget(m_saveGameButton);
-
-    m_retryButton = new QPushButton("Recommencer", verticalLayoutWidget);
     m_retryButton->setStyleSheet(buttonStyle);
-    verticalLayout->addWidget(m_retryButton);
 
-    verticalLayoutWidget->setLayout(verticalLayout);
+    mainLayout->addWidget(m_reprendreButton, 0, Qt::AlignCenter);
+    mainLayout->addWidget(m_retryButton, 0, Qt::AlignCenter);
 
+    QSpacerItem *bottomSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    mainLayout->addItem(bottomSpacer);
 
-
-
+    setLayout(mainLayout);
 }
+
 void PauseWindow::connectSignals() {
 
     if (!m_reprendreButton) {
@@ -96,7 +92,7 @@ void PauseWindow::paintEvent(QPaintEvent *event) {
     QPixmap background(":/images/wood.jpg");
 
     if (!background.isNull()) {
-        QPixmap scaledBackground = background.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+        QPixmap scaledBackground = background.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
         painter.drawPixmap(0, 0, scaledBackground);
     } else {
         qDebug() << "Erreur : Impossible de charger l'image de fond.";

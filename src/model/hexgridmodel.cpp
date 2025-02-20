@@ -4,7 +4,7 @@
 HexGridModel::HexGridModel(int width, int height, int radius, QPointF gridSceneOrigin, QPoint cannonPosition, QObject *parent)
     : QObject{parent}, m_width{width}, m_height{height}, m_gridSceneOrigin{gridSceneOrigin}, m_cannonPosition{cannonPosition}
 {
-    qDebug()<<"canon"<<m_cannonPosition;
+    //qDebug()<<"canon"<<m_cannonPosition;
     m_cannonPosition = QPoint(550,450);
     m_hexRadius = radius;
     //m_ncols = m_width/(2*m_hexRadius) +1;
@@ -278,7 +278,7 @@ void HexGridModel::addRow(QVector<Bubble*> *bubbleLine){
     }
 
     if(!lastRowEmpty()){
-        qDebug()<<"ligne de trop";
+        //qDebug()<<"ligne de trop";
         emit lastRowReached();
     }
 }
@@ -358,8 +358,7 @@ bool HexGridModel::validTrajectory(int intersectX, int currentRow, int currentCo
 
 void HexGridModel::handleShot(int angle, Bubble *b){
     bool bubblePlaced = false;
-    qDebug()<<"La grille réceptionne le tir ("<<angle<<"degrés)";
-    //qDebug()<<"Au total"<<m_nrows<<"x"<<m_ncols;
+    //qDebug()<<"La grille réceptionne le tir ("<<angle<<"degrés)";
 
     int currentRow = m_nrows-1;
     QPoint initPos = intersectRowAndNormalize(angle,currentRow);
@@ -392,7 +391,6 @@ void HexGridModel::handleShot(int angle, Bubble *b){
         cptIter++;
     }
 
-    qDebug()<<currentRow<<currentCol<<lastValidPositionMatrix;
     if(currentRow==-1 && currentCol==-1 && lastValidPositionMatrix[0]==0){
         if(isEmpty(lastValidPositionMatrix[0],lastValidPositionMatrix[1])){
             addBubbleMatrix(lastValidPositionMatrix[0],lastValidPositionMatrix[1],b);

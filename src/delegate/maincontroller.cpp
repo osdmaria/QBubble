@@ -29,9 +29,8 @@ MainController::~MainController() {
 
 
 void MainController::soloLaunched(){
-    qDebug()<<"signal reçu";
     m_soloGameController = new SoloGameController(m_windowsController->soloGameWindow(),m_windowsController->mainMenuWindow());
-    m_soloGameController->start();
+    m_soloGameController->start(1);
 }
 
 void MainController::soloEnded(){

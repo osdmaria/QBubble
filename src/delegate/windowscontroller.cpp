@@ -185,7 +185,6 @@ void WindowsController::retry(){
         if(m_soloGameView->pauseWindow()){
             m_soloGameView->pauseWindow()->close();
             m_soloGameView->hide();
-
             emit soloEnded();
             delete m_soloGameView ;
             openSoloGame();

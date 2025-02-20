@@ -37,12 +37,12 @@ SoloGameController::~SoloGameController(){
 
 }
 
-void SoloGameController::start(){
+void SoloGameController::start(int level){
     m_running = true;
     m_gameOver = false;
     m_gameWon = false;
 
-    loadLevel(1);
+    loadLevel(level);
     initContainer();
     emit generateSingleBubble();
 }
@@ -101,8 +101,8 @@ void SoloGameController::handleBubblesBurst(Bubble *b){
     } else if(explosive) {
         emit burstFromExplosiveBubble(b->gridPosition()[0],b->gridPosition()[1]);
     } else {
+        emit generateSingleBubble();
     }
-    emit generateSingleBubble();
 }
 
 

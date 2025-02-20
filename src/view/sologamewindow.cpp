@@ -50,7 +50,6 @@ void SoloGameWindow::setupUi() {
 
     // Center CanonWidget
     m_canonWidget = new CanonWidget(m_gridScene->bubbleRadius(), 25, 100, 100,this); // Add cannon
-    qDebug()<<m_canonWidget;
     m_canonWidget->focusWidget();
     m_canonWidget->setParent(this);
     m_canonWidget->move(475,450);//// Center the canon widget horizontally
@@ -109,12 +108,12 @@ void SoloGameWindow::setupUi() {
     m_pause->move(60, 50);
 }
 
-void SoloGameWindow::showEvent(QShowEvent *event) {
-    QMainWindow::showEvent(event);
+// void SoloGameWindow::showEvent(QShowEvent *event) {
+//     QMainWindow::showEvent(event);
 
-    QPoint globalPos = m_gridScene->mapToParent(QPoint(0, 0));
-    qDebug()<<"Origine grille"<< globalPos;
-}
+//     QPoint globalPos = m_gridScene->mapToParent(QPoint(0, 0));
+//     qDebug()<<"Origine grille"<< globalPos;
+// }
 
 
 void SoloGameWindow::keyPressEvent(QKeyEvent *event) {
@@ -153,7 +152,7 @@ void SoloGameWindow::paintEvent(QPaintEvent *event) {
 
 
 
- void SoloGameWindow::shootBubble(int angle) {
+ //void SoloGameWindow::shootBubble(int angle) {
 //     // Créez une nouvelle bulle avec une couleur et une position de départ
 //     QColor bubbleColor = Qt::red; // Exemple de couleur
 //     QPointF startPosition = QPointF(m_gridScene->width()/2,0); // Position de départ au niveau du canon
@@ -193,5 +192,5 @@ void SoloGameWindow::paintEvent(QPaintEvent *event) {
 
 //     // Débogage : vérifiez que l'animation est bien démarrée
 //     qDebug() << "Démarrage de l'animation de la bulle";
- }
+// }
 
