@@ -32,7 +32,6 @@ public:
     EnemiesGameWindow *enemiesGameWindow(){return m_enemiesGameView;}
     void startMusic();
 
-
 signals:
     void soloLaunched();
     void soloEnded();
@@ -43,6 +42,9 @@ signals:
     void enemiesLauched();
     void enemiesEnded();
 
+    void sendSelectedLevel(int level);
+
+
 
 public slots:
     //Main menu window
@@ -51,6 +53,8 @@ public slots:
     void openMultiplayerChoice();
     void openHowToPlay();
     void quit();
+
+    void handleGameOver();
 
     //Multiplayer choice window
     void openEnemiesGameWindow();
@@ -66,6 +70,11 @@ public slots:
     // game over back to menu and retry:
     void handleReplayTheGame();
     void handleReturnToMainMenu();
+
+    void backMenu();
+    void replay();
+
+    void showLevelMenu();
 
 private:
     void connectSignalsMainMenu();

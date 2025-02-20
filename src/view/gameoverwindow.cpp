@@ -51,12 +51,12 @@ void gameOverWindow::connectSignals() {
     }
 
     connect(m_menuPrincipalButton, &QPushButton::clicked, [this]() {
-        qDebug() << "Reprendre clicked!";
+        qDebug() << "revenir vers menu clicked!";
         emit backMenuClicked();
     });
 
     connect(m_rejouerButton, &QPushButton::clicked, [this]() {
-        qDebug() << "Retry clicked!";
+        qDebug() << "Retry button clicked!";
         emit replayClicked();
     });
 }

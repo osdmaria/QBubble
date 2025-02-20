@@ -103,6 +103,48 @@ void WindowsController::openSoloGame() {
     connectSignalsSolo();
 }
 
+void WindowsController::handleGameOver(){
+    qDebug()<<"handleGameOver calledd";
+    if(m_soloGameView){
+        connect(m_soloGameView->gameOver(), &gameOverWindow::replayClicked, this, &WindowsController::replay);
+        connect(m_soloGameView->gameOver(), &gameOverWindow::backMenuClicked, this, &WindowsController::handleRetour);
+    }
+    m_soloGameView->gameOver()->exec();
+}
+
+void WindowsController::replay(){
+    qDebug()<<"replay calledd";
+    if(m_soloGameView){
+        if(m_soloGameView->gameOver()){
+            m_soloGameView->gameOver()->close();
+            m_soloGameView->hide();
+            qDebug()<<"check 1";
+            emit soloEnded();
+            qDebug()<<"check 2";
+            delete m_soloGameView ;
+            qDebug()<<"check 3";
+            openSoloGame();
+            qDebug()<<"check 4";
+        }
+    }
+    if(m_alliesGameView){}
+    if(m_enemiesGameView){}
+}
+
+void WindowsController::backMenu(){
+    qDebug()<<"kjf";
+    if(m_soloGameView){
+        if(m_soloGameView->gameOver()){
+            m_soloGameView->gameOver()->close();
+            m_soloGameView->hide();
+            emit soloEnded();
+            delete m_soloGameView ;
+        }
+    }
+    handleRetour();
+
+}
+
 
 
 void WindowsController::openAlliesGameWindow() {
@@ -140,6 +182,7 @@ void WindowsController::setFixedSize(int width, int height, QMainWindow *window)
 void WindowsController::connectSignalsSolo() {
     connect(m_soloGameView, &SoloGameWindow::onRetourClicked, this, &WindowsController::handleRetour);
     connect(m_soloGameView, &SoloGameWindow::onPauseClicked, this, &WindowsController::openPause);
+
 
     // Connecter les signaux de SoloGameController aux slots de WindowsController
     // if (m_soloGameController) {
@@ -213,5 +256,23 @@ void WindowsController::handleReplayTheGame() {
 void WindowsController::handleReturnToMainMenu() {
     qDebug() << "Return to main menu";
     openMainMenu();  // Retourner au menu principal
+}
+
+
+void WindowsController::showLevelMenu() {
+    qDebug() << "show level menu";
+
+    LevelMenu *levelMenu = m_soloGameView->menuLevels();
+
+    // Connect the signal before exec() is called
+    connect(levelMenu, &LevelMenu::levelSelected, this, [this, levelMenu](int level) {
+        qDebug() << "Level selected:" << level;
+        emit sendSelectedLevel(level);
+
+        levelMenu->close();  // Close the dialog
+        levelMenu->deleteLater();  // Safe deletion after event processing
+    });
+
+    levelMenu->exec();  // Modal execution
 }
 

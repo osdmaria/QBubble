@@ -43,8 +43,6 @@ public:
 
     void start(int level);
     void gameOver();
-    void backMenu();
-    void replay();
     void gameWon();
 
     void initContainer();
@@ -66,6 +64,8 @@ signals:
     void returnToMainMenu();
 
     void showGameOver();
+
+    void requestLevelSelection();
 
 public slots:
     void handleLastRow();
