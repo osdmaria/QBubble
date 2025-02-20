@@ -28,10 +28,19 @@ MainController::~MainController() {
 }
 
 
-void MainController::soloLaunched(){
-    m_soloGameController = new SoloGameController(m_windowsController->soloGameWindow(),m_windowsController->mainMenuWindow());
-    m_soloGameController->start(1);
+// <<<<<<< HEAD
+// void MainController::soloLaunched(){
+//     m_soloGameController = new SoloGameController(m_windowsController->soloGameWindow(),m_windowsController->mainMenuWindow());
+//     m_soloGameController->start(1);
+// =======
+void MainController::soloLaunched() {
+    qDebug() << "Launching Solo Game...";
+
+    m_soloGameController = new SoloGameController(m_windowsController->soloGameWindow(), this);
+    m_soloGameController->startLevelSelection();
 }
+
+
 
 void MainController::soloEnded(){
     delete m_soloGameController;

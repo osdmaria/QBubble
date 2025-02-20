@@ -19,6 +19,7 @@
 #include "src/view/containerwidget.h"
 #include "src/view/music.h"
 #include "src/view/pausewindow.h"
+#include "src/view/gameoverwindow.h"
 
 class SoloGameWindow : public QMainWindow
 {
@@ -33,6 +34,8 @@ public:
     //pause
     PauseWindow *pauseWindow(){return m_pauseWindow;}
     void pauseWindow(PauseWindow *pause){m_pauseWindow = pause;}
+    //game over
+    gameOverWindow *gameOver(){return m_gameOverWindow;}
     //music
     Music *music(){return m_music;}
     void music(Music *m){m_music=m;}
@@ -55,6 +58,7 @@ private:
     QPushButton *m_retour;
     QPushButton *m_pause;
     PauseWindow *m_pauseWindow;
+    gameOverWindow *m_gameOverWindow;
     void connectSignals();
     void paintEvent(QPaintEvent *event);
     //void showEvent(QShowEvent *event);

@@ -21,6 +21,7 @@ SoloGameWindow::SoloGameWindow(int widthSize, int heightSize, QWidget *parent)
     setFocus();
 
     m_pauseWindow = nullptr;
+    m_gameOverWindow = nullptr;
 }
 
 SoloGameWindow::~SoloGameWindow() {
@@ -32,6 +33,7 @@ SoloGameWindow::~SoloGameWindow() {
     delete m_retour;
     delete m_pause;
     delete m_pauseWindow;
+    delete m_gameOverWindow;
 }
 
 void SoloGameWindow::setupUi() {
