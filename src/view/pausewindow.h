@@ -12,20 +12,21 @@
 
 #include "src/view/music.h"
 
-class pausewindow : public QDialog
+class PauseWindow : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit pausewindow(QWidget *parent = nullptr);
-    ~pausewindow();
+    explicit PauseWindow(QWidget *parent = nullptr);
+    ~PauseWindow();
     QPushButton *m_reprendreButton;
     QPushButton *m_saveGameButton;
+    QPushButton *m_retryButton;
 
 
 signals:
     void reprendreClicked();
-    //void resumeGame();
+    void retryClicked();
 
 private:
     Music *m_music;

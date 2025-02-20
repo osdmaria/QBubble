@@ -29,6 +29,54 @@ void ScoreModel::calculScore(QVector<Bubble*> vec){
         addPoints(sum);
 }
 
+
+void ScoreModel::calculScoreBurst(QVector<Bubble*> vec){
+    int multiplier = 1;
+    int size = vec.size();
+
+    if(size>3)
+        multiplier=2;
+    else if (size > 4)
+        multiplier = 3;
+    else if (size > 6)
+        multiplier = 4;
+
+    int sum = 0;
+    for(int i=0; i<vec.size();i++){
+        sum += vec[i]->score();
+    }
+
+    sum *= multiplier;
+    emit calculScoreHandled(vec);
+
+    if(sum!=0)
+        addPoints(sum);
+}
+
+void ScoreModel::calculScoreDisconnected(QVector<Bubble*> vec){
+    int multiplier = 4;
+    int size = vec.size();
+
+    if(size>3)
+        multiplier=5;
+    else if (size > 4)
+        multiplier = 6;
+    else if (size > 6)
+        multiplier = 7;
+
+    int sum = 0;
+    for(int i=0; i<vec.size();i++){
+        sum += vec[i]->score();
+    }
+
+    sum *= multiplier;
+    emit calculScoreHandled(vec);
+
+    if(sum!=0)
+        addPoints(sum);
+}
+
+
 void ScoreModel::addPoints(int x){
     m_score += x;
     emit scoreChanged(m_score);

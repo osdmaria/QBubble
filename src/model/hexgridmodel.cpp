@@ -9,7 +9,7 @@ HexGridModel::HexGridModel(int width, int height, int radius, QPointF gridSceneO
     m_hexRadius = radius;
     //m_ncols = m_width/(2*m_hexRadius) +1;
     m_ncols = 12;
-    m_nrows = qRound(m_height/(std::sqrt(3)*m_hexRadius));
+    m_nrows = std::min(qRound(m_height/(std::sqrt(3)*m_hexRadius)),7);
     m_matrix2D = QVector<QVector<Bubble*>>(m_nrows, QVector<Bubble*>(m_ncols, nullptr));
 }
 

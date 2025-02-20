@@ -82,7 +82,7 @@ private:
     HexGridModel *m_hexGridModel;
     GridInitializer *m_gridInitializer;
     CanonModel *m_canonModel;
-    pausewindow *m_pauseWindow;
+    PauseWindow *m_pauseWindow;
     BurstCalculator *m_burstCalculator;
 
     bool m_running = false;

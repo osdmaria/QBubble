@@ -213,7 +213,7 @@ void AlliesGameController::showPauseWindow() {
     qDebug() << "Pause clicked!";
 
     if (!m_pauseWindow) {
-        m_pauseWindow = new pausewindow(m_alliesGameView);
+        m_pauseWindow = new PauseWindow(m_alliesGameView);
     }
 
     m_pauseWindow->exec();

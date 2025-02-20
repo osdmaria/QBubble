@@ -18,6 +18,7 @@
 #include "src/view/canonwidget.h"
 #include "src/view/containerwidget.h"
 #include "src/view/music.h"
+#include "src/view/pausewindow.h"
 
 class SoloGameWindow : public QMainWindow
 {
@@ -29,18 +30,21 @@ public:
     GridScene *gridScene(){return m_gridScene;}
     CanonWidget *canonWidget(){return m_canonWidget;}
     ContainerWidget *containerWidget(){return m_containerWidget;}
-    QPushButton *m_retour;
-    QPushButton *m_pause;
+    //pause
+    PauseWindow *pauseWindow(){return m_pauseWindow;}
+    void pauseWindow(PauseWindow *pause){m_pauseWindow = pause;}
+    //music
+    Music *music(){return m_music;}
+    void music(Music *m){m_music=m;}
+    //retour
+    QPushButton *retour(){return m_retour;}
+    //pause
+    QPushButton *pause(){return m_pause;}
     void shootBubble(int angle);
-
-private:
-    void setupUi();
-    void keyPressEvent(QKeyEvent *event);
 
 signals:
     void onRetourClicked();
     void onPauseClicked();
-
 
 private:
     ScoreWidget *m_scoreWidget;
@@ -48,9 +52,14 @@ private:
     CanonWidget *m_canonWidget;
     ContainerWidget *m_containerWidget;
     Music *m_music;
+    QPushButton *m_retour;
+    QPushButton *m_pause;
+    PauseWindow *m_pauseWindow;
     void connectSignals();
     void paintEvent(QPaintEvent *event);
     void showEvent(QShowEvent *event);
+    void setupUi();
+    void keyPressEvent(QKeyEvent *event);
 
 };
 

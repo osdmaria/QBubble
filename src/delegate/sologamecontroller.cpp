@@ -1,13 +1,12 @@
 #include "sologamecontroller.h"
 
-SoloGameController::SoloGameController(SoloGameWindow *soloGameView,MainMenuWindow *mainMenuView, QObject *parent)
-    : QObject{parent}, m_soloGameView{soloGameView}, m_mainMenuView{mainMenuView}
+SoloGameController::SoloGameController(SoloGameWindow *soloGameView, QObject *parent)
+    : QObject{parent}, m_soloGameView{soloGameView}
 {
     m_scoreModel = new ScoreModel();
     m_containerModel = new ContainerModel();
     m_canonModel = new CanonModel();
     m_bubbleGeneratorModel = new GeneratorModel();
-    m_pauseWindow = nullptr;
 
     m_hexGridModel = new HexGridModel(soloGameView->gridScene()->width(),
                                       soloGameView->gridScene()->height(),
@@ -18,8 +17,6 @@ SoloGameController::SoloGameController(SoloGameWindow *soloGameView,MainMenuWind
     m_gridInitializer = new GridInitializer(m_hexGridModel);
     m_burstCalculator = new BurstCalculator(m_hexGridModel);
 
-    //connectsignal des buttons
-    connectSignalsButttons();
     connectGenerator();
     connectContainer();
     connectCannon();
@@ -31,6 +28,13 @@ SoloGameController::SoloGameController(SoloGameWindow *soloGameView,MainMenuWind
 
 SoloGameController::~SoloGameController(){
     delete m_scoreModel;
+    delete m_containerModel;
+    delete m_bubbleGeneratorModel;
+    delete m_burstCalculator;
+    delete m_hexGridModel;
+    delete m_gridInitializer;
+    delete m_canonModel;
+
 }
 
 void SoloGameController::start(){
@@ -38,7 +42,7 @@ void SoloGameController::start(){
     m_gameOver = false;
     m_gameWon = false;
 
-    loadLevel(2);
+    loadLevel(1);
     initContainer();
     emit generateSingleBubble();
 }
@@ -143,19 +147,7 @@ void SoloGameController::gameWon(){
     qDebug()<<"GAME WON";
 }
 
-void SoloGameController::openMainMenu() {
-    delete m_soloGameView;
-    m_mainMenuView->show();
-    emit menuLauched();
-}
 
-
-
-void SoloGameController::connectSignalsButttons(){
-    qDebug() << "connectSignalsButttons() clicked!";
-    connect(m_soloGameView, &SoloGameWindow::onRetourClicked, this, &SoloGameController::openMainMenu);
-    connect(m_soloGameView, &SoloGameWindow::onPauseClicked, this, &SoloGameController::showPauseWindow);
-}
 
 void SoloGameController::connectBurstCalculator(){
     connect(m_burstCalculator,&BurstCalculator::amountDestroyedBubbles,this,&SoloGameController::handleAmountDestroyedBubbles);
@@ -164,13 +156,10 @@ void SoloGameController::connectBurstCalculator(){
 }
 
 void SoloGameController::connectScore(){
-    connect(m_burstCalculator, &BurstCalculator::bubblesToBurst, m_scoreModel, &ScoreModel::calculScore);
-    connect(m_burstCalculator, &BurstCalculator::bubblesDisconnected , m_scoreModel, &ScoreModel::calculScore);
+    connect(m_burstCalculator, &BurstCalculator::bubblesToBurst, m_scoreModel, &ScoreModel::calculScoreBurst);
+    connect(m_burstCalculator, &BurstCalculator::bubblesDisconnected , m_scoreModel, &ScoreModel::calculScoreDisconnected);
     connect(m_scoreModel, &ScoreModel::calculScoreHandled, m_hexGridModel, &HexGridModel::handleBurst);
     connect(m_scoreModel, &ScoreModel::scoreChanged, m_soloGameView->scoreWidget(),&ScoreWidget::updateLabel);
-    //delete m_soloGameView;
-    m_mainMenuView->show();
-    emit menuLauched();
 }
 
 void SoloGameController::connectGenerator(){
@@ -210,12 +199,3 @@ void SoloGameController::connectGridScene(){
     connect(m_hexGridModel, &HexGridModel::bubbleMoved, m_soloGameView->gridScene(), &GridScene::onBubbleMoved);
 }
 
-void SoloGameController::showPauseWindow() {
-    qDebug() << "Pause clicked!";
-
-    if (!m_pauseWindow) {
-        m_pauseWindow = new pausewindow(m_soloGameView);
-    }
-
-    m_pauseWindow->exec();
-}

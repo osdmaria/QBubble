@@ -22,9 +22,7 @@ class WindowsController : public QObject
     int m_fixedWidth = 1125, m_fixedHeight = 642;
 public:
     WindowsController(QObject *parent=nullptr);
-    void launch();
     void setFixedSize(int width, int height, QMainWindow *window);
-
     MainMenuWindow *mainMenuWindow(){return m_mainMenuView;}
     HowToPlayWindow *howToplayWindow(){return m_howToPlayView;}
     MultiplayerChoiceWindow *multiplayerChoiceWindow(){return m_multiplayerChoiceView;}
@@ -36,28 +34,38 @@ public:
 
 signals:
     void soloLaunched();
+    void soloEnded();
+
     void alliesLauched();
+    void alliesEnded();
+
     void enemiesLauched();
+    void enemiesEnded();
+
 
 public slots:
     //Main menu window
+    void openMainMenu();
     void openSoloGame();
     void openMultiplayerChoice();
     void openHowToPlay();
     void quit();
 
-    //Rules window
-    void openMainMenuFromHowToPlay();
-
     //Multiplayer choice window
-    void openMainMenuFromMultiplayerChoice();
     void openEnemiesGameWindow();
     void openAlliesGameWindow();
+
+    //pause and back main menu
+    void handleRetour();
+    void openPause();
+    void closePause();
+    void retry();
 
 private:
     void connectSignalsMainMenu();
     void connectSignalsHowToplay();
     void connectSignalsMultiplayerChoice();
+    void connectSignalsSolo();
 
     MainMenuWindow *m_mainMenuView;
     HowToPlayWindow *m_howToPlayView;

@@ -19,9 +19,20 @@ SoloGameWindow::SoloGameWindow(int widthSize, int heightSize, QWidget *parent)
 
     setFocusPolicy(Qt::StrongFocus);
     setFocus();
+
+    m_pauseWindow = nullptr;
 }
 
-SoloGameWindow::~SoloGameWindow() {}
+SoloGameWindow::~SoloGameWindow() {
+    delete m_scoreWidget;
+    delete m_gridScene;
+    delete m_canonWidget;
+    delete m_containerWidget;
+    delete m_music;
+    delete m_retour;
+    delete m_pause;
+    delete m_pauseWindow;
+}
 
 void SoloGameWindow::setupUi() {
     //widget
@@ -29,7 +40,7 @@ void SoloGameWindow::setupUi() {
     QWidget *centralWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
 
-    m_scoreWidget->setFixedSize(300, 30);
+    m_scoreWidget->setFixedSize(300, 100);
     m_scoreWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     // Add score widget and grid scene
@@ -42,7 +53,7 @@ void SoloGameWindow::setupUi() {
     qDebug()<<m_canonWidget;
     m_canonWidget->focusWidget();
     m_canonWidget->setParent(this);
-    m_canonWidget->move(420,450);//// Center the canon widget horizontally
+    m_canonWidget->move(475,450);//// Center the canon widget horizontally
     m_canonWidget->show(); // Ensure it's visible
 
 
@@ -89,7 +100,7 @@ void SoloGameWindow::setupUi() {
     m_gridScene->move(180, 10);
 
     m_scoreWidget->setParent(this);
-    m_scoreWidget->move(970, 50);
+    m_scoreWidget->move(985, 50);
 
     m_retour->setParent(this);
     m_retour->move(20,50);
@@ -120,6 +131,7 @@ void SoloGameWindow::connectSignals() {
         emit onPauseClicked();});
 
 }
+
 void SoloGameWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     QPixmap background("://images/empty_background.png");

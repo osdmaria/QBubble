@@ -3,7 +3,7 @@
 #include "src/delegate/sologamecontroller.h"
 
 
-pausewindow::pausewindow(QWidget *parent)
+PauseWindow::PauseWindow(QWidget *parent)
     : QDialog(parent),m_music(new Music())
 {
     setupUi();
@@ -20,11 +20,11 @@ pausewindow::pausewindow(QWidget *parent)
     }
 }
 
-pausewindow::~pausewindow() {
+PauseWindow::~PauseWindow() {
     delete m_music;
 }
 
-void pausewindow::setupUi() {
+void PauseWindow::setupUi() {
 
     setGeometry(0, 0, 400, 300);
     setWindowTitle("Dialog");
@@ -53,9 +53,13 @@ void pausewindow::setupUi() {
     m_reprendreButton->setStyleSheet(buttonStyle);
     verticalLayout->addWidget(m_reprendreButton);
 
-    m_saveGameButton = new QPushButton("Enregistrer", verticalLayoutWidget);
-    m_saveGameButton->setStyleSheet(buttonStyle);
-    verticalLayout->addWidget(m_saveGameButton);
+    // m_saveGameButton = new QPushButton("Enregistrer", verticalLayoutWidget);
+    // m_saveGameButton->setStyleSheet(buttonStyle);
+    // verticalLayout->addWidget(m_saveGameButton);
+
+    m_retryButton = new QPushButton("Recommencer", verticalLayoutWidget);
+    m_retryButton->setStyleSheet(buttonStyle);
+    verticalLayout->addWidget(m_retryButton);
 
     verticalLayoutWidget->setLayout(verticalLayout);
 
@@ -63,15 +67,31 @@ void pausewindow::setupUi() {
 
 
 }
+void PauseWindow::connectSignals() {
 
-void pausewindow::connectSignals() {
+    if (!m_reprendreButton) {
+        qDebug() << "ERROR: m_reprendreButton nullptr!";
+    }
+    if (!m_retryButton) {
+        qDebug() << "ERROR: m_retryButton nullptr!";
+    }
+
     connect(m_reprendreButton, &QPushButton::clicked, [this]() {
+        qDebug() << "Reprendre clicked!";
         m_music->playSoundEffect("click");
-        emit close();});
-    //connect(m_menuPrincipalButton, &QPushButton::clicked, this, &SoloGameController::openMainMenuFromPause);
+        emit reprendreClicked();
+    });
+
+    connect(m_retryButton, &QPushButton::clicked, [this]() {
+        qDebug() << "Retry clicked!";
+        m_music->playSoundEffect("click");
+        emit retryClicked();
+    });
+
 }
 
-void pausewindow::paintEvent(QPaintEvent *event) {
+
+void PauseWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     QPixmap background(":/images/wood.jpg");
 

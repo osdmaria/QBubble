@@ -73,4 +73,5 @@ void ContainerModel::fill(Bubble *b){
         emit transmitBubble(bubble);
         emit bubblesChanged();
     }
+    qDebug()<<"le réservoir contient"<<m_container[0]->type()<<m_container[0]->type()<<m_container[0]->type();
 }

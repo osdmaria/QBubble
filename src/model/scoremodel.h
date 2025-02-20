@@ -18,6 +18,8 @@ signals:
 
 public slots:
     void calculScore(QVector<Bubble*> vec);
+    void calculScoreBurst(QVector<Bubble*> vec);
+    void calculScoreDisconnected(QVector<Bubble*> vec);
 
 private:
     int m_score;

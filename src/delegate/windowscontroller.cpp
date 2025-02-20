@@ -4,105 +4,128 @@
 WindowsController::WindowsController(QObject *parent) :QObject(parent)
 {
     m_mainMenuView = new MainMenuWindow();
-
-    //Il faut que les view se créenent uniquement lorsqu'on en a bseoin et pas par défaut
-    //A changer !
-    m_howToPlayView = new HowToPlayWindow();
-    m_multiplayerChoiceView = new MultiplayerChoiceWindow();
+    setFixedSize(m_fixedWidth,m_fixedHeight,m_mainMenuView);
     music = new Music();
 
-    //Menu principal
-    setFixedSize(m_fixedWidth,m_fixedHeight,m_mainMenuView);
+    m_howToPlayView = nullptr;
+    m_multiplayerChoiceView = nullptr;
+    m_alliesGameView = nullptr;
+    m_enemiesGameView = nullptr;
+    m_soloGameView = nullptr;
+
     connectSignalsMainMenu();
+}
 
-    //Comment jouer
-    setFixedSize(m_fixedWidth,m_fixedHeight,m_howToPlayView);
-    connectSignalsHowToplay();
 
-    //Choix Multijoueurs
-    setFixedSize(m_fixedWidth,m_fixedHeight,m_multiplayerChoiceView);
-    connectSignalsMultiplayerChoice();
+//LAUNCH
+void WindowsController::openMainMenu(){
+    m_mainMenuView->show();
+    if(m_howToPlayView){
+        m_howToPlayView->hide();
+        delete m_howToPlayView;
+        m_howToPlayView = nullptr;
+    }
+
+    if(m_multiplayerChoiceView){
+        m_multiplayerChoiceView->hide();
+        delete m_multiplayerChoiceView;
+        m_multiplayerChoiceView = nullptr;
+    }
+
+    if(m_alliesGameView){
+        m_alliesGameView->hide();
+        delete m_alliesGameView;
+        m_alliesGameView = nullptr;
+    }
+
+    if(m_enemiesGameView){
+        m_enemiesGameView->hide();
+        delete m_enemiesGameView;
+        m_enemiesGameView = nullptr;
+    }
+
+    if(m_soloGameView){
+        m_soloGameView->hide();
+        delete m_soloGameView;
+        m_soloGameView = nullptr;
+    }
 }
 
 void WindowsController::connectSignalsMainMenu(){
-    qDebug() << "SignalsMainMenu clicked!";
     connect(m_mainMenuView, &MainMenuWindow::onSoloClicked, this, &WindowsController::openSoloGame);
     connect(m_mainMenuView, &MainMenuWindow::onMultiplayerClicked, this, &WindowsController::openMultiplayerChoice);
     connect(m_mainMenuView, &MainMenuWindow::onHowToPlayClicked, this, &WindowsController::openHowToPlay);
     connect(m_mainMenuView, &MainMenuWindow::onQuitClicked, this, &WindowsController::quit);
 }
 
-//LAUNCH
-void WindowsController::launch(){
-    m_mainMenuView->show();
 
+//HOW TO PLAY -> open how to play menu
+void WindowsController::openHowToPlay() {
+    m_howToPlayView = new HowToPlayWindow();
+    setFixedSize(m_fixedWidth,m_fixedHeight,m_howToPlayView);
+    connectSignalsHowToplay();
+    m_howToPlayView->show();
+    m_mainMenuView->hide();
+    connectSignalsHowToplay();
 }
 
 //HOW TO PLAY -> Connect signals
 void WindowsController::connectSignalsHowToplay(){
-    connect(m_howToPlayView, &HowToPlayWindow::onMainMenuClicked, this, &WindowsController::openMainMenuFromHowToPlay);
+    connect(m_howToPlayView, &HowToPlayWindow::onMainMenuClicked, this, &WindowsController::openMainMenu);
 }
 
-//HOW TO PLAY -> open how to play menu
-void WindowsController::openHowToPlay() {
+//MULTIPLAYER CHOICE -> open multiplayer choice
+void WindowsController::openMultiplayerChoice() {
+    m_multiplayerChoiceView = new MultiplayerChoiceWindow();
+    setFixedSize(m_fixedWidth,m_fixedHeight,m_multiplayerChoiceView);
+    m_multiplayerChoiceView->show();
     m_mainMenuView->hide();
-    m_howToPlayView->show();
-}
-
-//HOW TO PLAY -> back to main menu
-void WindowsController::openMainMenuFromHowToPlay() {
-    m_howToPlayView->hide();
-    m_mainMenuView->show();
+    connectSignalsMultiplayerChoice();
 }
 
 
 //MULTIPLAYER CHOICE -> connect signals
 void WindowsController::connectSignalsMultiplayerChoice(){
-    connect(m_multiplayerChoiceView, &MultiplayerChoiceWindow::onMainMenuClicked, this, &WindowsController::openMainMenuFromMultiplayerChoice);
+    connect(m_multiplayerChoiceView, &MultiplayerChoiceWindow::onMainMenuClicked, this, &WindowsController::openMainMenu);
     connect(m_multiplayerChoiceView, &MultiplayerChoiceWindow::onAlliesClicked, this, &WindowsController::openAlliesGameWindow);
     connect(m_multiplayerChoiceView, &MultiplayerChoiceWindow::onEnemiesClicked, this, &WindowsController::openEnemiesGameWindow);
 }
 
-//MULTIPLAYER CHOICE -> open multiplayer choice
-void WindowsController::openMultiplayerChoice() {
-    m_mainMenuView->hide();
-    m_multiplayerChoiceView->show();
-}
-
-void WindowsController::openMainMenuFromMultiplayerChoice() {
-    m_multiplayerChoiceView->hide();
-    m_mainMenuView->show();
-}
 
 
 //SOLO GAME -> openSolo
 void WindowsController::openSoloGame() {
     m_soloGameView = new SoloGameWindow(m_fixedWidth,m_fixedHeight);
-    m_mainMenuView->hide();
     m_soloGameView->show();
+    if(m_mainMenuView)
+        m_mainMenuView->hide();
     emit soloLaunched();
+    connectSignalsSolo();
 }
 
+
+
 void WindowsController::openAlliesGameWindow() {
-    qDebug() << "Allies clicked!";
     m_alliesGameView = new AlliesGameWindow(m_fixedWidth,m_fixedHeight);
-    m_multiplayerChoiceView->hide();
     m_alliesGameView->show();
+    m_multiplayerChoiceView->hide();
+    delete m_multiplayerChoiceView;
+    m_multiplayerChoiceView = nullptr;
     emit alliesLauched();
 }
 
 void WindowsController::openEnemiesGameWindow() {
-    qDebug() << "Enemies clicked!";
     m_enemiesGameView = new EnemiesGameWindow(m_fixedWidth,m_fixedHeight);
-    m_multiplayerChoiceView->hide();
     m_enemiesGameView->show();
+    m_multiplayerChoiceView->hide();
+    delete m_multiplayerChoiceView;
+    m_multiplayerChoiceView = nullptr;
     emit enemiesLauched();
 }
 
 void WindowsController::startMusic() {
     music->playBackgroundMusic( 0.5);
 }
-
 
 
 void WindowsController::quit() {
@@ -113,3 +136,62 @@ void WindowsController::quit() {
 void WindowsController::setFixedSize(int width, int height, QMainWindow *window){
     window->setFixedSize(width,height);
 }
+
+void WindowsController::connectSignalsSolo(){
+    connect(m_soloGameView, &SoloGameWindow::onRetourClicked, this, &WindowsController::handleRetour);
+    connect(m_soloGameView, &SoloGameWindow::onPauseClicked, this, &WindowsController::openPause);
+}
+
+
+void WindowsController::handleRetour(){
+    if(m_soloGameView)
+        emit soloEnded();
+    if(m_alliesGameView)
+        emit alliesEnded();
+    if(m_enemiesGameView)
+        emit enemiesEnded();
+    openMainMenu();
+}
+
+void WindowsController::openPause(){
+    if(m_soloGameView){
+        if(!m_soloGameView->pauseWindow()){
+            m_soloGameView->pauseWindow(new PauseWindow(m_soloGameView));
+            connect(m_soloGameView->pauseWindow(), &PauseWindow::reprendreClicked, this, &WindowsController::closePause);
+            connect(m_soloGameView->pauseWindow(), &PauseWindow::retryClicked, this, &WindowsController::retry);
+            m_soloGameView->pauseWindow()->exec();
+        }
+    }
+
+    if(m_alliesGameView){}
+    if(m_enemiesGameView){}
+}
+
+void WindowsController::closePause(){
+    if(m_soloGameView){
+        if(m_soloGameView->pauseWindow()){
+            m_soloGameView->pauseWindow()->close();
+            delete m_soloGameView->pauseWindow();
+            m_soloGameView->pauseWindow(nullptr);
+        }
+    }
+
+    if(m_alliesGameView){}
+    if(m_enemiesGameView){}
+}
+
+void WindowsController::retry(){
+    if(m_soloGameView){
+        if(m_soloGameView->pauseWindow()){
+            m_soloGameView->pauseWindow()->close();
+            m_soloGameView->hide();
+
+            emit soloEnded();
+            delete m_soloGameView ;
+            openSoloGame();
+        }
+    }
+    if(m_alliesGameView){}
+    if(m_enemiesGameView){}
+}
+

@@ -5,13 +5,19 @@ MainController::MainController(QObject *parent)
     : QObject{parent}
 {
     m_windowsController = new WindowsController();
-
-    m_windowsController->launch();
+    m_windowsController->openMainMenu();
     m_windowsController->startMusic();
+
     //QTimer::singleShot(500, m_windowsController, &WindowsController::startMusic);
-    connect(m_windowsController->mainMenuWindow(), &MainMenuWindow::onSoloClicked, this, &MainController::soloLaunched);
+    connect(m_windowsController, &WindowsController::soloLaunched, this, &MainController::soloLaunched);
+
+    //changer c'est le windows controller qui doit envoyer les signaux
     connect(m_windowsController->multiplayerChoiceWindow(), &MultiplayerChoiceWindow::onEnemiesClicked, this, &MainController::enemieLaunched);
     connect(m_windowsController->multiplayerChoiceWindow(), &MultiplayerChoiceWindow::onAlliesClicked, this, &MainController::allieLaunched);
+
+    connect(m_windowsController, &WindowsController::soloEnded, this, &MainController::soloEnded);
+    connect(m_windowsController, &WindowsController::alliesEnded, this, &MainController::allieEnded);
+    connect(m_windowsController, &WindowsController::enemiesEnded, this, &MainController::enemieEnded);
 }
 
 MainController::~MainController() {
@@ -23,6 +29,7 @@ MainController::~MainController() {
 
 
 void MainController::soloLaunched(){
+    qDebug()<<"signal reçu";
     m_soloGameController = new SoloGameController(m_windowsController->soloGameWindow(),m_windowsController->mainMenuWindow());
     m_soloGameController->start();
 }

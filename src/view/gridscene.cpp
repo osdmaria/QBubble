@@ -9,7 +9,7 @@ GridScene::GridScene(int windowWidth, int windowHeight, int gridRadius, int bubb
     : QGraphicsView{parent}, m_gridRadius{gridRadius}, m_bubbleRadius{bubbleRadius}
 {
     QGraphicsScene *scene = new QGraphicsScene();
-    QColor semiTransparentColor(0, 0, 0, 128); // Màu xanh nhạt với độ trong suốt 50%
+    QColor semiTransparentColor(0, 0, 0, 150); // Màu xanh nhạt với độ trong suốt 50%
     scene->setBackgroundBrush(QBrush(semiTransparentColor));
     setScene(scene);
 
@@ -47,7 +47,7 @@ GridScene::GridScene(int windowWidth, int windowHeight, int gridRadius, int bubb
 
     //m_ncols = m_width/(2*m_gridRadius) +1;
     m_ncols = 12;
-    m_nrows = qRound(m_height/(std::sqrt(3)*m_gridRadius));
+    m_nrows = std::min(qRound(m_height/(std::sqrt(3)*m_gridRadius)),7);
 
 
     m_bubbleMatrix = QVector<QVector<BubbleView*>>(m_nrows, QVector<BubbleView*>(m_ncols, nullptr));
