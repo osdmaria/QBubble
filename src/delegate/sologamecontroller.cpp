@@ -86,7 +86,7 @@ void SoloGameController::handleAmountDestroyedBubbles(int amount){
     //     emit generateBubblesRow(m_hexGridModel->ncols());
     // }
 
-    if(m_hexGridModel->isGridEmpty())
+    if(!m_gameWon && !m_gameOver && m_running && m_hexGridModel->isGridEmpty())
         gameWon();
     else
         emit generateSingleBubble();

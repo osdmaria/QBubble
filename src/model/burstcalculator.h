@@ -22,6 +22,7 @@ signals:
     void bubblesDisconnected(QVector<Bubble*> vec);
     void amountDestroyedBubbles(int amount);
 
+
 public slots:
     void burstFromColoredBubble(int row, int col);
     void burstFromExplosiveBubble(int row, int col);
