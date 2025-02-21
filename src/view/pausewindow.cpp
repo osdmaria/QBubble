@@ -89,16 +89,12 @@ void PauseWindow::connectSignals() {
 }
 
 
+
 void PauseWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
-    QPixmap background(":/images/wood.jpg");
 
-    if (!background.isNull()) {
-        QPixmap scaledBackground = background.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-        painter.drawPixmap(0, 0, scaledBackground);
-    } else {
-        qDebug() << "Erreur : Impossible de charger l'image de fond.";
-    }
+    QColor backgroundColor = QColor(0, 0, 0, 50);
+    painter.fillRect(rect(), backgroundColor);
 
     QWidget::paintEvent(event);
 }
