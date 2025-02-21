@@ -36,18 +36,22 @@ GridScene::GridScene(int windowWidth, int windowHeight, int gridRadius, int bubb
     int widthDiff = windowWidth - m_width;
     int heightDiff = windowHeight - m_height;
 
-    //m_globalCenter = QPointF(m_localCenter.x() + widthDiff/2.f, m_localCenter.y() + heightDiff/2.f);
-    //m_globalOrigin = QPointF(m_globalCenter.x()-m_width/2.f, m_globalCenter.y()-m_height/2.f);
     m_globalOrigin = QPointF(169+bubbleRadius/2,32+bubbleRadius/2);
     m_globalCenter = QPointF(169+m_width/2,32+m_height/2);
 
 
-
-
-    //m_ncols = m_width/(2*m_gridRadius) +1;
     m_ncols = 12;
     m_nrows = std::min(qRound(m_height/(std::sqrt(3)*m_gridRadius)),7);
 
+    QPen dashedPen(Qt::red);
+    dashedPen.setStyle(Qt::DashLine);
+    dashedPen.setWidth(2); // Optionnel : Ajuste l'épaisseur de la ligne
+
+    // Calculer la position de la ligne en fonction du dernier row de la grille
+    qreal lastRowY = m_globalOrigin.y() + (m_nrows - 2) * std::sqrt(3) * m_gridRadius;
+
+    // Ajouter la ligne à la scène
+    scene->addLine(0, lastRowY, m_width, lastRowY, dashedPen);
 
     m_bubbleMatrix = QVector<QVector<BubbleView*>>(m_nrows, QVector<BubbleView*>(m_ncols, nullptr));
 
@@ -80,7 +84,6 @@ void GridScene::onBubbleMoved(int prevRow, int prevCol, Bubble* b) {
     QVector<int> pos = b->gridPosition();
     m_bubbleMatrix[pos[0]][pos[1]] = bubbleView;
     bubbleView->setPos(b->position());
-    //bubbleView->setPos(b->position()-QPoint(m_bubbleRadius/2,m_bubbleRadius/2));
     scene()->addItem(bubbleView);
 
     delete m_bubbleMatrix[prevRow][prevCol] ;

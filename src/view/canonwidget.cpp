@@ -12,9 +12,6 @@ CanonWidget::CanonWidget(int bubbleRadius, int radius, int startX, int startY, Q
 
     m_spotBubble = new QLabel(this);
     m_spotBubble->setFixedSize(bubbleRadius, bubbleRadius);
-    //m_layout = new QHBoxLayout(this);
-    //m_layout->addWidget(m_spotBubble, 0, Qt::AlignCenter);
-    //setLayout(m_layout);
     m_spotBubble->move(67,100);
 
     setFocusPolicy(Qt::StrongFocus); // Make the widget focusable
@@ -28,7 +25,6 @@ CanonWidget::~CanonWidget() {}
 
 void CanonWidget::updateBubble(BubbleView *b){
     if(m_bubble){
-        //m_layout->removeWidget(m_spotBubble);
         m_spotBubble->clear();
         m_bubble = nullptr;
     }

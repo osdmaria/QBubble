@@ -19,8 +19,6 @@ void MainMenuWindow::setupUi() {
     m_soloButton = new QPushButton("Partie solo", this);
     m_multiplayerButton = new QPushButton("Partie multijoueurs", this);
     m_quitButton = new QPushButton("Quitter", this);
-    //m_loadgameButton  = new QPushButton("Charger", this);
-    //m_niveauButton  = new QPushButton("Choisir le niveau", this);
 
     m_imageButton = new QPushButton(this);
     m_howToPlayButton = new QPushButton(this);

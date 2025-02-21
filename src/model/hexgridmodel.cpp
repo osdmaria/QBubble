@@ -5,10 +5,8 @@
 HexGridModel::HexGridModel(int width, int height, int radius, QPointF gridSceneOrigin, QPoint cannonPosition, QObject *parent)
     : QObject{parent}, m_width{width}, m_height{height}, m_gridSceneOrigin{gridSceneOrigin}, m_cannonPosition{cannonPosition}
 {
-    //qDebug()<<"canon"<<m_cannonPosition;
     m_cannonPosition = QPoint(550,450);
     m_hexRadius = radius;
-    //m_ncols = m_width/(2*m_hexRadius) +1;
     m_ncols = 12;
     m_nrows = std::min(qRound(m_height/(std::sqrt(3)*m_hexRadius)),7);
     m_matrix2D = QVector<QVector<Bubble*>>(m_nrows, QVector<Bubble*>(m_ncols, nullptr));
@@ -225,13 +223,11 @@ QVector<Bubble*> HexGridModel::getNeighborsSameColor(int row, int col){
 }
 
 void HexGridModel::removeBubblesMatrix(QVector<Bubble*> vec){
-    QTimer::singleShot(500, this, [this, vec]() {  // 500 ms delay
         for(int i=0; i<vec.size(); i++){
             QVector<int> vPos = vec[i]->gridPosition();
             emit bubbleDestroyed(vec[i]);
             removeBubbleMatrix(vPos[0], vPos[1]);
         }
-    });
 }
 
 bool HexGridModel::lastRowEmpty(){

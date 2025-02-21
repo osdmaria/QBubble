@@ -53,6 +53,7 @@ void EnemiesGameWindow::setupUi() {
 
     mainLayout->addWidget(m_scoreWidget);
     mainLayout->addWidget(m_scoreWidget2);
+    m_gridScene->setFocusPolicy(Qt::NoFocus);
     mainLayout->addWidget(m_gridScene);
 
     // Center CanonWidget

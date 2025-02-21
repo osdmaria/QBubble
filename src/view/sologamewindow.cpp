@@ -17,9 +17,6 @@ SoloGameWindow::SoloGameWindow(int widthSize, int heightSize, QWidget *parent)
     setupUi();
     connectSignals();
 
-    setFocusPolicy(Qt::StrongFocus);
-    setFocus();
-
     m_pauseWindow = nullptr;
     m_gameOverWindow = new gameOverWindow;
     m_menuLevels = new LevelMenu;
@@ -49,7 +46,6 @@ SoloGameWindow::~SoloGameWindow() {
 }
 
 void SoloGameWindow::setupUi() {
-    //widget
 
     QWidget *centralWidget = new QWidget(this);
     QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
@@ -57,12 +53,12 @@ void SoloGameWindow::setupUi() {
     m_scoreWidget->setFixedSize(300, 100);
     m_scoreWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
-    // Add score widget and grid scene
     mainLayout->addWidget(m_scoreWidget);
+    m_gridScene->setFocusPolicy(Qt::NoFocus);
     mainLayout->addWidget(m_gridScene);
 
 
-    // Center CanonWidget
+
     m_canonWidget = new CanonWidget(m_gridScene->bubbleRadius(), 25, 100, 100,this); // Add cannon
     m_canonWidget->focusWidget();
     m_canonWidget->setParent(this);
@@ -70,22 +66,19 @@ void SoloGameWindow::setupUi() {
     m_canonWidget->show(); // Ensure it's visible
 
 
-    // Add container widget
+
     mainLayout->addWidget(m_containerWidget);
     mainLayout->setAlignment(Qt::AlignCenter);
 
     centralWidget->setLayout(mainLayout);
     setCentralWidget(centralWidget);
 
-    //button
     m_retour = new QPushButton("X", this);
     m_pause  = new QPushButton("Pause", this);
 
-    // Button sizes
     m_retour->setFixedSize(35, 40);
     m_pause ->setFixedSize(100, 40);
 
-    //Style des boutons
     QString buttonStyle = "QPushButton {"
                           "background-color: #31B472;"
                           "color: #EEFF6A;"
@@ -142,12 +135,9 @@ void SoloGameWindow::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     QPixmap background("://images/empty_background.png");
 
-    // Vérifier si l'image est correctement chargée
     if (!background.isNull()) {
-        // Redimensionner l'image avec une transformation fluide
         QPixmap scaledBackground = background.scaled(size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
 
-        // Dessiner l'image redimensionnée
         painter.drawPixmap(0, 0, scaledBackground);
     } else {
         qDebug() << "Erreur : Impossible de charger l'image de fond.";

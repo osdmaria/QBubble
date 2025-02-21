@@ -6,9 +6,6 @@
 ContainerModel::ContainerModel(QObject *parent)
     : QObject{parent}
 {
-    //m_container[0] =  new ColoredBubble("lightblue");
-    //m_container[1] = new IndestructibleBubble();
-    //m_container[2] = new ExplosiveBubble(2);
     m_container[0] =  nullptr;
     m_container[1] = nullptr;
     m_container[2] = nullptr;
@@ -73,5 +70,5 @@ void ContainerModel::fill(Bubble *b){
         emit transmitBubble(bubble);
         emit bubblesChanged();
     }
-    //qDebug()<<"le réservoir contient"<<m_container[0]->type()<<m_container[1]->type()<<m_container[2]->type();
+
 }

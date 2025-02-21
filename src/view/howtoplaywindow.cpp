@@ -38,9 +38,9 @@ void HowToPlayWindow::setupUi() {
     QLabel *frame = framing();
 
     // Create instruction texts with images
-    QWidget *text1 = frameTextWithImage("1 - Utiliser les touches pour faire bouger le cannon.", "://images/keyboard_play.png");
-    QWidget *text2 = frameTextWithImage("2 - Cliquer la touche espace pour tirer.", "://images/spacebar.png");
-    QWidget *text3 = frameTextWithImage("3 - Éviter que les bulles atteignent le bas.", "");
+    QWidget *text1 = frameTextWithImage("1 - Utiliser les flèches G et D pour faire pivoter <br> le canon.", "://images/keyboard_play.png");
+    QWidget *text2 = frameTextWithImage("2 - Utiliser la touche Espace pour tirer.", "://images/spacebar.png");
+    QWidget *text3 = frameTextWithImage("3 - Éviter que les bulles depassent la ligne rouge", "");
 
     QVBoxLayout *layout = new QVBoxLayout();
     layout->addStretch();
@@ -64,35 +64,6 @@ void HowToPlayWindow::setupUi() {
     centralWidget->setLayout(mainLayout);
     setCentralWidget(centralWidget);
 
-    // //Title
-    // QLabel *titleHowToPlayLabel = createTitleHowToPlayLabel();
-    // layout->addWidget(titleHowToPlayLabel);
-    // titleHowToPlayLabel->setAlignment(Qt::AlignHCenter);
-    // layout->setAlignment(titleHowToPlayLabel, Qt::AlignHCenter);
-
-    // //Rules
-    // QLabel *gameRulesLabel = createGameRulesLabel();
-    // layout->addWidget(gameRulesLabel);
-    // layout->setAlignment(gameRulesLabel, Qt::AlignHCenter);
-
-    // //Controls
-    // QLabel *gameControlsLabel = createGameControlsLabel();
-    // layout->addWidget(gameControlsLabel);
-    // layout->setAlignment(gameControlsLabel, Qt::AlignHCenter);
-
-    // //Back to menu
-    // layout->addWidget(m_mainMenuButton);
-    // layout->setAlignment(m_mainMenuButton, Qt::AlignHCenter);
-    // layout->addStretch();
-
-    // //Scroll
-    // QWidget *scrollWidget = new QWidget();
-    // scrollWidget->setLayout(layout);
-    // QScrollArea *scrollArea = new QScrollArea(this);
-    // scrollArea->setWidgetResizable(true);
-    // scrollArea->setWidget(scrollWidget);
-
-    // setCentralWidget(scrollArea);
 
 }
 

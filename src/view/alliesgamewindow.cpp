@@ -18,9 +18,6 @@ AlliesGameWindow::AlliesGameWindow(int widthSize, int heightSize, QWidget *paren
     setupUi();
     connectSignals();
 
-    setFocusPolicy(Qt::StrongFocus);
-    setFocus();
-
     m_pauseWindow = nullptr;
     m_gameOverWindow = new gameOverWindow;
     m_menuLevels = new LevelMenu;
@@ -48,6 +45,7 @@ void AlliesGameWindow::setupUi() {
     m_scoreWidget->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 
     mainLayout->addWidget(m_scoreWidget);
+    m_gridScene->setFocusPolicy(Qt::NoFocus);
     mainLayout->addWidget(m_gridScene);
 
     // Center CanonWidget
@@ -61,7 +59,6 @@ void AlliesGameWindow::setupUi() {
     // Center CanonWidget2
     m_canonWidget2 = new CanonWidget(m_gridScene->bubbleRadius(),25, 100, 100,this); // Add cannon
     qDebug()<<m_canonWidget2;
-    //m_canonWidget2->focusWidget();
     m_canonWidget2->setParent(this);
     m_canonWidget2->move(530,450);
     m_canonWidget2->show(); // Ensure it's visible

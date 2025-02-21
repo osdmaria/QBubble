@@ -31,17 +31,17 @@ EnemiesGameController::EnemiesGameController(EnemiesGameWindow *enemiesGameView,
 }
 
 EnemiesGameController::~EnemiesGameController(){
-    delete m_scoreModel;
-    delete m_scoreModel2;
-    delete m_containerModel;
-    delete m_containerModel2;
-    delete m_bubbleGeneratorModel;
-    delete m_burstCalculator;
-    delete m_hexGridModel;
-    delete m_gridInitializer;
-    delete m_canonModel;
-    delete m_canonModel2;
-    delete m_levelMenu;
+    // delete m_scoreModel;
+    // delete m_scoreModel2;
+    // delete m_containerModel;
+    // delete m_containerModel2;
+    // delete m_bubbleGeneratorModel;
+    // delete m_burstCalculator;
+    // delete m_hexGridModel;
+    // delete m_gridInitializer;
+    // delete m_canonModel;
+    // delete m_canonModel2;
+    // delete m_levelMenu;
 }
 
 void EnemiesGameController::start(int level){
