@@ -1,7 +1,6 @@
 #ifndef GAMEOVERWINDOW_H
 #define GAMEOVERWINDOW_H
 
-#include "ui_gameoverwindow.h"
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QApplication>
@@ -11,7 +10,7 @@
 #include <QPainter>
 #include <QDialog>
 
-class gameOverWindow : public QDialog, private Ui::gameOverWindow
+class gameOverWindow : public QDialog
 {
     Q_OBJECT
 

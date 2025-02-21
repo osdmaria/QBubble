@@ -93,5 +93,4 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 RESOURCES += \
     src/resources/resources.qrc
 
-FORMS += \
-    src/view/gameoverwindow.ui
+FORMS +=

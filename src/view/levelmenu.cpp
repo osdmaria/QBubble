@@ -1,4 +1,4 @@
-#include "LevelMenu.h"
+#include "levelmenu.h"
 
 LevelMenu::LevelMenu(QWidget *parent) : QDialog(parent) {
     setFixedSize(300, 200);
