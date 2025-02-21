@@ -66,7 +66,6 @@ void AlliesGameController::startLevelSelection() {
         m_levelMenu->close();
         m_levelMenu = nullptr;
 
-        qDebug() << "Level selected:" << level;
         start(level);
     });
 }

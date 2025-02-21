@@ -50,7 +50,6 @@ void AlliesGameWindow::setupUi() {
 
     // Center CanonWidget
     m_canonWidget = new CanonWidget(m_gridScene->bubbleRadius(),25, 100, 100,this); // Add cannon
-    qDebug()<<m_canonWidget;
     m_canonWidget->focusWidget();
     m_canonWidget->setParent(this);
     m_canonWidget->move(420,450);// Center the canon widget horizontally
@@ -58,7 +57,7 @@ void AlliesGameWindow::setupUi() {
 
     // Center CanonWidget2
     m_canonWidget2 = new CanonWidget(m_gridScene->bubbleRadius(),25, 100, 100,this); // Add cannon
-    qDebug()<<m_canonWidget2;
+    //m_canonWidget2->focusWidget();
     m_canonWidget2->setParent(this);
     m_canonWidget2->move(530,450);
     m_canonWidget2->show(); // Ensure it's visible
