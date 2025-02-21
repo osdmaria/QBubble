@@ -42,22 +42,21 @@ LevelMenu::LevelMenu(QWidget *parent) : QDialog(parent) {
 
 
 
-// void LevelMenu::paintEvent(QPaintEvent *event) {
-//     QPainter painter(this);
-//     QPixmap background(":/images/wood.jpg");
+void LevelMenu::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    QPixmap background(":/images/wood.jpg");
 
-//     if (!background.isNull()) {
-//         QPixmap scaledBackground = background.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-//         painter.drawPixmap(0, 0, scaledBackground);
-//     } else {
-//         qDebug() << "Erreur : Impossible de charger l'image de fond.";
-//     }
+    if (!background.isNull()) {
+        QPixmap scaledBackground = background.scaled(size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+        painter.drawPixmap(0, 0, scaledBackground);
+    } else {
+        qDebug() << "Erreur : Impossible de charger l'image de fond.";
+    }
 
-//     QWidget::paintEvent(event);
-
+    QWidget::paintEvent(event);
+}
 LevelMenu::~LevelMenu(){
     delete level1Btn;
     delete level2Btn;
     delete level3Btn;
-
 }

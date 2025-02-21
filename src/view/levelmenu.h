@@ -17,8 +17,8 @@ public:
 signals:
     void levelSelected(int level);
 
-// private :
-//     void paintEvent(QPaintEvent *event);
+private :
+    void paintEvent(QPaintEvent *event);
 
 
 private:
