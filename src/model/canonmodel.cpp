@@ -31,7 +31,6 @@ void CanonModel::updateAngle(int direction) {
 void CanonModel::loadBubble(Bubble *b){
     m_currentBubble = b;
     emit cannonLoaded();
-    //qDebug()<<"canon rechargé";
 }
 
 void CanonModel::fire(){

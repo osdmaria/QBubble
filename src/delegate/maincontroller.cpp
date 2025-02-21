@@ -29,7 +29,6 @@ MainController::~MainController() {
 
 
 void MainController::soloLaunched() {
-    qDebug() << "Launching Solo Game...";
 
     m_soloGameController = new SoloGameController(m_windowsController->soloGameWindow(), this);
 

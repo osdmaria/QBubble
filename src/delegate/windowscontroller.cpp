@@ -104,7 +104,6 @@ void WindowsController::openSoloGame() {
 }
 
 void WindowsController::handleGameOver(int score){
-    qDebug()<<"handleGameOver calledd";
     if(m_soloGameView){
         connect(m_soloGameView->gameOver(), &gameOverWindow::replayClicked, this, &WindowsController::replay);
         connect(m_soloGameView->gameOver(), &gameOverWindow::backMenuClicked, this, &WindowsController::handleRetour);
@@ -126,50 +125,36 @@ void WindowsController::handleGameOver(int score){
 }
 
 void WindowsController::replay(){
-    qDebug()<<"replay calledd";
     if(m_soloGameView){
         if(m_soloGameView->gameOver()){
             m_soloGameView->gameOver()->close();
             m_soloGameView->hide();
-            qDebug()<<"check 1";
             emit soloEnded();
-            qDebug()<<"check 2";
             delete m_soloGameView ;
-            qDebug()<<"check 3";
             openSoloGame();
-            qDebug()<<"check 4";
         }
     }
     if(m_alliesGameView){
         if(m_alliesGameView->gameOver()){
             m_alliesGameView->gameOver()->close();
             m_alliesGameView->hide();
-            qDebug()<<"check 1";
             emit alliesEnded();
-            qDebug()<<"check 2";
             delete m_alliesGameView ;
-            qDebug()<<"check 3";
             openAlliesGameWindow();
-            qDebug()<<"check 4";
         }
     }
     if(m_enemiesGameView){
         if(m_enemiesGameView->gameOver()){
             m_enemiesGameView->gameOver()->close();
             m_enemiesGameView->hide();
-            qDebug()<<"check 1";
             emit enemiesEnded();
-            qDebug()<<"check 2";
             delete m_enemiesGameView ;
-            qDebug()<<"check 3";
             openEnemiesGameWindow();
-            qDebug()<<"check 4";
         }
     }
 }
 
 void WindowsController::backMenu(){
-    qDebug()<<"kjf";
     if(m_soloGameView){
         if(m_soloGameView->gameOver()){
             m_soloGameView->gameOver()->close();
@@ -337,7 +322,6 @@ void WindowsController::retry(){
 }
 
 void WindowsController::handleReplayTheGame() {
-    qDebug() << "Replay the game";
     if (m_soloGameView) {
         m_soloGameView->hide();
         delete m_soloGameView;
@@ -347,21 +331,16 @@ void WindowsController::handleReplayTheGame() {
 }
 
 void WindowsController::handleReturnToMainMenu() {
-    qDebug() << "Return to main menu";
     openMainMenu();  // Retourner au menu principal
 }
 
 
 void WindowsController::showLevelMenu() {
-    qDebug() << "show level menu";
-
     LevelMenu *levelMenu = m_soloGameView->menuLevels();
 
     // Connect the signal before exec() is called
     connect(levelMenu, &LevelMenu::levelSelected, this, [this, levelMenu](int level) {
-        qDebug() << "Level selected:" << level;
         emit sendSelectedLevel(level);
-
         levelMenu->close();  // Close the dialog
         levelMenu->deleteLater();  // Safe deletion after event processing
     });

@@ -29,24 +29,14 @@ SoloGameController::SoloGameController(SoloGameWindow *soloGameView, QObject *pa
 }
 
 SoloGameController::~SoloGameController(){
-    qDebug()<<"check score model";
     delete m_scoreModel;
-    qDebug()<<"check container model";
     delete m_containerModel;
-    qDebug()<<"check generateur model";
     delete m_bubbleGeneratorModel;
-    qDebug()<<"check burst calculator model";
     delete m_burstCalculator;
-    qDebug()<<"check hex grid model";
     delete m_hexGridModel;
-    qDebug()<<"check grid init model";
     delete m_gridInitializer;
-    qDebug()<<"check canon model";
     delete m_canonModel;
-    qDebug()<<"check level menu";
     delete m_levelMenu;
-    qDebug()<<"check after level menu";
-
 }
 
 void SoloGameController::start(int level){
@@ -70,7 +60,6 @@ void SoloGameController::initContainer(){
 
 
 void SoloGameController::startLevelSelection() {
-    qDebug()<<"started selection";
     emit requestLevelSelection();
 }
 
@@ -102,8 +91,6 @@ void SoloGameController::handleAmountDestroyedBubbles(int amount){
     } else {
         m_failedShots = 0;
     }
-
-    //qDebug()<<amount<<m_failedShots;
 
     // if(m_failedShots==3){
     //     emit generateBubblesRow(m_hexGridModel->ncols());

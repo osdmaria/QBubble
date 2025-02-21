@@ -96,7 +96,6 @@ void EnemiesGameController::handleAmountDestroyedBubbles(int amount){
         m_failedShots = 0;
     }
 
-    //qDebug()<<amount<<m_failedShots;
 
     // if(m_failedShots==3){
     //     emit generateBubblesRow(m_hexGridModel->ncols());
