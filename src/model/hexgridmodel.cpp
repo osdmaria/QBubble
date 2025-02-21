@@ -1,5 +1,6 @@
 #include "hexgridmodel.h"
 #include <QDebug>
+#include <QTimer>
 
 HexGridModel::HexGridModel(int width, int height, int radius, QPointF gridSceneOrigin, QPoint cannonPosition, QObject *parent)
     : QObject{parent}, m_width{width}, m_height{height}, m_gridSceneOrigin{gridSceneOrigin}, m_cannonPosition{cannonPosition}
@@ -224,11 +225,13 @@ QVector<Bubble*> HexGridModel::getNeighborsSameColor(int row, int col){
 }
 
 void HexGridModel::removeBubblesMatrix(QVector<Bubble*> vec){
-    for(int i=0; i<vec.size();i++){
-        QVector<int> vPos = vec[i]->gridPosition();
-        emit bubbleDestroyed(vec[i]);
-        removeBubbleMatrix(vPos[0],vPos[1]);
-    }
+    QTimer::singleShot(500, this, [this, vec]() {  // 500 ms delay
+        for(int i=0; i<vec.size(); i++){
+            QVector<int> vPos = vec[i]->gridPosition();
+            emit bubbleDestroyed(vec[i]);
+            removeBubbleMatrix(vPos[0], vPos[1]);
+        }
+    });
 }
 
 bool HexGridModel::lastRowEmpty(){
